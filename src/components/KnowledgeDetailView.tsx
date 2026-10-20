@@ -290,13 +290,13 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
                   <div>
                     <span className="text-[var(--muted)] font-mono">适用特征：</span>
                     <div className="text-[var(--ink)] mt-0.5 leading-relaxed font-body">
-                      <MathView content={m.condition} inline />
+                      <MathView content={m.condition || m.applicability || ""} inline />
                     </div>
                   </div>
                   <div>
                     <span className="text-[var(--muted)] font-mono">核心操作：</span>
                     <div className="text-[var(--ink)] mt-0.5 leading-relaxed font-body">
-                      <MathView content={m.description} inline />
+                      <MathView content={m.description || m.limitations || ""} inline />
                     </div>
                   </div>
                 </div>
@@ -313,7 +313,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
               § 5. 适用条件与前置限制
             </div>
             <div className="text-xs text-[var(--ink)] leading-relaxed bg-[var(--well)] p-3 sm:p-3.5 rounded-[8px] border border-[var(--line)] font-body">
-              <MathView content={node.applicability} inline />
+              <MathView content={node.applicability || "适用于考研数学相关考点题型"} inline />
             </div>
           </div>
 
@@ -548,13 +548,25 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
                     {/* Problem statement */}
                     <div className="text-sm text-[var(--ink)] font-serif leading-relaxed bg-[var(--sheet)] p-3.5 sm:p-4 rounded-[10px] border border-[var(--line)]">
                       <MathView content={q.content} />
-                      {q.options && (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 pt-3 border-t border-[var(--line)]">
-                          {q.options.map((opt: string, i: number) => (
-                            <div key={i} className="text-xs text-[var(--ink)]">
-                              <MathView content={opt} inline />
-                            </div>
-                          ))}
+                      {q.options && q.options.length > 0 && (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-3.5 pt-3.5 border-t border-[var(--line)] font-mono text-xs">
+                          {q.options.map((opt: string, i: number) => {
+                            const optLabel = String.fromCharCode(65 + i);
+                            const cleanOpt = opt.replace(new RegExp(`^\\s*\\(?${optLabel}\\)?[\\.、\\s]*`, 'i'), '').trim();
+                            return (
+                              <div
+                                key={i}
+                                className="flex items-start gap-2.5 p-2.5 rounded-[8px] bg-[var(--well)] hover:bg-[var(--sheet)] border border-[var(--line)] transition-colors group/opt"
+                              >
+                                <span className="w-5 h-5 rounded-[5px] bg-[var(--sheet)] text-[var(--blue)] group-hover/opt:bg-[var(--blue)] group-hover/opt:text-white font-bold text-[11px] flex items-center justify-center flex-shrink-0 border border-[var(--line)] shadow-2xs transition-colors">
+                                  {optLabel}
+                                </span>
+                                <div className="flex-1 font-serif text-[var(--ink)] leading-relaxed pt-0.5">
+                                  <MathView content={cleanOpt} inline />
+                                </div>
+                              </div>
+                            );
+                          })}
                         </div>
                       )}
                     </div>
@@ -596,14 +608,19 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
                         </div>
 
                         {/* Solution Steps */}
-                        <div className="space-y-2 pt-1">
+                        <div className="space-y-2.5 pt-1">
                           <span className="text-xs font-mono font-bold text-[var(--ink)]">分步解答过程：</span>
                           {q.solutionSteps.map((s: string, stepIdx: number) => (
                             <div
                               key={stepIdx}
-                              className="text-xs text-[var(--ink)] bg-[var(--sheet)] p-3 rounded-[8px] border border-[var(--line)] leading-relaxed font-body"
+                              className="text-xs text-[var(--ink)] bg-[var(--sheet)] p-3 rounded-[8px] border border-[var(--line)] leading-relaxed font-body flex items-start gap-2.5"
                             >
-                              <MathView content={s} inline />
+                              <span className="px-1.5 py-0.5 rounded bg-[var(--well)] text-[var(--muted)] font-mono font-bold text-[10px] border border-[var(--line)] flex-shrink-0 mt-0.5">
+                                步 {stepIdx + 1}
+                              </span>
+                              <div className="flex-1">
+                                <MathView content={s} />
+                              </div>
                             </div>
                           ))}
                         </div>

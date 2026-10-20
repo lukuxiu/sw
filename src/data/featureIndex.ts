@@ -12,7 +12,8 @@ export type FeatureCategory =
   | '方程组与向量组'
   | '特征值与二次型'
   | '随机变量与分布'
-  | '数理统计与参数估计';
+  | '数理统计与参数估计'
+  | '应试工程与备考策略';
 
 export interface FeatureExample {
   id: string;
@@ -55,6 +56,7 @@ function categorizeChapter(chapterTitle: string): FeatureCategory {
   if (chapterTitle.includes('特征值') || chapterTitle.includes('相似') || chapterTitle.includes('二次型')) return '特征值与二次型';
   if (chapterTitle.includes('随机事件') || chapterTitle.includes('一维随机') || chapterTitle.includes('多维') || chapterTitle.includes('数字特征') || chapterTitle.includes('大数')) return '随机变量与分布';
   if (chapterTitle.includes('统计') || chapterTitle.includes('估计')) return '数理统计与参数估计';
+  if (chapterTitle.includes('应试工程') || chapterTitle.includes('失误清单') || chapterTitle.includes('时间分配') || chapterTitle.includes('保命')) return '应试工程与备考策略';
   return '极限与连续';
 }
 

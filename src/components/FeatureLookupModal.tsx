@@ -26,6 +26,7 @@ const CATEGORIES: { id: FeatureCategory; label: string }[] = [
   { id: '特征值与二次型', label: '特征值与二次型' },
   { id: '随机变量与分布', label: '随机变量与分布' },
   { id: '数理统计与参数估计', label: '数理统计与估计' },
+  { id: '应试工程与备考策略', label: '应试工程/失误/保命' },
 ];
 
 export const FeatureLookupModal: React.FC<FeatureLookupModalProps> = ({

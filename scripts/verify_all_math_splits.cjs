@@ -4,8 +4,9 @@ const katex = require('katex');
 // 1. Parse knowledgeBase JSON object
 const text = fs.readFileSync('src/data/knowledgeBase.ts', 'utf8');
 const startIdx = text.indexOf('export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {') + 'export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = '.length;
-const endIdx = text.indexOf('\n};\n\nimport { EXTRACTED_PAST_QUESTIONS }');
-const jsonPart = text.slice(startIdx, endIdx + 2).trim();
+const importIdx = text.indexOf('import { EXTRACTED_PAST_QUESTIONS }');
+const semiIdx = text.lastIndexOf('};', importIdx);
+const jsonPart = text.slice(startIdx, semiIdx + 1).trim();
 const kb = JSON.parse(jsonPart);
 
 // 2. Parse pastQuestionsData JSON object
@@ -59,21 +60,24 @@ for (const [nodeId, node] of Object.entries(kb)) {
   checkString(node.firstReaction, `${nodeId}.firstReaction`);
   checkString(node.whyChooseMethod, `${nodeId}.whyChooseMethod`);
   (node.triggers || []).forEach((t, i) => checkString(t, `${nodeId}.triggers[${i}]`));
-  (node.standardSteps || []).forEach((s, i) => checkString(s, `${nodeId}.standardSteps[${i}]`));
+  (node.steps || []).forEach((s, i) => checkString(s, `${nodeId}.steps[${i}]`));
   (node.pitfalls || []).forEach((p, i) => checkString(p, `${nodeId}.pitfalls[${i}]`));
 
   (node.candidateMethods || []).forEach((m, i) => {
     checkString(m.name, `${nodeId}.candidateMethods[${i}].name`);
-    checkString(m.applicability, `${nodeId}.candidateMethods[${i}].applicability`);
+    checkString(m.condition || m.applicability, `${nodeId}.candidateMethods[${i}].condition`);
     checkString(m.whyChoose, `${nodeId}.candidateMethods[${i}].whyChoose`);
   });
 
-  (node.coreFormulas || []).forEach((f, i) => {
-    checkString(f.latex, `${nodeId}.coreFormulas[${i}].latex`);
+  (node.formulas || []).forEach((f, i) => {
+    checkString(f.latex, `${nodeId}.formulas[${i}].latex`);
   });
 
   (node.pastQuestions || []).forEach((q, i) => {
     checkString(q.content, `${nodeId}.pastQuestions[${i}].content (${q.id})`);
+    (q.options || []).forEach((opt, oi) => {
+      checkString(opt, `${nodeId}.pastQuestions[${i}].options[${oi}] (${q.id})`);
+    });
     checkString(q.analysis, `${nodeId}.pastQuestions[${i}].analysis (${q.id})`);
     checkString(q.answer, `${nodeId}.pastQuestions[${i}].answer (${q.id})`);
     checkString(q.pitfall, `${nodeId}.pastQuestions[${i}].pitfall (${q.id})`);
@@ -84,6 +88,7 @@ for (const [nodeId, node] of Object.entries(kb)) {
 }
 
 console.log("\n=== VERIFICATION SUMMARY ===");
+console.log(`Total topics in KB: ${Object.keys(kb).length}`);
 console.log(`Total text items checked: ${totalItemsChecked}`);
 console.log(`KaTeX errors found: ${errorsFound}`);
 console.log(`Unmatched $ found: ${unmatchedDollars}`);

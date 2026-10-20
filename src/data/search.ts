@@ -54,7 +54,7 @@ export function searchKnowledgeBase(query: string): SearchMatchItem[] {
 
     // 4. Check candidate methods (解题方法)
     const matchedMethod = node.candidateMethods.find(
-      (m) => m.name.toLowerCase().includes(clean) || m.condition.toLowerCase().includes(clean)
+      (m) => m.name.toLowerCase().includes(clean) || (m.condition || m.applicability || "").toLowerCase().includes(clean)
     );
     if (matchedMethod) {
       results.push({

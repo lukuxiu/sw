@@ -22,7 +22,7 @@ export const MathView: React.FC<MathViewProps> = ({ content, className = '', inl
     // 1. If content contains $ delimiters, parse segments
     if (content.includes('$')) {
       // Match display math $$...$$ or inline math $...$
-      const parts = content.split(/(\$\$[\s\S]*?\$\$|\$[^$\n]+?\$)/g);
+      const parts = content.split(/(\$\$[\s\S]*?\$\$|\$[^\$]+?\$)/g);
 
       return parts
         .map((part) => {

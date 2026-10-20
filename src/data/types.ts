@@ -29,10 +29,12 @@ export interface ChapterInfo {
 
 export interface CandidateMethod {
   name: string;
-  priority: number;
-  condition: string;
+  priority?: number;
+  condition?: string;
+  applicability?: string;
   whyChoose: string;
-  description: string;
+  description?: string;
+  limitations?: string;
 }
 
 export interface FormulaItem {
@@ -80,7 +82,7 @@ export interface KnowledgeNode {
   triggers: string[]; // 触发信号：题目出现哪些形式、条件、关键词或结构
   firstReaction: string; // 第一反应：看到题目后首先应该检查什么、尝试什么
   candidateMethods: CandidateMethod[]; // 方法选择与优先级
-  applicability: string; // 适用条件与易忽略限制
+  applicability?: string; // 适用条件与易忽略限制
   steps: string[]; // 从特征到具体数学操作的详细步骤
   pitfalls: string[]; // 易错点分析
   formulas: FormulaItem[]; // 核心公式与速记结论
@@ -90,6 +92,8 @@ export interface KnowledgeNode {
   relatedKnowledgeIds: string[]; // 相关考点与跨章节方法
   tags: string[]; // 标签
   source: string; // 讲义来源
+  whyChooseMethod?: string;
+  selfCheckList?: string[];
   isPending?: boolean; // 是否待补充
 }
 

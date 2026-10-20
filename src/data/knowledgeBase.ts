@@ -21,21 +21,21 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "提取非零因子 + 等价无穷小替换",
         "priority": 1,
-        "condition": "分子分母中包含趋于 0 的乘除整体因式",
+        "applicability": "分子分母中包含趋于 0 的乘除整体因式",
         "whyChoose": "计算量极小，迅速降阶",
         "description": "利用 sin x ~ x, e^x - 1 ~ x, ln(1+x) ~ x, 1 - cos x ~ (1/2)x^2 等价公式"
       },
       {
         "name": "泰勒展开法（麦克劳林公式）",
         "priority": 2,
-        "condition": "分子或分母存在加减相消，或等价替换无法直接处理的差式",
+        "applicability": "分子或分母存在加减相消，或等价替换无法直接处理的差式",
         "whyChoose": "通用降维打击，杜绝等价替换误用",
         "description": "分母为几阶无穷小，分子就展开到几阶，合并同类项消去低次"
       },
       {
         "name": "洛必达法则 (L'Hôpital)",
         "priority": 3,
-        "condition": "求导后式子明显简化，且导函数极限存在",
+        "applicability": "求导后式子明显简化，且导函数极限存在",
         "whyChoose": "适用于简单多项式或单步求导",
         "description": "分子分母分别求导，不可用于振荡不存在情形"
       }
@@ -149,14 +149,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "凑 e 核心公式法",
         "priority": 1,
-        "condition": "任何 1^∞ 型通用",
+        "applicability": "任何 1^∞ 型通用",
         "whyChoose": "免去写繁琐对数过程，一步转化为乘积未定式",
         "description": "lim u^v = e^{lim v(u-1)}"
       },
       {
         "name": "多项式速算公式",
         "priority": 2,
-        "condition": "底数为同次二次多项式之比，指数为 x",
+        "applicability": "底数为同次二次多项式之比，指数为 x",
         "whyChoose": "选择填空题秒出",
         "description": "lim [(x^2+p1 x + q1)/(x^2+p2 x + q2)]^x = e^{p1 - p2}"
       }
@@ -253,14 +253,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "通分法",
         "priority": 1,
-        "condition": "分式相减",
+        "applicability": "分式相减",
         "whyChoose": "直接转化为 0/0 分式",
         "description": "A/B - C/D = (AD - BC)/(BD)"
       },
       {
         "name": "分子有理化",
         "priority": 2,
-        "condition": "含有平方根式差",
+        "applicability": "含有平方根式差",
         "whyChoose": "消去最高次项",
         "description": "乘除共轭因式"
       }
@@ -344,14 +344,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "单调有界准则三步法",
         "priority": 1,
-        "condition": "递推数列求解",
+        "applicability": "递推数列求解",
         "whyChoose": "解答题标准模板",
         "description": "1.证有界; 2.证单调; 3.取极限"
       },
       {
         "name": "夹逼准则",
         "priority": 2,
-        "condition": "n 项和或阶梯分段函数",
+        "applicability": "n 项和或阶梯分段函数",
         "whyChoose": "两头缩放逼向同一常数",
         "description": "若 yn <= xn <= zn 且 lim yn = lim zn = a 则 lim xn = a"
       }
@@ -446,14 +446,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "导数定义极限法",
         "priority": 1,
-        "condition": "分段点与不可导可疑点",
+        "applicability": "分段点与不可导可疑点",
         "whyChoose": "唯一标准判据",
         "description": "算左右导数 lim [f(x)-f(x0)]/(x-x0)"
       },
       {
         "name": "绝对值剥离定理",
         "priority": 2,
-        "condition": "f(x) = |x-a|g(x)",
+        "applicability": "f(x) = |x-a|g(x)",
         "whyChoose": "秒杀客观题",
         "description": "可导 <=> g(a) = 0"
       }
@@ -535,14 +535,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "莱布尼茨公式法",
         "priority": 1,
-        "condition": "多项式乘初等函数",
+        "applicability": "多项式乘初等函数",
         "whyChoose": "求导有限项截断",
         "description": "(uv)^{(n)} = \\sum C_n^k u^{(n-k)} v^{(k)}"
       },
       {
         "name": "泰勒展开反求导数值",
         "priority": 2,
-        "condition": "求 f^{(n)}(0)",
+        "applicability": "求 f^{(n)}(0)",
         "whyChoose": "比对 x^n 系数免去求导",
         "description": "f^{(n)}(0) = n! * [x^n 的系数]"
       }
@@ -631,14 +631,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "拆项提因式法",
         "priority": 1,
-        "condition": "形如 ∫_0^x (x - t)f(t) dt",
+        "applicability": "形如 ∫_0^x (x - t)f(t) dt",
         "whyChoose": "拆开后利用乘积求导法则，最清晰",
         "description": "x ∫ f dt - ∫ t f dt"
       },
       {
         "name": "换元脱钩法",
         "priority": 2,
-        "condition": "形如 ∫_0^x f(x - t) dt",
+        "applicability": "形如 ∫_0^x f(x - t) dt",
         "whyChoose": "彻底将 x 转移至上下限",
         "description": "令 u = x - t"
       }
@@ -726,7 +726,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "待定系数法",
         "priority": 1,
-        "condition": "标准二阶常系数非齐次方程",
+        "applicability": "标准二阶常系数非齐次方程",
         "whyChoose": "考研必考大题套路",
         "description": "y* = x^k Q_m(x) e^{λx}"
       }
@@ -816,14 +816,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "折线积分法",
         "priority": 1,
-        "condition": "路径无关且无奇点",
+        "applicability": "路径无关且无奇点",
         "whyChoose": "平行坐标轴的一段导数为0，算值极简",
         "description": "(x0,y0) -> (x1,y0) -> (x1,y1)"
       },
       {
         "name": "凑微分求原函数法",
         "priority": 2,
-        "condition": "明显全微分式",
+        "applicability": "明显全微分式",
         "whyChoose": "直接等于 u(终点)-u(起点)",
         "description": "Pdx+Qdy = du"
       }
@@ -935,14 +935,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "泰勒展开定阶法",
         "priority": 1,
-        "condition": "复合初等函数加减差式",
+        "applicability": "复合初等函数加减差式",
         "whyChoose": "直接读出最低次非零项指数即为阶数",
         "description": "展开到第一个系数不为零的 $x^k$ 项"
       },
       {
         "name": "变限积分幂次法则",
         "priority": 2,
-        "condition": "含有变限积分 $\\int_0^{\\phi(x)} f(t)dt$",
+        "applicability": "含有变限积分 $\\int_0^{\\phi(x)} f(t)dt$",
         "whyChoose": "无需洛必达，直接阶数叠加",
         "description": "若 $f(t) \\sim c t^m, \\phi(x) \\sim a x^n$，则积分阶数为 $n(m+1)$"
       }
@@ -1032,7 +1032,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "左右极限判定分类法",
         "priority": 1,
-        "condition": "所有间断点分类题",
+        "applicability": "所有间断点分类题",
         "whyChoose": "严格依据间断点数学定义判别",
         "description": "算 $f(x_0^+)$ 与 $f(x_0^-)$，双存在->第一类，至少一个不存在->第二类"
       }
@@ -1124,14 +1124,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "积分因子微分方程构造法",
         "priority": 1,
-        "condition": "单中值线性组合证明",
+        "applicability": "单中值线性组合证明",
         "whyChoose": "机械化逆推，百分之百构建出罗尔辅助函数",
         "description": "解方程 $y' + P(x)y = 0 \\implies F(x) = y e^{\\int P(x)dx}$"
       },
       {
         "name": "双中值拉格朗日分段法",
         "priority": 2,
-        "condition": "结论含 $\\xi, \\eta$ 两个不同中值",
+        "applicability": "结论含 $\\xi, \\eta$ 两个不同中值",
         "whyChoose": "避开复杂联立，分区间独立中值化",
         "description": "在 $[a, c]$ 和 $[c, b]$ 上分别应用拉格朗日中值定理"
       }
@@ -1229,14 +1229,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "中点两向泰勒展开法",
         "priority": 1,
-        "condition": "已知二阶导数有界证明函数差不等式",
+        "applicability": "已知二阶导数有界证明函数差不等式",
         "whyChoose": "对称展开直接消去奇数阶导数项",
         "description": "在 $x_0 = \\frac{a+b}{2}$ 处向两端点 $a$ 和 $b$ 展开相减"
       },
       {
         "name": "端点泰勒展开法",
         "priority": 2,
-        "condition": "已知 $f'(a)=0$ 或某端点导数为0",
+        "applicability": "已知 $f'(a)=0$ 或某端点导数为0",
         "whyChoose": "利用一阶导为0直接连接函数差与二阶导",
         "description": "在 $a$ 处展开：$f(b) = f(a) + f'(a)(b-a) + \\frac{f''(\\xi)}{2}(b-a)^2$"
       }
@@ -1329,14 +1329,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "单调性与极值点正负判根法",
         "priority": 1,
-        "condition": "求方程根的个数",
+        "applicability": "求方程根的个数",
         "whyChoose": "确定函数在各个单调区间的形态",
         "description": "极值异号且单调必有唯一零点"
       },
       {
         "name": "渐近线三步标准算法",
         "priority": 2,
-        "condition": "求曲线渐近线条数",
+        "applicability": "求曲线渐近线条数",
         "whyChoose": "铅直、水平、斜渐近线全覆盖",
         "description": "找无定义点算极限->求 $a = \\lim f(x)/x$ 与 $b = \\lim (f(x)-ax)$"
       }
@@ -1434,14 +1434,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "区间再现相加除以二法",
         "priority": 1,
-        "condition": "被积函数含反常对称因子（如 $1/(1+a^x)$）",
+        "applicability": "被积函数含反常对称因子（如 $1/(1+a^x)$）",
         "whyChoose": "考研定积分降维秒杀神技",
         "description": "设 $I = \\int_a^b f(x)dx$，换元 $x = a+b-t$，两式相加 $2I = \\int_a^b [f(x)+f(a+b-x)]dx$"
       },
       {
         "name": "华里士点火公式 (Wallis)",
         "priority": 2,
-        "condition": "$\\int_0^{\\pi/2} \\sin^n x dx$ 或 $\\cos^n x$",
+        "applicability": "$\\int_0^{\\pi/2} \\sin^n x dx$ 或 $\\cos^n x$",
         "whyChoose": "无需分部积分，直接按奇偶写出双阶乘",
         "description": "$I_n = \\frac{n-1}{n} \\frac{n-3}{n-2} \\dots$（偶数末尾乘 $\\pi/2$，奇数乘 1）"
       }
@@ -1536,14 +1536,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "p 积分比较审敛法",
         "priority": 1,
-        "condition": "代数分式型反常积分",
+        "applicability": "代数分式型反常积分",
         "whyChoose": "直接比较阶数，免去积分",
         "description": "无穷区间 $\\int_1^{+\\infty} \\frac{1}{x^p}dx$ 在 $p>1$ 收敛；瑕积分 $\\int_0^1 \\frac{1}{x^p}dx$ 在 $p<1$ 收敛"
       },
       {
         "name": "狄利克雷判别法",
         "priority": 2,
-        "condition": "振荡型反常积分（如 $\\int_1^{+\\infty} \\frac{\\sin x}{x^p}dx$）",
+        "applicability": "振荡型反常积分（如 $\\int_1^{+\\infty} \\frac{\\sin x}{x^p}dx$）",
         "whyChoose": "判定条件收敛与绝对收敛",
         "description": "若 $\\int_a^A f(x)dx$ 有界且 $g(x)$ 单调趋于 0，则 $\\int_a^{+\\infty} f(x)g(x)dx$ 收敛"
       }
@@ -1636,21 +1636,21 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "圆盘切片法（绕自身轴）",
         "priority": 1,
-        "condition": "绕 $x$ 轴旋转求体积",
+        "applicability": "绕 $x$ 轴旋转求体积",
         "whyChoose": "横向垂直切片，底面为圆盘",
         "description": "$V_x = \\pi \\int_a^b y^2(x)dx$"
       },
       {
         "name": "圆柱壳法（绕垂直轴）",
         "priority": 2,
-        "condition": "绕 $y$ 轴旋转求体积",
+        "applicability": "绕 $y$ 轴旋转求体积",
         "whyChoose": "避免反解 $x=g(y)$，直接用 $x$ 积分",
         "description": "$V_y = 2\\pi \\int_a^b x y(x)dx$"
       },
       {
         "name": "极坐标扇形微元法",
         "priority": 3,
-        "condition": "极坐标曲线 $r = r(\\theta)$",
+        "applicability": "极坐标曲线 $r = r(\\theta)$",
         "whyChoose": "扇形面积微元",
         "description": "$S = \\frac{1}{2}\\int_{\\alpha}^\\beta r^2(\\theta)d\\theta$"
       }
@@ -1741,14 +1741,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "一阶线性通解公式法",
         "priority": 1,
-        "condition": "$y' + P(x)y = Q(x)$",
+        "applicability": "$y' + P(x)y = Q(x)$",
         "whyChoose": "直接公式代入，积分两步到位",
         "description": "$y = e^{-\\int P(x)dx} \\left[ \\int Q(x) e^{\\int P(x)dx} dx + C \\right]$"
       },
       {
         "name": "x 关于 y 互换视角法",
         "priority": 2,
-        "condition": "方程关于 $y$ 非线性但关于 $x$ 和 $x'$ 为线性",
+        "applicability": "方程关于 $y$ 非线性但关于 $x$ 和 $x'$ 为线性",
         "whyChoose": "转为 $\\frac{dx}{dy} + P(y)x = Q(y)$ 化繁为简",
         "description": "把 $y'$ 写作 $1 / \\frac{dx}{dy}$ 移项"
       }
@@ -1842,14 +1842,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "缺 y 令 p(x) 降阶法",
         "priority": 1,
-        "condition": "方程中没有出现 $y$",
+        "applicability": "方程中没有出现 $y$",
         "whyChoose": "直接对自变量 $x$ 积分",
         "description": "令 $y'=p, y''=p'$，解出 $p(x)$ 后再对 $x$ 积一次得 $y$"
       },
       {
         "name": "缺 x 令 p(y) 链式降阶法",
         "priority": 2,
-        "condition": "方程中没有出现 $x$",
+        "applicability": "方程中没有出现 $x$",
         "whyChoose": "链式法则消去自变量 $x$",
         "description": "令 $y'=p, y''=p \\frac{dp}{dy}$，解出 $p(y)$ 后再分离变量"
       }
@@ -1946,7 +1946,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "自变量对数换元法 (x=e^t)",
         "priority": 1,
-        "condition": "标准欧拉方程",
+        "applicability": "标准欧拉方程",
         "whyChoose": "数一考纲标准规定解法",
         "description": "令 $t = \\ln x$，则 $x y' = \\frac{dy}{dt}, x^2 y'' = \\frac{d^2 y}{dt^2} - \\frac{dy}{dt}$"
       }
@@ -2042,7 +2042,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "可微性定义极限检验法",
         "priority": 1,
-        "condition": "在分段点或特殊点判定可微性",
+        "applicability": "在分段点或特殊点判定可微性",
         "whyChoose": "不可用充分条件判定时唯一的充要裁决法",
         "description": "算偏导数后代入 $\\frac{\\Delta z - A\\Delta x - B\\Delta y}{\\rho} \\to 0$ 极限式"
       }
@@ -2136,14 +2136,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "树状结构链式法则",
         "priority": 1,
-        "condition": "复合偏导求解",
+        "applicability": "复合偏导求解",
         "whyChoose": "条理清晰，杜绝遗漏交叉分支",
         "description": "$\\frac{\\partial z}{\\partial x} = f_u' \\frac{\\partial u}{\\partial x} + f_v' \\frac{\\partial v}{\\partial x}$"
       },
       {
         "name": "全微分形式不变性法",
         "priority": 2,
-        "condition": "求全微分或隐函数偏导",
+        "applicability": "求全微分或隐函数偏导",
         "whyChoose": "两边直接做微分 $d$，避免分别求偏导",
         "description": "$dz = f_u' du + f_v' dv$"
       }
@@ -2237,14 +2237,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "隐函数偏导公式法",
         "priority": 1,
-        "condition": "单一隐函数方程 $F(x, y, z)=0$",
+        "applicability": "单一隐函数方程 $F(x, y, z)=0$",
         "whyChoose": "直接偏导比值加负号",
         "description": "$\\frac{\\partial z}{\\partial x} = -\\frac{F_x}{F_z}$"
       },
       {
         "name": "方程组全微分消元法",
         "priority": 2,
-        "condition": "方程组确定多元隐函数",
+        "applicability": "方程组确定多元隐函数",
         "whyChoose": "把复杂的雅可比行列式转化为代数消元",
         "description": "两边求微分 $d$，解关于 $du, dv$ 的线性方程组"
       }
@@ -2339,14 +2339,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "拉格朗日乘数法",
         "priority": 1,
-        "condition": "带等式约束的极值最值问题",
+        "applicability": "带等式约束的极值最值问题",
         "whyChoose": "标准解法，将几何约束转化为无约束梯度平行",
         "description": "$\\nabla f + \\lambda \\nabla g = 0$ 联立方程组求解"
       },
       {
         "name": "无条件极值二阶充分条件",
         "priority": 2,
-        "condition": "开区域内部求极值",
+        "applicability": "开区域内部求极值",
         "whyChoose": "判别式判定极值类型",
         "description": "$A = f_{xx}, B = f_{xy}, C = f_{yy}$；若 $AC-B^2>0$ 且 $A<0$ 极大，A>0 极小"
       }
@@ -2444,14 +2444,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "极坐标化简积分法",
         "priority": 1,
-        "condition": "圆形区域或被积函数含 $x^2+y^2$",
+        "applicability": "圆形区域或被积函数含 $x^2+y^2$",
         "whyChoose": "角度与半径完全分离为两个一重积分",
         "description": "$\\iint f(x, y)dxdy = \\int_\\alpha^\\beta d\\theta \\int_{r_1(\\theta)}^{r_2(\\theta)} f(r\\cos\\theta, r\\sin\\theta) r dr$"
       },
       {
         "name": "直角坐标后积先积切换",
         "priority": 2,
-        "condition": "多项式或容易找原函数的直角区域",
+        "applicability": "多项式或容易找原函数的直角区域",
         "whyChoose": "根据穿线方便选择 X 型或 Y 型",
         "description": "X型 $\\int dx \\int dy$；Y型 $\\int dy \\int dx$"
       }
@@ -2545,14 +2545,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "交换积分次序画图法",
         "priority": 1,
-        "condition": "原次序不可积或题目要求换序",
+        "applicability": "原次序不可积或题目要求换序",
         "whyChoose": "不可积函数的唯一突破口",
         "description": "画出 $D$，由 X 型改为 Y 型或由 Y 型改为 X 型"
       },
       {
         "name": "轮换对称性对调法 (y=x)",
         "priority": 2,
-        "condition": "区域关于 $y=x$ 对称",
+        "applicability": "区域关于 $y=x$ 对称",
         "whyChoose": "将非对称项化为常数",
         "description": "$\\iint_D f(x, y)d\\sigma = \\iint_D f(y, x)d\\sigma = \\frac{1}{2}\\iint_D [f(x, y)+f(y, x)]d\\sigma$"
       }
@@ -2651,21 +2651,21 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "柱面坐标法",
         "priority": 1,
-        "condition": "区域投影为圆，且高为柱状或抛物面",
+        "applicability": "区域投影为圆，且高为柱状或抛物面",
         "whyChoose": "直接化极坐标，保留高 $z$",
         "description": "$x = r\\cos\\theta, y = r\\sin\\theta, z = z, dV = r dr d\\theta dz$"
       },
       {
         "name": "球面坐标法",
         "priority": 2,
-        "condition": "球体或含 $x^2+y^2+z^2$",
+        "applicability": "球体或含 $x^2+y^2+z^2$",
         "whyChoose": "径向距离与角度彻底分离",
         "description": "$x = r\\sin\\phi\\cos\\theta, y = r\\sin\\phi\\sin\\theta, z = r\\cos\\phi, dV = r^2\\sin\\phi dr d\\phi d\\theta$"
       },
       {
         "name": "先一后二投影法",
         "priority": 3,
-        "condition": "上下底面明确的柱状直角区域",
+        "applicability": "上下底面明确的柱状直角区域",
         "whyChoose": "先对 $z$ 积分转化为二重积分",
         "description": "$\\iint_{D_{xy}} dxdy \\int_{z_1(x, y)}^{z_2(x, y)} f(x, y, z) dz$"
       }
@@ -2761,21 +2761,21 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "格林公式标准闭合化",
         "priority": 1,
-        "condition": "无奇点的闭合正向曲线",
+        "applicability": "无奇点的闭合正向曲线",
         "whyChoose": "把一维线积分转化为二维面积分",
         "description": "$\\oint_L P dx + Q dy = \\iint_D \\left( \\frac{\\partial Q}{\\partial x} - \\frac{\\partial P}{\\partial y} \\right) dxdy$"
       },
       {
         "name": "开曲线补线法",
         "priority": 2,
-        "condition": "非闭合曲线但两端点落在坐标轴上",
+        "applicability": "非闭合曲线但两端点落在坐标轴上",
         "whyChoose": "补直线段通常导数为0极易积分",
         "description": "$\\int_L = \\oint_{L + L_\\text{补}} - \\int_{L_\\text{补}}$"
       },
       {
         "name": "奇点挖洞法",
         "priority": 3,
-        "condition": "区域内含有分母为0的孤立奇点（如原点）",
+        "applicability": "区域内含有分母为0的孤立奇点（如原点）",
         "whyChoose": "隔离不可导奇点，外层变为路径无关",
         "description": "围一顺时针小圆 $L_\\varepsilon$，$\\oint_L = \\oint_{L_\\varepsilon}$"
       }
@@ -2870,14 +2870,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "高斯公式化三重积分法",
         "priority": 1,
-        "condition": "封闭曲面且偏导连续",
+        "applicability": "封闭曲面且偏导连续",
         "whyChoose": "降维打击，直接化为简单多重积分或体积",
         "description": "$\\oiint_\\Sigma P dydz + Q dzdx + R dxdy = \\iiint_\\Omega (P_x + Q_y + R_z) dV$"
       },
       {
         "name": "补面法 (平面补底)",
         "priority": 2,
-        "condition": "开曲面但底面为坐标平面",
+        "applicability": "开曲面但底面为坐标平面",
         "whyChoose": "补底面通常法向量垂直坐标轴极好积分",
         "description": "$\\iint_\\Sigma = \\oiint_{\\Sigma + \\Sigma_1} - \\iint_{\\Sigma_1}$"
       }
@@ -2974,7 +2974,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "斯托克斯公式平面投影法",
         "priority": 1,
-        "condition": "空间闭合曲线且容易张成平面",
+        "applicability": "空间闭合曲线且容易张成平面",
         "whyChoose": "把空间曲线积分化为二重积分",
         "description": "$\\oint_\\Gamma \\mathbf{F} \\cdot d\\mathbf{r} = \\iint_\\Sigma (\\nabla \\times \\mathbf{F}) \\cdot \\mathbf{n} dS$"
       }
@@ -3072,21 +3072,21 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "达朗贝尔比值法 / 柯西根值法",
         "priority": 1,
-        "condition": "通项含 $a^n, n!, n^n$",
+        "applicability": "通项含 $a^n, n!, n^n$",
         "whyChoose": "高阶乘与幂次相消极速出比值",
         "description": "$\\lim_{n\\to\\infty} \\frac{u_{n+1}}{u_n} = \\rho$（$\\rho < 1$ 收敛，$\\rho > 1$ 发散）"
       },
       {
         "name": "比较审敛法的极限形式",
         "priority": 2,
-        "condition": "代数多项式分式",
+        "applicability": "代数多项式分式",
         "whyChoose": "与标准 $p$ 级数对比确定阶数",
         "description": "若 $\\lim \\frac{u_n}{1/n^p} = c > 0$，则同敛散"
       },
       {
         "name": "莱布尼茨审敛法",
         "priority": 3,
-        "condition": "交错级数 $\\sum (-1)^n v_n (v_n > 0)$",
+        "applicability": "交错级数 $\\sum (-1)^n v_n (v_n > 0)$",
         "whyChoose": "充要判定交错级数收敛性",
         "description": "验证两点：① $v_{n+1} \\le v_n$；② $\\lim_{n\\to\\infty} v_n = 0$"
       }
@@ -3182,21 +3182,21 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "达朗贝尔比值极限法",
         "priority": 1,
-        "condition": "标准连续项幂级数",
+        "applicability": "标准连续项幂级数",
         "whyChoose": "直接套公式 $R = 1/\\rho$",
         "description": "$\\rho = \\lim |a_{n+1}/a_n| \\implies R = 1/\\rho$"
       },
       {
         "name": "达朗贝尔比值不等式法（通法）",
         "priority": 2,
-        "condition": "缺项或复杂复合幂级数",
+        "applicability": "缺项或复杂复合幂级数",
         "whyChoose": "免去变元代换，直接解 $x$ 的不等式",
         "description": "令 $\\lim |\\frac{u_{n+1}(x)}{u_n(x)}| < 1$ 直接解出开区间"
       },
       {
         "name": "阿贝尔定理推断法",
         "priority": 3,
-        "condition": "抽象幂级数给定某点敛散性",
+        "applicability": "抽象幂级数给定某点敛散性",
         "whyChoose": "考研客观题秒杀利器",
         "description": "若在 $x_0$ 收敛，则 $|x| < |x_0|$ 绝对收敛；若在 $x_1$ 发散，则 $|x| > |x_1|$ 必发散"
       }
@@ -3296,21 +3296,21 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "先求导后积分法（脱分母）",
         "priority": 1,
-        "condition": "通项分母含有 $n$ 或 $n+1$",
+        "applicability": "通项分母含有 $n$ 或 $n+1$",
         "whyChoose": "求导消去分母化为等比数列求和",
         "description": "$S(x) = \\int_0^x S'(t)dt$（注意初值 $S(0)$）"
       },
       {
         "name": "先积分后求导法（脱分子乘积）",
         "priority": 2,
-        "condition": "通项分子含有乘积 $n$ 或 $2n$",
+        "applicability": "通项分子含有乘积 $n$ 或 $2n$",
         "whyChoose": "积分吸收 $n$ 因子",
         "description": "设辅助和函数积分后求导"
       },
       {
         "name": "微分方程法",
         "priority": 3,
-        "condition": "系数满足二阶递推关系",
+        "applicability": "系数满足二阶递推关系",
         "whyChoose": "利用 $S'(x), S''(x)$ 建立常系数微分方程",
         "description": "建立 $S'' + a S' + b S = f(x)$ 解出和函数"
       }
@@ -3407,14 +3407,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "狄利克雷中值代入法",
         "priority": 1,
-        "condition": "求傅里叶级数在某特定点的和",
+        "applicability": "求傅里叶级数在某特定点的和",
         "whyChoose": "无需算傅里叶系数积分，直接算左右极限",
         "description": "$S(x_0) = \\frac{f(x_0^-) + f(x_0^+)}{2}$"
       },
       {
         "name": "奇偶对称系数公式法",
         "priority": 2,
-        "condition": "展开为正弦级数或余弦级数",
+        "applicability": "展开为正弦级数或余弦级数",
         "whyChoose": "积分区间缩为一半 $[0, \\pi]$ 并乘 2",
         "description": "偶延拓 $a_n = \\frac{2}{\\pi}\\int_0^\\pi f(x)\\cos nx dx$；奇延拓 $b_n = \\frac{2}{\\pi}\\int_0^\\pi f(x)\\sin nx dx$"
       }
@@ -3508,14 +3508,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "行列式叉乘法",
         "priority": 1,
-        "condition": "求垂直公向量或面积",
+        "applicability": "求垂直公向量或面积",
         "whyChoose": "直接构造垂直方向向量",
         "description": "$\\mathbf{a}\\times\\mathbf{b}$ 模长为平行四边形面积，方向右手法则"
       },
       {
         "name": "点积内积夹角法",
         "priority": 2,
-        "condition": "求角度或投影",
+        "applicability": "求角度或投影",
         "whyChoose": "无量纲代数计算",
         "description": "$\\cos\\theta = \\frac{\\mathbf{a}\\cdot\\mathbf{b}}{|\\mathbf{a}||\\mathbf{b}|}$"
       }
@@ -3606,14 +3606,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "参数式代入求交点法",
         "priority": 1,
-        "condition": "求直线与平面交点",
+        "applicability": "求直线与平面交点",
         "whyChoose": "化多元方程为单变量一元一次方程",
         "description": "设参数 $t$，代入平面方程解出 $t_0$"
       },
       {
         "name": "平面束方程法",
         "priority": 2,
-        "condition": "求过某已知直线的所有平面",
+        "applicability": "求过某已知直线的所有平面",
         "whyChoose": "免去设一般方程，单参数确定",
         "description": "$(A_1 x + B_1 y + C_1 z + D_1) + \\lambda (A_2 x + B_2 y + C_2 z + D_2) = 0$"
       }
@@ -3706,14 +3706,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "旋转曲面代换法则",
         "priority": 1,
-        "condition": "求旋转曲面方程",
+        "applicability": "求旋转曲面方程",
         "whyChoose": "机械化母线旋转代换",
         "description": "绕 $z$ 轴旋转：将方程中的 $y$（或 $x$）替换为 $\\pm\\sqrt{x^2+y^2}$"
       },
       {
         "name": "消元联立投影法",
         "priority": 2,
-        "condition": "求空间曲线在坐标面的投影",
+        "applicability": "求空间曲线在坐标面的投影",
         "whyChoose": "空间曲线投影必为柱面与平面的交线",
         "description": "消去 $z$ 得到投影柱面，写方程组 $\\begin{cases} F(x, y) = 0 \\\\ z = 0 \\end{cases}$"
       }
@@ -3806,14 +3806,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "求导消积分法",
         "priority": 1,
-        "condition": "含变限积分的等式",
+        "applicability": "含变限积分的等式",
         "whyChoose": "将积分方程降维化为微分方程",
         "description": "先拆分变量提公因式，再两边求导"
       },
       {
         "name": "特征根法解导出微分方程",
         "priority": 2,
-        "condition": "求导后得一阶或二阶线性方程",
+        "applicability": "求导后得一阶或二阶线性方程",
         "whyChoose": "直接套常微分方程公式求解",
         "description": "代入 $x=0$ 的初始值确定特解"
       }
@@ -3916,14 +3916,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "泰勒极值点展开放缩法",
         "priority": 1,
-        "condition": "高阶导数存在的不等式证明",
+        "applicability": "高阶导数存在的不等式证明",
         "whyChoose": "直接消去一阶导项，建立二阶导数与函数值联系",
         "description": "在驻点处展开 $f(x) = f(x_0) + \\frac{f''(\\xi)}{2}(x-x_0)^2$"
       },
       {
         "name": "柯西-施瓦茨积分不等式法",
         "priority": 2,
-        "condition": "涉及函数平方与导数平方的积分不等式",
+        "applicability": "涉及函数平方与导数平方的积分不等式",
         "whyChoose": "一次性建立两积分乘积界限",
         "description": "$[\\int f(x)g(x)dx]^2 \\le \\int f^2(x)dx \\int g^2(x)dx$"
       }
@@ -4025,21 +4025,21 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "消爪法（加边法逆用）",
         "priority": 1,
-        "condition": "爪型行列式",
+        "applicability": "爪型行列式",
         "whyChoose": "一次性消去第一行所有非零项化为上三角",
         "description": "第 j 列乘以 -a_{1j}/a_{jj} 加到第 1 列"
       },
       {
         "name": "递推数列法",
         "priority": 2,
-        "condition": "三对角线行列式",
+        "applicability": "三对角线行列式",
         "whyChoose": "化为特征方程递推通项公式",
         "description": "D_n = p D_{n-1} + q D_{n-2}"
       },
       {
         "name": "行和相等全加第一列",
         "priority": 3,
-        "condition": "每行元素和均为固定常数 c",
+        "applicability": "每行元素和均为固定常数 c",
         "whyChoose": "直接提出公因子 c 制造全 1 列",
         "description": "各列加到第 1 列，提公因式后第一列消零化上三角"
       }
@@ -4131,14 +4131,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "换行/换列造新行列式法",
         "priority": 1,
-        "condition": "求代数余子式线性组合 $\\sum c_i A_{ik}$",
+        "applicability": "求代数余子式线性组合 $\\sum c_i A_{ik}$",
         "whyChoose": "将 n 个复杂余子式转化为 1 个行列式计算",
         "description": "把原矩阵第 k 列换成常数列 $(c_1, \\dots, c_n)^T$，按该列展开即得目标式"
       },
       {
         "name": "伴随矩阵乘向量法",
         "priority": 2,
-        "condition": "求各行（列）所有代数余子式之和",
+        "applicability": "求各行（列）所有代数余子式之和",
         "whyChoose": "利用 $A^* (1, 1, \\dots, 1)^T = |A| A^{-1} (1, \\dots, 1)^T$",
         "description": "利用伴随矩阵的列向量恰好是原阵代数余子式的性质"
       }
@@ -4231,14 +4231,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "恒等式变形法",
         "priority": 1,
-        "condition": "含 $A^*$ 的代数方程",
+        "applicability": "含 $A^*$ 的代数方程",
         "whyChoose": "两边左乘或右乘 $A$ 将 $A^*$ 转化为常数 $|A|$",
         "description": "利用 $A A^* = |A|E$ 消去伴随矩阵"
       },
       {
         "name": "秩的三级跳判别",
         "priority": 2,
-        "condition": "判定 $r(A^*)$",
+        "applicability": "判定 $r(A^*)$",
         "whyChoose": "考研客观题高频结论秒杀",
         "description": "r(A)=n => r(A*)=n; r(A)=n-1 => r(A*)=1; r(A)<n-1 => r(A*)=0"
       }
@@ -4331,21 +4331,21 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "秩一外积归纳法",
         "priority": 1,
-        "condition": "矩阵各行（列）成比例，$r(A)=1$",
+        "applicability": "矩阵各行（列）成比例，$r(A)=1$",
         "whyChoose": "计算量极小，$A^n = (\\beta^T\\alpha)^{n-1} A = [\\mathrm{tr}(A)]^{n-1} A$",
         "description": "写成 $A = \\alpha\\beta^T$，利用标量结合律 $(\\alpha\\beta^T)(\\alpha\\beta^T) = \\alpha(\\beta^T\\alpha)\\beta^T$"
       },
       {
         "name": "相似对角化法",
         "priority": 2,
-        "condition": "矩阵可相似对角化",
+        "applicability": "矩阵可相似对角化",
         "whyChoose": "对角阵高次幂对角元直接取 $n$ 次方",
         "description": "$A^n = P \\mathrm{diag}(\\lambda_1^n, \\dots, \\lambda_n^n) P^{-1}$"
       },
       {
         "name": "二项式展开拆分法",
         "priority": 3,
-        "condition": "矩阵可拆为 $aE + B$ 且 $B^k = O$ 幂零",
+        "applicability": "矩阵可拆为 $aE + B$ 且 $B^k = O$ 幂零",
         "whyChoose": "因为 $E$ 与任何矩阵可交换，满足二项式定理",
         "description": "$A^n = a^n E + n a^{n-1} B + \\dots$（有限项终止）"
       }
@@ -4438,14 +4438,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "增广矩阵初等行变换法",
         "priority": 1,
-        "condition": "求可逆矩阵的逆 $A^{-1}$ 或解矩阵方程 $AX=B$",
+        "applicability": "求可逆矩阵的逆 $A^{-1}$ 或解矩阵方程 $AX=B$",
         "whyChoose": "一次性算出全部列向量，避免多次求解",
         "description": "$(A | B) \\xrightarrow{\\text{行变换}} (E | A^{-1}B)$"
       },
       {
         "name": "初等矩阵因子分解",
         "priority": 2,
-        "condition": "证明矩阵等价或分解性质",
+        "applicability": "证明矩阵等价或分解性质",
         "whyChoose": "任何可逆阵都是有限个初等矩阵的乘积",
         "description": "$P_k \\dots P_1 A = E \\implies A = P_1^{-1} \\dots P_k^{-1}$"
       }
@@ -4535,14 +4535,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "定义法（设零组合推出全零）",
         "priority": 1,
-        "condition": "抽象向量组证明题",
+        "applicability": "抽象向量组证明题",
         "whyChoose": "无视维数限制的最严格通用证明方法",
         "description": "设 $\\sum k_i \\alpha_i = 0$，结合已知条件两边乘矩阵或内积推出 $k_i=0$"
       },
       {
         "name": "矩阵秩判别法",
         "priority": 2,
-        "condition": "具体数字向量或已知矩阵秩",
+        "applicability": "具体数字向量或已知矩阵秩",
         "whyChoose": "直接转化为求阶梯矩阵非零行数",
         "description": "$r(\\alpha_1, \\dots, \\alpha_s) = s \\iff$ 线性无关"
       }
@@ -4632,14 +4632,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "行最简形主元法",
         "priority": 1,
-        "condition": "求具体向量组的极大无关组",
+        "applicability": "求具体向量组的极大无关组",
         "whyChoose": "初等行变换不改变各列之间的线性组合关系",
         "description": "行最简形各非零行首非零元所在列即为极大无关组"
       },
       {
         "name": "三秩相等判定法",
         "priority": 2,
-        "condition": "判定向量组 I 与 II 是否等价",
+        "applicability": "判定向量组 I 与 II 是否等价",
         "whyChoose": "等价充要条件：能相互表出 $\\iff r(I) = r(II) = r(I, II)$",
         "description": "三秩相等是向量组等价的充要条件"
       }
@@ -4731,14 +4731,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "施密特投影正交化法",
         "priority": 1,
-        "condition": "任意线性无关向量组正交化",
+        "applicability": "任意线性无关向量组正交化",
         "whyChoose": "线性代数标准正交化统一算法",
         "description": "$\\beta_k = \\alpha_k - \\sum_{j=1}^{k-1} \\frac{(\\alpha_k, \\beta_j)}{(\\beta_j, \\beta_j)}\\beta_j$"
       },
       {
         "name": "待定系数内积置零法",
         "priority": 2,
-        "condition": "求与已有正交向量垂直的第三个向量",
+        "applicability": "求与已有正交向量垂直的第三个向量",
         "whyChoose": "利用解齐次方程或向量积叉乘秒求",
         "description": "直接解方程组 $(\\beta_1, x) = 0, (\\beta_2, x) = 0$"
       }
@@ -4832,14 +4832,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "增广矩阵行阶梯消元法",
         "priority": 1,
-        "condition": "具体方程组或参数方程求解",
+        "applicability": "具体方程组或参数方程求解",
         "whyChoose": "一次性解决解的判定与基础解系求解",
         "description": "化为行最简形，主元变量用自由变量表示"
       },
       {
         "name": "克拉默法则 (Cramer)",
         "priority": 2,
-        "condition": "$n$ 个方程 $n$ 个未知数且系数行列式 $|A| \\neq 0$",
+        "applicability": "$n$ 个方程 $n$ 个未知数且系数行列式 $|A| \\neq 0$",
         "whyChoose": "直接公式法求唯一解",
         "description": "$x_i = |A_i| / |A|$"
       }
@@ -4931,14 +4931,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "联立大矩阵法",
         "priority": 1,
-        "condition": "求公共解",
+        "applicability": "求公共解",
         "whyChoose": "直接求两方程组解空间的交集",
         "description": "解方程组 $\\begin{pmatrix} A \\\\ B \\end{pmatrix} x = 0$"
       },
       {
         "name": "互相包含验证法",
         "priority": 2,
-        "condition": "判定两方程组同解",
+        "applicability": "判定两方程组同解",
         "whyChoose": "无需完全解出两个方程组",
         "description": "验证 $r(A) = r(B) = r\\begin{pmatrix} A \\\\ B \\end{pmatrix}$"
       }
@@ -5029,14 +5029,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "特征方程行列式求解法",
         "priority": 1,
-        "condition": "具体矩阵求全部特征值",
+        "applicability": "具体矩阵求全部特征值",
         "whyChoose": "微积分代数通法",
         "description": "计算 $|\\lambda E - A| = 0$ 解代数方程根"
       },
       {
         "name": "定义代入反求参数法",
         "priority": 2,
-        "condition": "已知某特征向量 $\\alpha$",
+        "applicability": "已知某特征向量 $\\alpha$",
         "whyChoose": "无需展开行列式，直接比较对应分量",
         "description": "写出 $A\\alpha = \\lambda \\alpha$ 直接解线性方程"
       }
@@ -5130,14 +5130,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "迹与秩判定秒杀法",
         "priority": 1,
-        "condition": "$r(A)=1$",
+        "applicability": "$r(A)=1$",
         "whyChoose": "考研无需任何特征多项式展开，3秒出结论",
         "description": "零特征值重数为 $n-1$，非零特征值为 $\\mathrm{tr}(A)$"
       },
       {
         "name": "可对角化充要判定",
         "priority": 2,
-        "condition": "问秩一矩阵能否对角化",
+        "applicability": "问秩一矩阵能否对角化",
         "whyChoose": "结论极度简明：当且仅当 $\\mathrm{tr}(A) \\neq 0$ 时可对角化",
         "description": "若迹等于 0，则全部特征值为 0，且 $A \\neq O$，绝不可对角化"
       }
@@ -5230,21 +5230,21 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "几何重数等于代数重数检验法",
         "priority": 1,
-        "condition": "矩阵存在重特征值",
+        "applicability": "矩阵存在重特征值",
         "whyChoose": "相似对角化唯一的充要判别标准",
         "description": "检验 $r(\\lambda_0 E - A) = n - k$ 是否成立"
       },
       {
         "name": "特征值互异直接判定",
         "priority": 2,
-        "condition": "无重根（n 个互异单根）",
+        "applicability": "无重根（n 个互异单根）",
         "whyChoose": "充分条件一步到位",
         "description": "不同特征值的特征向量必线性无关，凑齐 n 个"
       },
       {
         "name": "实对称矩阵保底定理",
         "priority": 3,
-        "condition": "$A^T = A$",
+        "applicability": "$A^T = A$",
         "whyChoose": "实对称矩阵必可正交对角化",
         "description": "任何重根的几何重数恒等于代数重数"
       }
@@ -5337,7 +5337,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "正交相似对角化标准套路",
         "priority": 1,
-        "condition": "实对称矩阵对角化",
+        "applicability": "实对称矩阵对角化",
         "whyChoose": "考研大题每年必考的标准固定解答模板",
         "description": "求特征值 -> 求特征向量 -> 重根正交化 -> 全部单位化 -> 构造 Q"
       }
@@ -5431,14 +5431,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "拉格朗日配方法",
         "priority": 1,
-        "condition": "任意二次型（允许使用可逆变换）",
+        "applicability": "任意二次型（允许使用可逆变换）",
         "whyChoose": "纯初等代数配平方，无需算特征值与行列式",
         "description": "含平方项直接配方；若无平方项先做对称变换 $x_1 = y_1+y_2, x_2 = y_1-y_2$ 造平方项"
       },
       {
         "name": "正交变换法",
         "priority": 2,
-        "condition": "题目限定“正交变换”或涉及几何最值",
+        "applicability": "题目限定“正交变换”或涉及几何最值",
         "whyChoose": "保持特征值与几何欧氏距离不变",
         "description": "写出矩阵 $A$，求特征值 $\\Lambda$，构造正交矩阵 $Q$"
       }
@@ -5532,21 +5532,21 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "各阶顺序主子式法 (Hurwitz)",
         "priority": 1,
-        "condition": "具体数字或含单参数的实对称矩阵",
+        "applicability": "具体数字或含单参数的实对称矩阵",
         "whyChoose": "直接算 1 阶、2 阶、3 阶左上角行列式大于0",
         "description": "$\\Delta_1 = a_{11} > 0, \\Delta_2 = \\begin{vmatrix} a_{11} & a_{12} \\\\ a_{21} & a_{22} \\end{vmatrix} > 0, \\dots, |A| > 0$"
       },
       {
         "name": "特征值全正判定法",
         "priority": 2,
-        "condition": "已知矩阵特征值或多项式形式",
+        "applicability": "已知矩阵特征值或多项式形式",
         "whyChoose": "正定等价于全部特征值 $\\lambda_i > 0$",
         "description": "$\\lambda_{\\min} > 0$"
       },
       {
         "name": "分解构造法 ($C^TC$)",
         "priority": 3,
-        "condition": "证明抽象乘积矩阵正定",
+        "applicability": "证明抽象乘积矩阵正定",
         "whyChoose": "若 $C$ 列满秩，则 $C^TC$ 必为对称正定矩阵",
         "description": "$x^T (C^T C) x = (Cx)^T (Cx) = ||Cx||^2 > 0$"
       }
@@ -5642,14 +5642,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "解空间列向量归属法",
         "priority": 1,
-        "condition": "求 $B$ 的列向量或基础解系",
+        "applicability": "求 $B$ 的列向量或基础解系",
         "whyChoose": "把矩阵乘法翻译为齐次方程解",
         "description": "$A(\\beta_1, \\dots, \\beta_m) = 0 \\implies A\\beta_i = 0$"
       },
       {
         "name": "西尔维斯特秩不等式法",
         "priority": 2,
-        "condition": "证明或计算矩阵秩的上下界",
+        "applicability": "证明或计算矩阵秩的上下界",
         "whyChoose": "秩的极值定理",
         "description": "$r(A) + r(B) - n \\le r(AB) = 0 \\implies r(A) + r(B) \\le n$"
       }
@@ -5741,14 +5741,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "四条主线语言互译法",
         "priority": 1,
-        "condition": "跨章节抽象综合证明题",
+        "applicability": "跨章节抽象综合证明题",
         "whyChoose": "把方程组解翻译为零空间，把特征值翻译为对角线",
         "description": "行列式 $\\iff$ 矩阵 $\\iff$ 向量 $\\iff$ 特征系统互译"
       },
       {
         "name": "分块对角化与正交分解法",
         "priority": 2,
-        "condition": "高阶或分块结构矩阵",
+        "applicability": "高阶或分块结构矩阵",
         "whyChoose": "降阶分治",
         "description": "利用分块初等变换消元"
       }
@@ -5846,14 +5846,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "全概率公式（先验综合）",
         "priority": 1,
-        "condition": "已知各原因 $B_i$ 的先验概率及各原因下 $A$ 的概率",
+        "applicability": "已知各原因 $B_i$ 的先验概率及各原因下 $A$ 的概率",
         "whyChoose": "将复杂事件分解到各个互斥子空间中求和",
         "description": "$P(A) = \\sum_{i=1}^n P(B_i)P(A|B_i)$"
       },
       {
         "name": "贝叶斯公式（后验逆概）",
         "priority": 2,
-        "condition": "已知最终结果 $A$ 已经发生，求具体原因 $B_k$",
+        "applicability": "已知最终结果 $A$ 已经发生，求具体原因 $B_k$",
         "whyChoose": "后验逆向归因的标准解法",
         "description": "$P(B_k|A) = \\frac{P(B_k)P(A|B_k)}{\\sum_{i=1}^n P(B_i)P(A|B_i)}$"
       }
@@ -5945,14 +5945,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "乘法公式化简",
         "priority": 1,
-        "condition": "已知独立性",
+        "applicability": "已知独立性",
         "whyChoose": "将交事件概率化为单事件概率乘积",
         "description": "$P(A\\bar{B}) = P(A)P(\\bar{B}) = P(A)(1-P(B))$"
       },
       {
         "name": "二项分布公式",
         "priority": 2,
-        "condition": "每次试验成功率 $p$ 不变且独立",
+        "applicability": "每次试验成功率 $p$ 不变且独立",
         "whyChoose": "精确计算 $k$ 次成功概率",
         "description": "$P_n(k) = C_n^k p^k (1-p)^{n-k}$"
       }
@@ -6041,14 +6041,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "三大充要条件校验",
         "priority": 1,
-        "condition": "检验函数 $F(x)$ 合法性",
+        "applicability": "检验函数 $F(x)$ 合法性",
         "whyChoose": "这是数学上判定一维分布函数的充要准则",
         "description": "单调不减、右连续、极限 0 与 1"
       },
       {
         "name": "跃度计算点概率",
         "priority": 2,
-        "condition": "已知分布函数求某点处的概率",
+        "applicability": "已知分布函数求某点处的概率",
         "whyChoose": "连续点概率为0，间断点概率等于跳跃高度",
         "description": "$P\\{X=x_0\\} = F(x_0) - F(x_0^-)$"
       }
@@ -6138,14 +6138,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "正态标准化变换",
         "priority": 1,
-        "condition": "涉及正态分布的概率计算",
+        "applicability": "涉及正态分布的概率计算",
         "whyChoose": "化为标准正态分布函数 $\\Phi(x)$，利用对称性 $\\Phi(-x) = 1 - \\Phi(x)$",
         "description": "$P(X \\le a) = \\Phi\\left(\\frac{a-\\mu}{\\sigma}\\right)$"
       },
       {
         "name": "指数分布生存函数法",
         "priority": 2,
-        "condition": "涉及指数分布尾部概率计算",
+        "applicability": "涉及指数分布尾部概率计算",
         "whyChoose": "避免积分计算，秒出结果",
         "description": "$P\\{X > t\\} = e^{-\\lambda t}$"
       }
@@ -6234,14 +6234,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "分布函数法（通法）",
         "priority": 1,
-        "condition": "任何连续型随机变量函数，尤其非单调函数",
+        "applicability": "任何连续型随机变量函数，尤其非单调函数",
         "whyChoose": "思路严密，不易漏掉取值区间与绝对值变换",
         "description": "$F_Y(y) = P\\{g(X) \\le y\\} = \\int_{g(x) \\le y} f_X(x)dx$，求导得 $f_Y(y) = F_Y'(y)$"
       },
       {
         "name": "单调可导公式法",
         "priority": 2,
-        "condition": "$y=g(x)$ 严格单调且导数 $g'(x) \\ne 0$",
+        "applicability": "$y=g(x)$ 严格单调且导数 $g'(x) \\ne 0$",
         "whyChoose": "无需积分，直接代入反函数导数公式",
         "description": "$f_Y(y) = f_X(h(y))|h'(y)|$，其中 $x=h(y)$ 为反函数"
       }
@@ -6332,21 +6332,21 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "边缘密度投影积分法",
         "priority": 1,
-        "condition": "已知联合密度求单变量密度",
+        "applicability": "已知联合密度求单变量密度",
         "whyChoose": "对不需要的变量在全空间积分“吸掉”",
         "description": "$f_X(x) = \\int_{-\\infty}^{+\\infty} f(x, y)dy, \\quad f_Y(y) = \\int_{-\\infty}^{+\\infty} f(x, y)dx$"
       },
       {
         "name": "条件密度比值法",
         "priority": 2,
-        "condition": "求条件分布",
+        "applicability": "求条件分布",
         "whyChoose": "类似条件概率除以边缘概率",
         "description": "$f_{X|Y}(x|y) = \\frac{f(x, y)}{f_Y(y)} \\quad (f_Y(y) > 0)$"
       },
       {
         "name": "独立性充要检验",
         "priority": 3,
-        "condition": "判断两随机变量独立性",
+        "applicability": "判断两随机变量独立性",
         "whyChoose": "快速识别或严格证明",
         "description": "检验 $f(x, y) = f_X(x)f_Y(y)$ 是否几乎处处成立"
       }
@@ -6435,21 +6435,21 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "极值分布展开法",
         "priority": 1,
-        "condition": "求最大值或最小值的分布",
+        "applicability": "求最大值或最小值的分布",
         "whyChoose": "最大值等价于“都小于等于”，最小值等价于“都大于”",
         "description": "$F_{\\max}(z) = F_X(z)F_Y(z), \\quad F_{\\min}(z) = 1 - [1-F_X(z)][1-F_Y(z)]$"
       },
       {
         "name": "卷积积分公式法",
         "priority": 2,
-        "condition": "$X, Y$ 独立且求和 $Z=X+Y$",
+        "applicability": "$X, Y$ 独立且求和 $Z=X+Y$",
         "whyChoose": "标准微积分套路",
         "description": "$f_Z(z) = \\int_{-\\infty}^{+\\infty} f_X(x)f_Y(z-x)dx$"
       },
       {
         "name": "二维区域积分法（通法）",
         "priority": 3,
-        "condition": "$X, Y$ 不独立或形式复杂",
+        "applicability": "$X, Y$ 不独立或形式复杂",
         "whyChoose": "画出积分区域 $D_z = \\{(x, y) \\mid g(x, y) \\le z\\}$ 做二重积分",
         "description": "$F_Z(z) = \\iint_{g(x, y) \\le z} f(x, y)dxdy$"
       }
@@ -6538,14 +6538,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "随机变量函数期望公式",
         "priority": 1,
-        "condition": "求单一或联合变量函数的期望",
+        "applicability": "求单一或联合变量函数的期望",
         "whyChoose": "降维跳过分布推导，一步到位",
         "description": "$E[g(X, Y)] = \\iint_{\\mathbb{R}^2} g(x, y)f(x, y)dxdy$"
       },
       {
         "name": "指示变量法（0-1变量分解）",
         "priority": 2,
-        "condition": "复杂计数问题、匹配问题、集齐卡片问题",
+        "applicability": "复杂计数问题、匹配问题、集齐卡片问题",
         "whyChoose": "将总量拆成单项指示变量 $I_i$，利用线性性质",
         "description": "$X = \\sum_{i=1}^n I_i \\implies E(X) = \\sum_{i=1}^n P(A_i)$"
       }
@@ -6634,21 +6634,21 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "方差核心计算公式",
         "priority": 1,
-        "condition": "求单变量方差",
+        "applicability": "求单变量方差",
         "whyChoose": "计算 $E(X^2)$ 通常远比直接算偏离差平方面积简便",
         "description": "$D(X) = E(X^2) - [E(X)]^2$"
       },
       {
         "name": "协方差拆解公式",
         "priority": 2,
-        "condition": "求多变量协方差",
+        "applicability": "求多变量协方差",
         "whyChoose": "满足双线性性质，可逐项展开",
         "description": "$\\mathrm{Cov}(X, Y) = E(XY) - E(X)E(Y)$"
       },
       {
         "name": "标准化相关系数公式",
         "priority": 3,
-        "condition": "度量两变量线性相关程度",
+        "applicability": "度量两变量线性相关程度",
         "whyChoose": "无量纲且界于 $[-1, 1]$ 之间",
         "description": "$\\rho_{XY} = \\frac{\\mathrm{Cov}(X, Y)}{\\sqrt{D(X)}\\sqrt{D(Y)}}$"
       }
@@ -6736,14 +6736,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "切比雪夫不等式估计法",
         "priority": 1,
-        "condition": "方差存在，求概率保守界限",
+        "applicability": "方差存在，求概率保守界限",
         "whyChoose": "无需知道分布形态即可给出严格界",
         "description": "$P(|X-E(X)| \\ge \\varepsilon) \\le \\frac{D(X)}{\\varepsilon^2}$"
       },
       {
         "name": "依概率收敛定义法",
         "priority": 2,
-        "condition": "判断序列是否收敛于常数",
+        "applicability": "判断序列是否收敛于常数",
         "whyChoose": "利用切比雪夫不等式极限为0证明",
         "description": "$\\lim_{n\\to\\infty} P(|Y_n - c| \\ge \\varepsilon) = 0$"
       }
@@ -6832,14 +6832,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "和的正态标准化逼近",
         "priority": 1,
-        "condition": "求总和 $\\sum X_i$ 的概率",
+        "applicability": "求总和 $\\sum X_i$ 的概率",
         "whyChoose": "中心极限定理核心套路",
         "description": "$\\frac{\\sum_{i=1}^n X_i - n\\mu}{\\sqrt{n}\\sigma} \\approx N(0, 1)$"
       },
       {
         "name": "均值的正态标准化逼近",
         "priority": 2,
-        "condition": "求样本均值 $\\bar{X}$ 的概率",
+        "applicability": "求样本均值 $\\bar{X}$ 的概率",
         "whyChoose": "误差方差缩减为原来的 $1/n$",
         "description": "$\\frac{\\bar{X} - \\mu}{\\sigma/\\sqrt{n}} \\approx N(0, 1)$"
       }
@@ -6929,14 +6929,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "三大分布定义构造检验",
         "priority": 1,
-        "condition": "判定已知统计量的分布类型",
+        "applicability": "判定已知统计量的分布类型",
         "whyChoose": "考研数理统计必考题型，标准范式",
         "description": "$\\chi^2(n)=\\sum Z_i^2, \\quad t(n)=\\frac{Z}{\\sqrt{Y/n}}, \\quad F(m,n)=\\frac{U/m}{V/n}$"
       },
       {
         "name": "分位数对称性转化",
         "priority": 2,
-        "condition": "求分位数代数关系",
+        "applicability": "求分位数代数关系",
         "whyChoose": "对称分布快速化简",
         "description": "$t_{1-\\alpha}(n) = -t_\\alpha(n), \\quad F_{1-\\alpha}(m, n) = \\frac{1}{F_\\alpha(n, m)}$"
       }
@@ -7031,14 +7031,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "四大抽样定理套用",
         "priority": 1,
-        "condition": "正态总体样本的数字特征与分布推导",
+        "applicability": "正态总体样本的数字特征与分布推导",
         "whyChoose": "现成定理，无需重新积分证明",
         "description": "严格匹配自由度 $n-1$ 与参数 $\\mu, \\sigma^2$"
       },
       {
         "name": "样本方差与卡方转化",
         "priority": 2,
-        "condition": "计算涉及样本方差的期望方差或概率",
+        "applicability": "计算涉及样本方差的期望方差或概率",
         "whyChoose": "利用 $(n-1)S^2/\\sigma^2 \\sim \\chi^2(n-1)$ 的性质",
         "description": "$E(S^2) = \\sigma^2, \\quad D(S^2) = \\frac{2\\sigma^4}{n-1}$"
       }
@@ -7127,21 +7127,21 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "矩估计标准解法",
         "priority": 1,
-        "condition": "求矩估计",
+        "applicability": "求矩估计",
         "whyChoose": "计算总体矩令其等于样本矩解方程",
         "description": "一阶矩 $\\alpha_1 = E(X) = \\bar{X}$；若有两参数补二阶矩 $\\alpha_2 = E(X^2) = \\frac{1}{n}\\sum X_i^2$"
       },
       {
         "name": "对数似然求导法（内点型）",
         "priority": 2,
-        "condition": "似然函数关于参数可导且极值在开区间内",
+        "applicability": "似然函数关于参数可导且极值在开区间内",
         "whyChoose": "经典微积分极值点求解",
         "description": "$\\frac{d \\ln L(\\theta)}{d\\theta} = 0 \\implies \\hat{\\theta}$"
       },
       {
         "name": "单调性极值法（端点型）",
         "priority": 3,
-        "condition": "参数出现在定义域指示函数中（如均匀分布 $U(0, \\theta)$）",
+        "applicability": "参数出现在定义域指示函数中（如均匀分布 $U(0, \\theta)$）",
         "whyChoose": "似然函数关于参数单调，导数不为零",
         "description": "结合定义域限制，似然函数最大值落在样本极值点 $\\hat{\\theta} = \\max(X_1,\\dots,X_n)$"
       }
@@ -7232,21 +7232,21 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "无偏性期望检验法",
         "priority": 1,
-        "condition": "判定是否为无偏估计",
+        "applicability": "判定是否为无偏估计",
         "whyChoose": "代入期望线性性质展开计算",
         "description": "检验 $E(\\hat{\\theta}) = \\theta$ 是否对任意 $\\theta$ 恒成立"
       },
       {
         "name": "方差比较法（有效性）",
         "priority": 2,
-        "condition": "两估计量均无偏",
+        "applicability": "两估计量均无偏",
         "whyChoose": "方差越小，估计值波动越小、精度越高",
         "description": "若 $D(\\hat{\\theta}_1) < D(\\hat{\\theta}_2)$，则 $\\hat{\\theta}_1$ 比 $\\hat{\\theta}_2$ 更有效"
       },
       {
         "name": "均方误差综合评定法",
         "priority": 3,
-        "condition": "估计量可能存在偏倚",
+        "applicability": "估计量可能存在偏倚",
         "whyChoose": "兼顾偏差与方差的综合度量",
         "description": "$\\mathrm{MSE}(\\hat{\\theta}) = E[(\\hat{\\theta}-\\theta)^2] = D(\\hat{\\theta}) + (E(\\hat{\\theta})-\\theta)^2$"
       }
@@ -7335,14 +7335,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "微积分-概率双向互译法",
         "priority": 1,
-        "condition": "高数积分与概率密度交叉题目",
+        "applicability": "高数积分与概率密度交叉题目",
         "whyChoose": "利用概率密度的归一性秒杀高难度定积分",
         "description": "如利用正态分布密度归一性直接写出高斯积分 $\\int_{-\\infty}^{+\\infty} e^{-a x^2}dx = \\sqrt{\\frac{\\pi}{a}}$"
       },
       {
         "name": "极坐标二重积分法",
         "priority": 2,
-        "condition": "二维圆形区域或含有 $x^2+y^2$ 项",
+        "applicability": "二维圆形区域或含有 $x^2+y^2$ 项",
         "whyChoose": "概率论中求圆盘内概率或二维独立正态组合的标准技巧",
         "description": "$x = r\\cos\\theta, y = r\\sin\\theta, dxdy = rdrd\\theta$"
       }
@@ -7431,14 +7431,14 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
       {
         "name": "多元对数似然偏导组法",
         "priority": 1,
-        "condition": "多参数无约束似然估计",
+        "applicability": "多参数无约束似然估计",
         "whyChoose": "联立偏导方程组解驻点",
         "description": "$\\frac{\\partial \\ln L}{\\partial \\theta_1} = 0, \\dots, \\frac{\\partial \\ln L}{\\partial \\theta_k} = 0$"
       },
       {
         "name": "拉格朗日乘数优化法",
         "priority": 2,
-        "condition": "带有约束条件的多参数似然估计",
+        "applicability": "带有约束条件的多参数似然估计",
         "whyChoose": "将有约束最优化转化为多元无约束驻点求解",
         "description": "$H(\\theta, \\lambda) = \\ln L(\\theta) + \\lambda(g(\\theta)-c)$"
       }
@@ -7504,6 +7504,296 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
     "source": "Maki考研数学大串讲 L62 & 真题分类精解 题62.1",
     "isPending": false
   }
+,
+  "gaoshu-00-algebra-five-actions": {
+  "id": "gaoshu-00-algebra-five-actions",
+  "title": "代数变形五大动作与高中公式补丁 (L01~L02)",
+  "subject": "gaoshu",
+  "subjectName": "高等数学",
+  "chapterId": "gaoshu-ch00",
+  "chapterTitle": "第 0 编 预备：高中补丁与代数动作",
+  "nodeType": "topic",
+  "summary": "Maki 预备篇核心：高等数学计算卡壳 80% 源于代数变形不熟练。必须掌握五大动作（配方、有理化、裂项、放缩、换元）与高中三角/指数不等式补丁。",
+  "triggers": [
+    "式中含二次三项式形如 x^2 + px + q（反常积分、二次型、有理积分）",
+    "含根号差式形如 \\sqrt{A} - \\sqrt{B} 处于分子或分母",
+    "数列或级数通项形如 \\frac{1}{n(n+k)} 或 \\frac{1}{n(n+1)(n+2)}",
+    "极限与不等式证明中出现 e^x, \\ln(1+x), \\sin x, \\tan x 混合",
+    "初等函数定义域、反函数与初等三角积化和差与和差化积"
+  ],
+  "firstReaction": "第一反应：不要死算！先观察属于五大代数动作的哪一种：遇二次式想配方，遇根号差想有理化，遇分式乘积想裂项，遇超越函数想切线放缩。",
+  "candidateMethods": [
+    {
+      "name": "配方法（真题调用 38 处第一高频）",
+        "priority": 1,
+      "applicability": "出现 $x^2 + px + q$ 或多变量二次型",
+      "whyChoose": "配成 $(x + \\frac{p}{2})^2 + (q - \\frac{p^2}{4})$ 转化为标准变量代换（如 $\\int \\frac{1}{x^2+2x+5}dx$ 换元为 $\\arctan$ 积分）。",
+      "description": "配方时注意括号外常数符号，切忌符号抄错。"
+    },
+    {
+      "name": "有理化（共轭无理式脱根号）",
+        "priority": 1,
+      "applicability": "根号相减未定式、渐近线斜率求 $b$、分母根号化简",
+      "whyChoose": "乘共轭式 $(\\sqrt{A}+\\sqrt{B})$ 将无理差化为有理差 $(A-B)$，迅速暴露主要无穷小阶数。",
+      "description": "只有两项为同阶无穷大或同阶差时才能有效消去主要项。"
+    },
+    {
+      "name": "裂项相消（级数求和与数列极限利器）",
+        "priority": 1,
+      "applicability": "分母为因式连乘乘积形式",
+      "whyChoose": "待定系数拆分 $\\frac{1}{n(n+1)} = \\frac{1}{n} - \\frac{1}{n+1}$，相加后中间全部抵消仅余首尾两项。",
+      "description": "注意核对拆分系数 $\\frac{1}{k}$ 是否遗漏。"
+    },
+    {
+      "name": "常用经典不等式放缩",
+        "priority": 1,
+      "applicability": "夹逼准则、单调有界证明、不等式放缩",
+      "whyChoose": "牢记切线不等式：$e^x \\ge 1+x$（$x=0$ 取等）、$\\ln(1+x) \\le x$（$x>-1$）、$\\sin x < x < \\tan x$（$x \\in (0, \\pi/2)$）。",
+      "description": "放缩必须保留主部，不可放得过粗导致极限不一致。"
+    }
+  ],
+  "steps": [
+    "第一步：识别结构特征（二次式、根号差、连乘分母、超越因式）。",
+    "第二步：执行五大动作之一：配方、有理化、裂项、放缩或整体换元。",
+    "第三步：核验高中三角补丁：倍角公式 $\\cos 2x = 2\\cos^2 x - 1 = 1 - 2\\sin^2 x$ 与降幂公式。",
+    "第四步：带入微积分主干算法（求极限、求导、求积分、特征多项式分解）。"
+  ],
+  "formulas": [
+    {
+      "title": "核心不等式放缩链",
+      "latex": "e^x \\ge 1+x,\\quad \\ln(1+x) \\le x,\\quad \\frac{x}{1+x} \\le \\ln(1+x) \\le x",
+      "notes": "考研高数四大金刚不等式，常用于夹逼与单调性分析"
+    },
+    {
+      "title": "二倍角与降幂公式",
+      "latex": "\\sin^2 x = \\frac{1-\\cos 2x}{2},\\quad \\cos^2 x = \\frac{1+\\cos 2x}{2}",
+      "notes": "三角积分与定积分计算的基石转化公式"
+    }
+  ],
+  "pitfalls": [
+    "有理化时盲目分子分母同乘，没有先提取公因子，导致多项式越来越庞大",
+    "配方时忽视二次项系数不为 1 的情形，提取负号时常数项忘记变号",
+    "裂项相消时漏写相消后保留的最后几项与负号"
+  ],
+  "whyChooseMethod": "L02 归纳的五个代数动作用在后面 60 多讲的真题演练里，是保证运算顺畅的基础基本功。",
+  "pastQuestions": [],
+  "variants": [],
+  "selfCheckList": [
+    "能否在 5 秒内默写出 e^x >= 1+x 与 ln(1+x) <= x 的等号成立条件？",
+    "遇到 1/(x^2 + 2x + 5) 是否能瞬间本能完成配方 (x+1)^2 + 4？",
+    "遇到 \\sqrt{x^2+x} - x 是否能迅速有理化得到极限为 1/2？"
+  ],
+  "relatedKnowledgeIds": [
+    "gaoshu-01-indeterminate-0-0",
+    "gaoshu-03-variable-limit-integral"
+  ],
+  "tags": [
+    "五大动作",
+    "配方",
+    "有理化",
+    "裂项",
+    "不等式放缩"
+  ],
+  "source": "Maki考研数学大串讲 L01 & L02",
+  "isPending": false
+},
+  "yingshi-64-exam-time-structure": {
+  "id": "yingshi-64-exam-time-structure",
+  "title": "卷面结构与 180 分钟时间分配方案 (L64)",
+  "subject": "gaoshu",
+  "subjectName": "高等数学",
+  "chapterId": "gaoshu-ch11",
+  "chapterTitle": "第 7 编 应试工程：卷面分配与保命进阶清单",
+  "nodeType": "topic",
+  "summary": "Maki 应试工程篇 L64：考研数学卷面由 10 道选择（50分）、6 道填空（30分）、6 道解答（70分）构成。考场 180 分钟必须建立精准的时间红线意识，绝不可在一道选择题上死磕超过 8 分钟。",
+  "triggers": [
+    "考场实战模考、全真模拟卷训练、冲刺套卷测试",
+    "做题慢、卡在难题上导致后面大题写不完、填空计算超时",
+    "选择题与填空题时间分配不均，前 16 题耗时超过 90 分钟"
+  ],
+  "firstReaction": "第一反应：考场时间就是分数！选填题每题平均 4~5 分钟，总计控制在 65~70 分钟；大题平均每题 12~14 分钟，总计控制在 80~85 分钟；必须留出 25~30 分钟进行全局核验与填涂卡检查！",
+  "candidateMethods": [
+    {
+      "name": "65-85-30 黄金时间分配律",
+        "priority": 1,
+      "applicability": "全国硕士研究生数学统考 180 分钟全卷",
+      "whyChoose": "前 65 分钟保住 80 分选填题；中间 85 分钟拿下 6 道综合解答大题；最后 30 分钟复查高危计算与填涂，将失误率降至最低。",
+      "description": "严格设置单题止损点：选填题 6 分钟无进展必须先标记跳过。"
+    },
+    {
+      "name": "选择题四大特化得分术",
+        "priority": 1,
+      "applicability": "单项选择题 1~10 题",
+      "whyChoose": "结合排除法、特值法（特殊函数 $f(x)=x, x^2$、特殊矩阵 $A=E, O$）、极值反例法，秒杀不需分步过程的选择题。",
+      "description": "特值法验证只能用于否定错误选项，只有唯一合法项剩余时方可敲定。"
+    }
+  ],
+  "steps": [
+    "第一阶段（0~65分钟）：全神贯注完成 1~16 题（10 选择 + 6 填空），遇阻卡壳立即画圈跳过。",
+    "第二阶段（65~150分钟）：集中精力推进 17~22 题（6 道综合大题），按步拿分，步骤规范。",
+    "第三阶段（150~180分钟）：返回攻坚此前画圈标记的卡壳题，并按清单重点核查计算易错项。"
+  ],
+  "formulas": [
+    {
+      "title": "考卷分值结构比",
+      "latex": "\\text{选填: } 16 \\times 5 = 80\\text{分 (53.3\\%)}, \\quad \\text{解答: } 6\\text{题} = 70\\text{分 (46.7\\%)}",
+      "notes": "选填占半壁江山，得选填者得天下"
+    }
+  ],
+  "pitfalls": [
+    "在某一道 5 分的选择题上苦思冥想 15 分钟，导致后面 12 分的大题没有时间看题",
+    "解答题草稿纸上算对，抄到答题卡上时符号或指数抄错",
+    "没有留出足够时间检查填空题的定义域与开闭区间"
+  ],
+  "whyChooseMethod": "把控时间节奏是发挥平时真实水平的决定性前提，严格执行止损与分段策略。",
+  "pastQuestions": [],
+  "variants": [],
+  "selfCheckList": [
+    "模考时能否在 70 分钟内完成前 16 题？",
+    "是否有单题耗时超过 8 分钟立即跳过的果断止损纪律？",
+    "是否留出了至少 20 分钟用于检查高频符号错误？"
+  ],
+  "relatedKnowledgeIds": [
+    "yingshi-65-calculation-mistakes-checklist",
+    "yingshi-66-survival-and-advanced-checklist"
+  ],
+  "tags": [
+    "时间分配",
+    "卷面结构",
+    "模考策略",
+    "止损纪律"
+  ],
+  "source": "Maki考研数学大串讲 L64",
+  "isPending": false
+},
+  "yingshi-65-calculation-mistakes-checklist": {
+  "id": "yingshi-65-calculation-mistakes-checklist",
+  "title": "考研数学四大失误清单与交卷前自查 (L65)",
+  "subject": "gaoshu",
+  "subjectName": "高等数学",
+  "chapterId": "gaoshu-ch11",
+  "chapterTitle": "第 7 编 应试工程：卷面分配与保命进阶清单",
+  "nodeType": "topic",
+  "summary": "Maki 应试工程篇 L65：考研数学的扣分点有 60% 不是因为‘不会’，而是因为‘四大失误’（读题失误、建模失误、方法失误、计算失误）。考前必须形成强有力的防错雷达与交卷前自查习惯。",
+  "triggers": [
+    "平时做题总能看懂解析，但自己算总是在符号、常数上扣分",
+    "定义域看错、开闭区间看漏、题干问极小值误写成极小值点",
+    "二重积分积分区域上下限写颠倒、矩阵乘法不满足交换律却擅自交换"
+  ],
+  "firstReaction": "第一反应：交卷前 20 分钟启动‘四查雷达’：一查题干问什么（点还是值？），二查定义域与符号（分母非零、底数大于0），三查二重积分投影与格林公式方向，四查特征向量是否非零！",
+  "candidateMethods": [
+    {
+      "name": "四大失误雷达自查法",
+        "priority": 1,
+      "applicability": "所有大题演算与填空题核对",
+      "whyChoose": "针对性排查：读题错误（问点还是值？齐次还是非齐次？）、建模错误（旋转体绕 x 轴还是 y 轴？）、方法错误（加减法误代无穷小）、计算错误（分母通分移项变号）。",
+      "description": "必须在脑海中条理化列出检查项，不可泛泛扫视。"
+    }
+  ],
+  "steps": [
+    "第一项（读题自查）：重新扫一眼题干第一句和问句末尾，核对题设条件（如独立？连续？正定？非零？）。",
+    "第二项（极限自查）：核对等价无穷小是否仅用于乘积项；洛必达是否确认是 0/0 或 \\infty/\\infty。",
+    "第三项（积分自查）：二重积分奇偶对称性是否包含原点；格林公式曲线是否为逆时针正向（顺时针必须加负号）。",
+    "第四项（线代自查）：伴随矩阵公式 $A^{-1} = \\frac{1}{|A|}A^*$ 的分母 $|A|$ 有无漏除；特征向量写成基础解系是否注明 $k_1, k_2$ 不同时为 0。",
+    "第五项（概率自查）：概率密度积分为 1 的全域检查；方差公式 $DX = E(X^2) - [E(X)]^2$ 有无忘扣平方。"
+  ],
+  "formulas": [
+    {
+      "title": "四大高危陷阱公式",
+      "latex": "DX = E(X^2) - [E(X)]^2,\\quad A^{-1} = \\frac{1}{|A|}A^*,\\quad \\oint_L = -\\oint_{L^-}",
+      "notes": "考场失误最高频的三大符号与常数漏记点"
+    }
+  ],
+  "pitfalls": [
+    "题干问‘极值’却写成了自变量坐标 $x=x_0$；问‘极值点’却写成了函数值 $f(x_0)$",
+    "格林公式与高斯公式中，未检查曲面或曲线的方向，顺时针或内侧遗漏负号",
+    "矩阵乘法 $AB=AC$ 在 $|A| \\ne 0$ 未满足时擅自约去 $A$ 得到 $B=C$"
+  ],
+  "whyChooseMethod": "考前每消除一种习惯性失误，考场上就能多拿 5~10 分，是产出比极高的提分手段。",
+  "pastQuestions": [],
+  "variants": [],
+  "selfCheckList": [
+    "算完方差是否核验过 DX >= 0？若算成负数是否能立刻意识到公式写错？",
+    "求格林公式是否先画草图检查边界是逆时针（正向）还是顺时针（负向）？",
+    "求特征向量通解是否写了 'c 为任意非零常数'？"
+  ],
+  "relatedKnowledgeIds": [
+    "yingshi-64-exam-time-structure",
+    "yingshi-66-survival-and-advanced-checklist"
+  ],
+  "tags": [
+    "四大失误",
+    "读题错误",
+    "计算失误",
+    "符号检查",
+    "自查清单"
+  ],
+  "source": "Maki考研数学大串讲 L65",
+  "isPending": false
+},
+  "yingshi-66-survival-and-advanced-checklist": {
+  "id": "yingshi-66-survival-and-advanced-checklist",
+  "title": "保命清单 (60~90分) 与 进阶提分清单 (120~140分) (L66)",
+  "subject": "gaoshu",
+  "subjectName": "高等数学",
+  "chapterId": "gaoshu-ch11",
+  "chapterTitle": "第 7 编 应试工程：卷面分配与保命进阶清单",
+  "nodeType": "topic",
+  "summary": "Maki 应试工程篇 L66：将考研数学考点划分为两大作战军团：保命清单（必须稳拿的 80~90 分基本盘）与进阶清单（拉开分差冲击 120~140 分的高难度考点）。考前两周按清单分类逐项突破，有的放矢。",
+  "triggers": [
+    "考前最后 1~2 个月复习规划、知识点查漏补缺",
+    "目标分数在 80~100 分（过线求稳）或 120~140 分（冲刺名校）",
+    "感觉考点太多抓不住主次重点，需要清晰的优先级阶梯"
+  ],
+  "firstReaction": "第一反应：先保基本盘，再攻进阶堡垒！保命清单上的 25 个送分考点必须达到 100% 零失误；在此坚实基础上，攻坚 15 个高阶综合题型以争取 120+ 高分。",
+  "candidateMethods": [
+    {
+      "name": "阶梯式分类推进策略",
+        "priority": 1,
+      "applicability": "考研数学一整体复习与冲刺复盘",
+      "whyChoose": "把有限的备考精力精准投放到产出比最高的考点上，避免在冷门极难偏题上浪费时间而丢失基本分。",
+      "description": "保命盘未稳时切忌盲目硬啃极难证明题。"
+    }
+  ],
+  "steps": [
+    "第一层（60~90分保命清单）：七大未定式极限计算、导数与复合/隐函数求导、可分离变量方程与二阶常系数齐次方程、定积分换元分部、基础解系与相似对角化、八大常见分布与均值方差公式。",
+    "第二层（90~120分强化清单）：泰勒公式展开定阶、单调有界递推数列、微分中值定理辅助函数、变限积分求导与反常积分收敛性、多元极值拉格朗日乘数、二重积分极坐标、施密特正交与二次型化标准形、二维联合分布求边缘与条件概率、矩估计与似然估计。",
+    "第三层（120~140分进阶清单）：曲线曲面积分（格林、高斯、斯托克斯、场论）、三重积分切片法、幂级数求和与傅里叶展开、抽象分块矩阵方程与秩定理、二维随机变量函数分布（卷积公式与最大最小值分布）、估计量的无偏性与有效性证明、跨章节综合分析证明题。"
+  ],
+  "formulas": [
+    {
+      "title": "得分目标梯队",
+      "latex": "\\text{保命盘: } 85\\text{分} \\to \\text{强化盘: } 115\\text{分} \\to \\text{进阶盘: } 135+\\text{分}",
+      "notes": "考研数学阶梯式目标管理"
+    }
+  ],
+  "pitfalls": [
+    "基础未牢固就盲目追求高深技巧，结果最简单的极限与导数丢分严重",
+    "只刷题不总结方法卡与特征归纳，做一道忘一道",
+    "忽视最后两周的模拟考全真掐表训练，考场上缺乏时间压迫感应对能力"
+  ],
+  "whyChooseMethod": "考前两周依清单对号入座，实现复习收益最大化。",
+  "pastQuestions": [],
+  "variants": [],
+  "selfCheckList": [
+    "保命清单上的 25 个题型是否能做到提笔即出答案？",
+    "进阶清单上的重点考点（拉格朗日乘数、格林公式、正交对角化、MLE）是否有标准的推导模版？",
+    "最后两周是否安排了至少 3 次全真 180 分钟模考测试？"
+  ],
+  "relatedKnowledgeIds": [
+    "yingshi-64-exam-time-structure",
+    "yingshi-65-calculation-mistakes-checklist"
+  ],
+  "tags": [
+    "保命清单",
+    "进阶清单",
+    "提分规划",
+    "优先级",
+    "冲刺复习"
+  ],
+  "source": "Maki考研数学大串讲 L66",
+  "isPending": false
+}
 };
 
 import { EXTRACTED_PAST_QUESTIONS } from './pastQuestionsData';
