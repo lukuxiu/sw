@@ -52,7 +52,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
 
   const filteredPastQuestions = useMemo(() => {
     return (node.pastQuestions || []).filter((q) => {
-      if (pastPaperFilter !== 'all' && q.category !== pastPaperFilter) return false;
+      if (pastPaperFilter !== 'all' && !q.category.includes(pastPaperFilter)) return false;
       const yr = parseInt(q.year, 10) || 0;
       if (pastYearFilter === 'recent' && yr < 2021) return false;
       if (pastYearFilter === 'classic' && yr >= 2021) return false;
