@@ -41,6 +41,7 @@ export interface FormulaItem {
   notes?: string;
 }
 
+export type PastQuestionItem = PastQuestion;
 export interface PastQuestion {
   id: string;
   year: string;

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { 
   ArrowLeft, ArrowRight, ChevronLeft, Compass, Eye, EyeOff, Tag, CheckCircle2, Bookmark
 } from 'lucide-react';
 import { KNOWLEDGE_BASE } from '../data/knowledgeBase';
 import { CHAPTERS, SUBJECTS } from '../data/subjects';
-import { LearningStatus, MistakeTag } from '../data/types';
+import { LearningStatus, MistakeTag, PastQuestion } from '../data/types';
 import { getLearningStatus, setLearningStatus, getTopicRecord, setTopicMistakeTags } from '../data/storage';
 import { MathView } from './MathView';
 
@@ -37,14 +37,28 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
   const [record, setRecord] = useState(getTopicRecord(node.id));
   const [revealedVariants, setRevealedVariants] = useState<Record<string, boolean>>({});
   const [revealedPastSolutions, setRevealedPastSolutions] = useState<Record<string, boolean>>({});
+  const [pastPaperFilter, setPastPaperFilter] = useState<'all' | '数一' | '数二' | '数三'>('all');
+  const [pastYearFilter, setPastYearFilter] = useState<'all' | 'recent' | 'classic'>('all');
 
   useEffect(() => {
     setStatus(getLearningStatus(node.id));
     setRecord(getTopicRecord(node.id));
     setRevealedVariants({});
     setRevealedPastSolutions({});
+    setPastPaperFilter('all');
+    setPastYearFilter('all');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [node.id]);
+
+  const filteredPastQuestions = useMemo(() => {
+    return (node.pastQuestions || []).filter((q) => {
+      if (pastPaperFilter !== 'all' && q.category !== pastPaperFilter) return false;
+      const yr = parseInt(q.year, 10) || 0;
+      if (pastYearFilter === 'recent' && yr < 2021) return false;
+      if (pastYearFilter === 'classic' && yr >= 2021) return false;
+      return true;
+    });
+  }, [node.pastQuestions, pastPaperFilter, pastYearFilter]);
 
   const handleStatusChange = (newStatus: LearningStatus) => {
     setStatus(newStatus);
@@ -461,13 +475,54 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
             </span>
           </div>
 
-          {node.pastQuestions.length === 0 ? (
+          {/* Quick Paper & Year filter pills */}
+          <div className="flex flex-wrap items-center justify-between gap-2 p-2 rounded-[8px] bg-[var(--well)] text-[11px] font-mono">
+            <div className="flex items-center gap-1">
+              <span className="text-[var(--muted)] mr-1">卷别:</span>
+              {(['all', '数一', '数二', '数三'] as const).map((p) => (
+                <button
+                  key={p}
+                  onClick={() => setPastPaperFilter(p)}
+                  className={`px-2 py-0.5 rounded-[5px] transition-colors cursor-pointer ${
+                    pastPaperFilter === p
+                      ? 'bg-[var(--ink)] text-[var(--paper)] font-bold'
+                      : 'bg-[var(--sheet)] text-[var(--muted)] hover:text-[var(--ink)]'
+                  }`}
+                >
+                  {p === 'all' ? '全部' : p}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-1">
+              <span className="text-[var(--muted)] mr-1">年份:</span>
+              {[
+                { id: 'all', label: '全部年份' },
+                { id: 'recent', label: '2021~2026 (重点)' },
+                { id: 'classic', label: '往年真题' }
+              ].map((yf) => (
+                <button
+                  key={yf.id}
+                  onClick={() => setPastYearFilter(yf.id as any)}
+                  className={`px-2 py-0.5 rounded-[5px] transition-colors cursor-pointer ${
+                    pastYearFilter === yf.id
+                      ? 'bg-[var(--blue-bg)] text-[var(--blue)] font-bold border border-[var(--blue)]'
+                      : 'bg-[var(--sheet)] text-[var(--muted)] hover:text-[var(--ink)]'
+                  }`}
+                >
+                  {yf.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {filteredPastQuestions.length === 0 ? (
             <div className="text-center py-8 text-xs font-mono text-[var(--muted)] bg-[var(--well)] rounded-[10px] border border-[var(--line)]">
-              真题分类解析整理中，后续持续更新同步。
+              当前筛选条件下暂无真题，请切换卷别或年份筛选。
             </div>
           ) : (
             <div className="space-y-5">
-              {node.pastQuestions.map((q) => {
+              {filteredPastQuestions.map((q: PastQuestion) => {
                 const isSolutionOpen = !!revealedPastSolutions[q.id];
 
                 return (
@@ -495,7 +550,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
                       <MathView content={q.content} />
                       {q.options && (
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 pt-3 border-t border-[var(--line)]">
-                          {q.options.map((opt, i) => (
+                          {q.options.map((opt: string, i: number) => (
                             <div key={i} className="text-xs text-[var(--ink)]">
                               <MathView content={opt} inline />
                             </div>
@@ -543,7 +598,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
                         {/* Solution Steps */}
                         <div className="space-y-2 pt-1">
                           <span className="text-xs font-mono font-bold text-[var(--ink)]">分步解答过程：</span>
-                          {q.solutionSteps.map((s, stepIdx) => (
+                          {q.solutionSteps.map((s: string, stepIdx: number) => (
                             <div
                               key={stepIdx}
                               className="text-xs text-[var(--ink)] bg-[var(--sheet)] p-3 rounded-[8px] border border-[var(--line)] leading-relaxed font-body"

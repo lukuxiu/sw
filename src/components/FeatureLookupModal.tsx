@@ -1,9 +1,10 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { 
   X, Search, Sparkles, Filter, ExternalLink, ArrowRight, 
-  RotateCcw, CheckCircle2, AlertCircle, Shuffle, BookOpen, Layers
+  RotateCcw, CheckCircle2, AlertCircle, Shuffle, BookOpen, Layers,
+  ChevronDown, ChevronUp, FileText, Check
 } from 'lucide-react';
-import { ALL_FEATURES, FeatureCategory, FeatureItem, searchFeatures } from '../data/featureIndex';
+import { ALL_FEATURES, FeatureCategory, FeatureItem, FeatureExample, searchFeatures } from '../data/featureIndex';
 import { MathView } from './MathView';
 import { setLearningStatus } from '../data/storage';
 
@@ -18,7 +19,7 @@ const CATEGORIES: { id: FeatureCategory; label: string }[] = [
   { id: '极限与连续', label: '极限与连续' },
   { id: '微分与中值定理', label: '一元微分/中值' },
   { id: '积分与常微分方程', label: '一元积分/方程' },
-  { id: '多元与多元微积分', label: '多元微积分/线面积分' },
+  { id: '多元与多元微积分', label: '多元微积分/线面' },
   { id: '级数与空间几何', label: '级数与空间几何' },
   { id: '行列式与矩阵', label: '行列式与矩阵' },
   { id: '方程组与向量组', label: '线性方程与向量' },
@@ -37,20 +38,30 @@ export const FeatureLookupModal: React.FC<FeatureLookupModalProps> = ({
   const [activeTab, setActiveTab] = useState<'matrix' | 'flashcard'>('matrix');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<FeatureCategory>('all');
+  const [selectedPaper, setSelectedPaper] = useState<'all' | '数一' | '数二' | '数三'>('all');
+  const [selectedYearFilter, setSelectedYearFilter] = useState<'all' | 'recent' | 'classic'>('all');
+
+  // Expanded examples on matrix cards
+  const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
 
   // Flashcard state
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [isFlipped, setIsFlipped] = useState(false);
   const [flashcardSubject, setFlashcardSubject] = useState<'all' | 'gaoshu' | 'xiandai' | 'gailv'>('all');
+  const [flashcardPaper, setFlashcardPaper] = useState<'all' | '数一' | '数二' | '数三'>('all');
+  const [showFlashcardExamplePrompt, setShowFlashcardExamplePrompt] = useState(false);
 
   const filteredFeatures = useMemo(() => {
-    return searchFeatures(searchQuery, selectedCategory);
-  }, [searchQuery, selectedCategory]);
+    return searchFeatures(searchQuery, selectedCategory, selectedPaper, selectedYearFilter);
+  }, [searchQuery, selectedCategory, selectedPaper, selectedYearFilter]);
 
   const flashcardPool = useMemo(() => {
-    if (flashcardSubject === 'all') return ALL_FEATURES;
-    return ALL_FEATURES.filter((f) => f.subjectId === flashcardSubject);
-  }, [flashcardSubject]);
+    return ALL_FEATURES.filter((f) => {
+      if (flashcardSubject !== 'all' && f.subjectId !== flashcardSubject) return false;
+      if (flashcardPaper !== 'all' && !f.papers.includes(flashcardPaper)) return false;
+      return true;
+    });
+  }, [flashcardSubject, flashcardPaper]);
 
   const currentFlashcard: FeatureItem | undefined = useMemo(() => {
     if (flashcardPool.length === 0) return undefined;
@@ -59,12 +70,14 @@ export const FeatureLookupModal: React.FC<FeatureLookupModalProps> = ({
 
   const handleNextFlashcard = () => {
     setIsFlipped(false);
-    setCurrentCardIndex((prev) => (prev + 1) % flashcardPool.length);
+    setShowFlashcardExamplePrompt(false);
+    setCurrentCardIndex((prev) => (prev + 1) % (flashcardPool.length || 1));
   };
 
   const handleRandomFlashcard = () => {
     setIsFlipped(false);
-    const rand = Math.floor(Math.random() * flashcardPool.length);
+    setShowFlashcardExamplePrompt(false);
+    const rand = Math.floor(Math.random() * (flashcardPool.length || 1));
     setCurrentCardIndex(rand);
   };
 
@@ -107,7 +120,7 @@ export const FeatureLookupModal: React.FC<FeatureLookupModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-xs font-body">
-      <div className="bg-[var(--sheet)] border border-[var(--line)] rounded-[14px] w-full max-w-4xl max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl overflow-hidden">
+      <div className="bg-[var(--sheet)] border border-[var(--line)] rounded-[14px] w-full max-w-5xl max-h-[92vh] sm:max-h-[88vh] flex flex-col shadow-2xl overflow-hidden">
         {/* Header */}
         <div className="px-4 sm:px-6 py-3.5 bg-[var(--well)] border-b border-[var(--line)] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -117,38 +130,38 @@ export const FeatureLookupModal: React.FC<FeatureLookupModalProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-base font-display font-bold text-[var(--ink)] tracking-tight">
-                  特征 $\to$ 思路 逆向速查与刷题
+                  特征 $\to$ 思路 逆向速查与真题例题库
                 </h2>
                 <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-[var(--sheet)] text-[var(--muted)] border border-[var(--line)] hidden sm:inline">
-                  看到什么 · 想到什么
+                  含 2021~2026 全部真题例题
                 </span>
               </div>
               <p className="text-[11px] text-[var(--muted)] font-mono">
-                从做题特征切入突破口，告别先翻目录再做题的被动模式
+                从做题特征切入突破口，配套历年真题实战例题与主动回忆抽查
               </p>
             </div>
           </div>
 
+          {/* Mode Switch Tabs */}
           <div className="flex items-center gap-2">
-            {/* Tab switch */}
-            <div className="flex items-center bg-[var(--sheet)] p-0.5 rounded-[8px] border border-[var(--line)] text-xs font-mono">
+            <div className="bg-[var(--well)] p-0.5 rounded-[8px] border border-[var(--line)] flex items-center text-xs font-mono">
               <button
                 onClick={() => setActiveTab('matrix')}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-[6px] transition-colors ${
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-[6px] transition-colors cursor-pointer ${
                   activeTab === 'matrix'
                     ? 'bg-[var(--ink)] text-[var(--paper)] font-bold shadow-xs'
                     : 'text-[var(--muted)] hover:text-[var(--ink)]'
                 }`}
               >
                 <Layers className="w-3.5 h-3.5" />
-                <span>特征速查表</span>
+                <span>特征与例题表</span>
               </button>
               <button
                 onClick={() => {
                   setActiveTab('flashcard');
                   setIsFlipped(false);
                 }}
-                className={`flex items-center gap-1 px-2.5 py-1 rounded-[6px] transition-colors ${
+                className={`flex items-center gap-1 px-2.5 py-1 rounded-[6px] transition-colors cursor-pointer ${
                   activeTab === 'flashcard'
                     ? 'bg-[var(--ink)] text-[var(--paper)] font-bold shadow-xs'
                     : 'text-[var(--muted)] hover:text-[var(--ink)]'
@@ -161,7 +174,7 @@ export const FeatureLookupModal: React.FC<FeatureLookupModalProps> = ({
 
             <button
               onClick={onClose}
-              className="p-1.5 rounded-[6px] text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--line)] transition-colors"
+              className="p-1.5 rounded-[6px] text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--line)] transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -178,7 +191,7 @@ export const FeatureLookupModal: React.FC<FeatureLookupModalProps> = ({
                   <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-[var(--muted)]" />
                   <input
                     type="text"
-                    placeholder="输入题目中看到的特征（如：0/0型、路径无关、A^2=A、卡方分布、对称区间）..."
+                    placeholder="输入题目中看到的特征（如：0/0型、路径无关、A^2=A、卡方分布、对称区间、2025、数二）..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full bg-[var(--well)] border border-transparent focus:border-[var(--line)] rounded-[8px] pl-9 pr-8 py-1.5 text-xs text-[var(--ink)] placeholder-[var(--muted)] focus:outline-none"
@@ -186,7 +199,7 @@ export const FeatureLookupModal: React.FC<FeatureLookupModalProps> = ({
                   {searchQuery && (
                     <button
                       onClick={() => setSearchQuery('')}
-                      className="absolute right-2.5 top-2 text-[var(--muted)] hover:text-[var(--ink)]"
+                      className="absolute right-2.5 top-2 text-[var(--muted)] hover:text-[var(--ink)] cursor-pointer"
                     >
                       <X className="w-3.5 h-3.5" />
                     </button>
@@ -197,13 +210,54 @@ export const FeatureLookupModal: React.FC<FeatureLookupModalProps> = ({
                 </span>
               </div>
 
+              {/* Sub-Filters: Paper & Year Filter Pills */}
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-[var(--line)] text-[11px] font-mono">
+                <div className="flex items-center gap-1">
+                  <span className="text-[var(--muted)] mr-1">卷别:</span>
+                  {(['all', '数一', '数二', '数三'] as const).map((p) => (
+                    <button
+                      key={p}
+                      onClick={() => setSelectedPaper(p)}
+                      className={`px-2 py-0.5 rounded-[5px] transition-colors cursor-pointer ${
+                        selectedPaper === p
+                          ? 'bg-[var(--ink)] text-[var(--paper)] font-bold'
+                          : 'bg-[var(--well)] text-[var(--muted)] hover:text-[var(--ink)]'
+                      }`}
+                    >
+                      {p === 'all' ? '全部卷别' : p}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-1">
+                  <span className="text-[var(--muted)] mr-1">年份:</span>
+                  {[
+                    { id: 'all', label: '全部年份' },
+                    { id: 'recent', label: '2021~2026 近年真题' },
+                    { id: 'classic', label: '往年经典' },
+                  ].map((yf) => (
+                    <button
+                      key={yf.id}
+                      onClick={() => setSelectedYearFilter(yf.id as any)}
+                      className={`px-2 py-0.5 rounded-[5px] transition-colors cursor-pointer ${
+                        selectedYearFilter === yf.id
+                          ? 'bg-[var(--blue-bg)] text-[var(--blue)] font-bold border border-[var(--blue)]'
+                          : 'bg-[var(--well)] text-[var(--muted)] hover:text-[var(--ink)]'
+                      }`}
+                    >
+                      {yf.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               {/* Category Pills */}
               <div className="flex items-center gap-1 overflow-x-auto no-scrollbar py-0.5 text-[11px] font-mono">
                 {CATEGORIES.map((c) => (
                   <button
                     key={c.id}
                     onClick={() => setSelectedCategory(c.id)}
-                    className={`px-2 py-0.8 rounded-[6px] flex-shrink-0 transition-colors ${
+                    className={`px-2 py-0.8 rounded-[6px] flex-shrink-0 transition-colors cursor-pointer ${
                       selectedCategory === c.id
                         ? 'bg-[var(--blue-bg)] text-[var(--blue)] font-bold border border-[var(--blue)]'
                         : 'bg-[var(--well)] text-[var(--muted)] hover:text-[var(--ink)]'
@@ -219,72 +273,142 @@ export const FeatureLookupModal: React.FC<FeatureLookupModalProps> = ({
             <div className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-3">
               {filteredFeatures.length === 0 ? (
                 <div className="text-center py-12 text-xs font-mono text-[var(--muted)]">
-                  未找到与 “{searchQuery}” 匹配的解题特征，请尝试更简练的关键词
+                  未找到与 “{searchQuery}” 匹配的解题特征，请尝试调整筛选或关键词
                 </div>
               ) : (
-                filteredFeatures.map((item) => (
-                  <div
-                    key={item.id}
-                    className="bg-[var(--well)] border border-[var(--line)] hover:border-[var(--blue)] rounded-[12px] p-3.5 sm:p-4 space-y-2.5 transition-colors group"
-                  >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-[var(--line)]">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--sheet)] text-[var(--muted)] border border-[var(--line)]">
-                          {item.subjectName} · {item.chapterTitle}
-                        </span>
-                        <span className="text-xs font-bold text-[var(--ink)] font-display">
-                          {item.topicTitle}
-                        </span>
+                filteredFeatures.map((item) => {
+                  const isExpanded = expandedCardId === item.id;
+
+                  return (
+                    <div
+                      key={item.id}
+                      className="bg-[var(--well)] border border-[var(--line)] hover:border-[var(--blue)] rounded-[12px] p-3.5 sm:p-4 space-y-2.5 transition-colors group"
+                    >
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-[var(--line)]">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-[var(--sheet)] text-[var(--muted)] border border-[var(--line)]">
+                            {item.subjectName} · {item.chapterTitle}
+                          </span>
+                          <span className="text-xs font-bold text-[var(--ink)] font-display">
+                            {item.topicTitle}
+                          </span>
+                          <div className="flex items-center gap-1">
+                            {item.papers.map((p) => (
+                              <span key={p} className="text-[9px] font-mono px-1 py-0.2 rounded bg-[var(--sheet)] text-[var(--blue)] border border-[var(--line)]">
+                                {p}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 self-end sm:self-auto">
+                          {item.examples.length > 0 && (
+                            <button
+                              onClick={() => setExpandedCardId(isExpanded ? null : item.id)}
+                              className="flex items-center gap-1 text-[11px] font-mono px-2 py-0.5 rounded bg-[var(--sheet)] hover:bg-[var(--line)] text-[var(--ink)] border border-[var(--line)] transition-colors cursor-pointer"
+                            >
+                              <BookOpen className="w-3 h-3 text-[var(--amber)]" />
+                              <span>{isExpanded ? '收起例题' : `配套真题例题 (${item.examples.length})`}</span>
+                              {isExpanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                            </button>
+                          )}
+
+                          <button
+                            onClick={() => {
+                              onSelectTopic(item.topicId);
+                              onClose();
+                            }}
+                            className="flex items-center gap-1 text-xs font-mono text-[var(--blue)] hover:underline cursor-pointer"
+                          >
+                            <span>完整考点推导</span>
+                            <ArrowRight className="w-3 h-3" />
+                          </button>
+                        </div>
                       </div>
 
-                      <button
-                        onClick={() => {
-                          onSelectTopic(item.topicId);
-                          onClose();
-                        }}
-                        className="flex items-center gap-1 text-xs font-mono text-[var(--blue)] hover:underline self-end sm:self-auto"
-                      >
-                        <span>进入完整推导与例题</span>
-                        <ArrowRight className="w-3 h-3" />
-                      </button>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs">
+                        {/* Trigger feature */}
+                        <div className="bg-[var(--sheet)] p-2.5 rounded-[8px] border border-[var(--line)]">
+                          <div className="font-mono text-[10px] text-[var(--amber)] font-bold mb-1">
+                            [看到题目特征]
+                          </div>
+                          <div className="text-[var(--ink)] font-medium leading-relaxed font-body">
+                            <MathView content={item.trigger} inline />
+                          </div>
+                        </div>
+
+                        {/* First reaction */}
+                        <div className="bg-[var(--sheet)] p-2.5 rounded-[8px] border border-[var(--line)]">
+                          <div className="font-mono text-[10px] text-[var(--blue)] font-bold mb-1">
+                            [应该想到什么 · 第一反应]
+                          </div>
+                          <div className="text-[var(--ink)] leading-relaxed font-body line-clamp-3">
+                            <MathView content={item.firstReaction} inline />
+                          </div>
+                        </div>
+
+                        {/* Primary method */}
+                        <div className="bg-[var(--sheet)] p-2.5 rounded-[8px] border border-[var(--line)]">
+                          <div className="font-mono text-[10px] text-[var(--green)] font-bold mb-1">
+                            [首选方法与理由]
+                          </div>
+                          <div className="text-[var(--ink)] font-semibold font-display">
+                            {item.primaryMethod}
+                          </div>
+                          <p className="text-[11px] text-[var(--muted)] mt-1 font-body">
+                            {item.whyChoose}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Expandable Authentic Examples Section */}
+                      {isExpanded && item.examples.length > 0 && (
+                        <div className="mt-2 pt-2 border-t border-[var(--line)] space-y-2.5 animate-fadeIn">
+                          <div className="flex items-center justify-between text-xs font-mono text-[var(--muted)]">
+                            <span className="font-bold text-[var(--ink)]">
+                              ★ 真实考卷配套例题演练（含 2021~2026 最新真题）
+                            </span>
+                            <span>共 {item.examples.length} 道精选真题</span>
+                          </div>
+
+                          <div className="grid grid-cols-1 gap-2.5">
+                            {item.examples.map((ex) => (
+                              <div
+                                key={ex.id}
+                                className="bg-[var(--sheet)] p-3 rounded-[8px] border border-[var(--line)] space-y-2 text-xs"
+                              >
+                                <div className="flex items-center justify-between font-mono text-[11px]">
+                                  <div className="flex items-center gap-1.5">
+                                    <span className="px-1.5 py-0.5 rounded bg-[var(--well)] text-[var(--ink)] font-bold border border-[var(--line)]">
+                                      {ex.year} · {ex.category} · {ex.questionNumber}
+                                    </span>
+                                    <span className="text-[var(--amber)]">{ex.difficulty}</span>
+                                  </div>
+                                  <span className="text-[var(--muted)] text-[10px]">{ex.source}</span>
+                                </div>
+
+                                <div className="text-[var(--ink)] font-serif leading-relaxed bg-[var(--well)] p-2.5 rounded-[6px]">
+                                  <MathView content={ex.prompt} />
+                                </div>
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] font-mono">
+                                  <div className="p-2 rounded bg-[var(--blue-bg)] text-[var(--blue)] border border-[var(--blue)]">
+                                    <span className="font-bold">[特征突破口]: </span>
+                                    <span>{ex.keyReaction}</span>
+                                  </div>
+                                  <div className="p-2 rounded bg-[var(--green-bg)] text-[var(--green)] border border-[var(--green)]">
+                                    <span className="font-bold">[参考答案]: </span>
+                                    <span>{ex.answer}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 text-xs">
-                      {/* Trigger feature */}
-                      <div className="bg-[var(--sheet)] p-2.5 rounded-[8px] border border-[var(--line)]">
-                        <div className="font-mono text-[10px] text-[var(--amber)] font-bold mb-1">
-                          [看到题目特征]
-                        </div>
-                        <div className="text-[var(--ink)] font-medium leading-relaxed font-body">
-                          <MathView content={item.trigger} inline />
-                        </div>
-                      </div>
-
-                      {/* First reaction */}
-                      <div className="bg-[var(--sheet)] p-2.5 rounded-[8px] border border-[var(--line)]">
-                        <div className="font-mono text-[10px] text-[var(--blue)] font-bold mb-1">
-                          [应该想到什么 · 第一反应]
-                        </div>
-                        <div className="text-[var(--ink)] leading-relaxed font-body line-clamp-3">
-                          <MathView content={item.firstReaction} inline />
-                        </div>
-                      </div>
-
-                      {/* Primary method */}
-                      <div className="bg-[var(--sheet)] p-2.5 rounded-[8px] border border-[var(--line)]">
-                        <div className="font-mono text-[10px] text-[var(--green)] font-bold mb-1">
-                          [首选方法与理由]
-                        </div>
-                        <div className="text-[var(--ink)] font-semibold font-display">
-                          {item.primaryMethod}
-                        </div>
-                        <p className="text-[11px] text-[var(--muted)] mt-1 font-body">
-                          {item.whyChoose}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
           </div>
@@ -295,51 +419,72 @@ export const FeatureLookupModal: React.FC<FeatureLookupModalProps> = ({
           <div className="flex-1 flex flex-col p-4 sm:p-6 overflow-y-auto">
             {/* Subject filter & counter */}
             <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[var(--line)] font-mono text-xs">
-              <div className="flex items-center gap-1 bg-[var(--well)] p-0.5 rounded-[8px] border border-[var(--line)] text-[11px]">
-                <button
-                  onClick={() => {
-                    setFlashcardSubject('all');
-                    setIsFlipped(false);
-                  }}
-                  className={`px-2 py-0.8 rounded-[6px] ${
-                    flashcardSubject === 'all' ? 'bg-[var(--sheet)] font-bold text-[var(--ink)]' : 'text-[var(--muted)]'
-                  }`}
-                >
-                  全部 ({ALL_FEATURES.length})
-                </button>
-                <button
-                  onClick={() => {
-                    setFlashcardSubject('gaoshu');
-                    setIsFlipped(false);
-                  }}
-                  className={`px-2 py-0.8 rounded-[6px] ${
-                    flashcardSubject === 'gaoshu' ? 'bg-[var(--sheet)] font-bold text-[var(--blue)]' : 'text-[var(--muted)]'
-                  }`}
-                >
-                  高数
-                </button>
-                <button
-                  onClick={() => {
-                    setFlashcardSubject('xiandai');
-                    setIsFlipped(false);
-                  }}
-                  className={`px-2 py-0.8 rounded-[6px] ${
-                    flashcardSubject === 'xiandai' ? 'bg-[var(--sheet)] font-bold text-[var(--blue)]' : 'text-[var(--muted)]'
-                  }`}
-                >
-                  线代
-                </button>
-                <button
-                  onClick={() => {
-                    setFlashcardSubject('gailv');
-                    setIsFlipped(false);
-                  }}
-                  className={`px-2 py-0.8 rounded-[6px] ${
-                    flashcardSubject === 'gailv' ? 'bg-[var(--sheet)] font-bold text-[var(--blue)]' : 'text-[var(--muted)]'
-                  }`}
-                >
-                  概率
-                </button>
+              <div className="flex items-center gap-2">
+                {/* Subject filter */}
+                <div className="flex items-center gap-1 bg-[var(--well)] p-0.5 rounded-[8px] border border-[var(--line)] text-[11px]">
+                  <button
+                    onClick={() => {
+                      setFlashcardSubject('all');
+                      setIsFlipped(false);
+                    }}
+                    className={`px-2 py-0.8 rounded-[6px] cursor-pointer ${
+                      flashcardSubject === 'all' ? 'bg-[var(--sheet)] font-bold text-[var(--ink)]' : 'text-[var(--muted)]'
+                    }`}
+                  >
+                    全部 ({ALL_FEATURES.length})
+                  </button>
+                  <button
+                    onClick={() => {
+                      setFlashcardSubject('gaoshu');
+                      setIsFlipped(false);
+                    }}
+                    className={`px-2 py-0.8 rounded-[6px] cursor-pointer ${
+                      flashcardSubject === 'gaoshu' ? 'bg-[var(--sheet)] font-bold text-[var(--blue)]' : 'text-[var(--muted)]'
+                    }`}
+                  >
+                    高数
+                  </button>
+                  <button
+                    onClick={() => {
+                      setFlashcardSubject('xiandai');
+                      setIsFlipped(false);
+                    }}
+                    className={`px-2 py-0.8 rounded-[6px] cursor-pointer ${
+                      flashcardSubject === 'xiandai' ? 'bg-[var(--sheet)] font-bold text-[var(--blue)]' : 'text-[var(--muted)]'
+                    }`}
+                  >
+                    线代
+                  </button>
+                  <button
+                    onClick={() => {
+                      setFlashcardSubject('gailv');
+                      setIsFlipped(false);
+                    }}
+                    className={`px-2 py-0.8 rounded-[6px] cursor-pointer ${
+                      flashcardSubject === 'gailv' ? 'bg-[var(--sheet)] font-bold text-[var(--blue)]' : 'text-[var(--muted)]'
+                    }`}
+                  >
+                    概率
+                  </button>
+                </div>
+
+                {/* Paper filter */}
+                <div className="flex items-center gap-1 bg-[var(--well)] p-0.5 rounded-[8px] border border-[var(--line)] text-[11px]">
+                  {(['all', '数一', '数二', '数三'] as const).map((p) => (
+                    <button
+                      key={p}
+                      onClick={() => {
+                        setFlashcardPaper(p);
+                        setIsFlipped(false);
+                      }}
+                      className={`px-1.5 py-0.8 rounded-[5px] cursor-pointer ${
+                        flashcardPaper === p ? 'bg-[var(--sheet)] font-bold text-[var(--ink)]' : 'text-[var(--muted)]'
+                      }`}
+                    >
+                      {p === 'all' ? '全部卷' : p}
+                    </button>
+                  ))}
+                </div>
               </div>
 
               <div className="flex items-center gap-2">
@@ -348,11 +493,11 @@ export const FeatureLookupModal: React.FC<FeatureLookupModalProps> = ({
                 </span>
                 <button
                   onClick={handleRandomFlashcard}
-                  className="flex items-center gap-1 px-2.5 py-1 rounded-[6px] bg-[var(--well)] hover:bg-[var(--sheet)] border border-[var(--line)] text-[var(--ink)]"
-                  title="随机抽取"
+                  className="flex items-center gap-1 px-2.5 py-1 rounded-[6px] bg-[var(--well)] hover:bg-[var(--sheet)] border border-[var(--line)] text-[var(--ink)] cursor-pointer"
+                  title="随机抽取 [快捷键 R]"
                 >
                   <Shuffle className="w-3 h-3 text-[var(--muted)]" />
-                  <span>随机换题</span>
+                  <span>随机换题 [R]</span>
                 </button>
               </div>
             </div>
@@ -368,7 +513,13 @@ export const FeatureLookupModal: React.FC<FeatureLookupModalProps> = ({
                     <span className="px-2 py-0.5 rounded-[4px] bg-[var(--sheet)] border border-[var(--line)]">
                       {currentFlashcard.subjectName} · {currentFlashcard.chapterTitle}
                     </span>
-                    <span>主动提取训练</span>
+                    <div className="flex items-center gap-1">
+                      {currentFlashcard.papers.map((p) => (
+                        <span key={p} className="text-[10px] px-1 py-0.2 rounded bg-[var(--sheet)] text-[var(--blue)] border border-[var(--line)]">
+                          {p}
+                        </span>
+                      ))}
+                    </div>
                   </div>
 
                   {/* Card Front: Trigger Signal Prompt */}
@@ -379,6 +530,30 @@ export const FeatureLookupModal: React.FC<FeatureLookupModalProps> = ({
                     <div className="text-base sm:text-xl font-display font-bold text-[var(--ink)] leading-relaxed bg-[var(--sheet)] p-4 sm:p-5 rounded-[12px] border border-[var(--line)] shadow-inner">
                       <MathView content={currentFlashcard.trigger} />
                     </div>
+
+                    {/* Optional Real Question In Front */}
+                    {currentFlashcard.examples.length > 0 && (
+                      <div className="pt-1">
+                        <button
+                          onClick={() => setShowFlashcardExamplePrompt((prev) => !prev)}
+                          className="text-[11px] font-mono text-[var(--muted)] hover:text-[var(--ink)] flex items-center justify-center gap-1 mx-auto cursor-pointer"
+                        >
+                          <BookOpen className="w-3 h-3 text-[var(--amber)]" />
+                          <span>{showFlashcardExamplePrompt ? '收起真题出题情境' : `查看在 ${currentFlashcard.examples[0].year} ${currentFlashcard.examples[0].category} 中的真实出题情境`}</span>
+                          {showFlashcardExamplePrompt ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+                        </button>
+
+                        {showFlashcardExamplePrompt && (
+                          <div className="mt-2 text-left bg-[var(--sheet)] p-3 rounded-[8px] border border-[var(--line)] font-serif text-xs text-[var(--ink)] animate-fadeIn">
+                            <div className="font-mono text-[10px] text-[var(--muted)] mb-1">
+                              真题背景：{currentFlashcard.examples[0].year} · {currentFlashcard.examples[0].category} · {currentFlashcard.examples[0].questionNumber}
+                            </div>
+                            <MathView content={currentFlashcard.examples[0].prompt} />
+                          </div>
+                        )}
+                      </div>
+                    )}
+
                     <p className="text-xs text-[var(--muted)] font-mono">
                       先在脑海中回忆：1. 第一反应检查什么？ 2. 首选方法是什么？ 3. 常见陷阱在哪？
                     </p>
@@ -436,6 +611,19 @@ export const FeatureLookupModal: React.FC<FeatureLookupModalProps> = ({
                           </div>
                         </div>
                       </div>
+
+                      {/* Example Result Highlight on Back */}
+                      {currentFlashcard.examples.length > 0 && (
+                        <div className="bg-[var(--sheet)] p-3 rounded-[8px] border border-[var(--line)] text-xs font-mono">
+                          <div className="flex items-center justify-between text-[11px] text-[var(--amber)] font-bold mb-1">
+                            <span>★ 配套真题例题答案核对：</span>
+                            <span>{currentFlashcard.examples[0].year} · {currentFlashcard.examples[0].category} {currentFlashcard.examples[0].questionNumber}</span>
+                          </div>
+                          <div className="text-[var(--ink)] bg-[var(--well)] p-2 rounded text-[11px]">
+                            {currentFlashcard.examples[0].answer}
+                          </div>
+                        </div>
+                      )}
 
                       {/* Feedback buttons */}
                       <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-2 font-mono text-xs">

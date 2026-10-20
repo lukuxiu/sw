@@ -7505,3 +7505,29 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
     "isPending": false
   }
 };
+
+import { EXTRACTED_PAST_QUESTIONS } from './pastQuestionsData';
+
+// Merge all 309 in-class real exam questions from 大串讲 + all 2021~2026 questions (数一、数二、数三)
+for (const [nodeId, extraQuestions] of Object.entries(EXTRACTED_PAST_QUESTIONS)) {
+  if (KNOWLEDGE_BASE[nodeId]) {
+    const existing = KNOWLEDGE_BASE[nodeId].pastQuestions || [];
+    const seen = new Set(existing.map((q) => `${q.year}-${q.category}-${q.questionNumber}`));
+    for (const q of extraQuestions) {
+      const key = `${q.year}-${q.category}-${q.questionNumber}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        existing.push(q);
+      }
+    }
+    // Sort past questions: newest year first (2026 -> 2025 -> ... -> 2010)
+    existing.sort((a, b) => {
+      const ya = parseInt(a.year, 10) || 0;
+      const yb = parseInt(b.year, 10) || 0;
+      if (yb !== ya) return yb - ya;
+      return a.category.localeCompare(b.category);
+    });
+    KNOWLEDGE_BASE[nodeId].pastQuestions = existing;
+  }
+}
+

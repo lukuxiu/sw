@@ -14,6 +14,18 @@ export type FeatureCategory =
   | '随机变量与分布'
   | '数理统计与参数估计';
 
+export interface FeatureExample {
+  id: string;
+  year: string;
+  category: '数一' | '数二' | '数三';
+  questionNumber: string;
+  source: string;
+  prompt: string;
+  keyReaction: string;
+  answer: string;
+  difficulty: string;
+}
+
 export interface FeatureItem {
   id: string;
   topicId: string;
@@ -26,6 +38,10 @@ export interface FeatureItem {
   firstReaction: string;
   primaryMethod: string;
   whyChoose: string;
+  pitfalls?: string[];
+  papers: ('数一' | '数二' | '数三')[];
+  recentYears: string[];
+  examples: FeatureExample[];
 }
 
 function categorizeChapter(chapterTitle: string): FeatureCategory {
@@ -49,6 +65,32 @@ export function getAllFeatures(): FeatureItem[] {
     const category = categorizeChapter(node.chapterTitle);
     const primaryMethod = node.candidateMethods[0]?.name || '标准推导法';
     const whyChoose = node.candidateMethods[0]?.whyChoose || '首选基准方法';
+    const pitfalls = node.pitfalls || [];
+
+    // Collect papers and years from pastQuestions
+    const paperSet = new Set<'数一' | '数二' | '数三'>();
+    const yearSet = new Set<string>();
+
+    const examples: FeatureExample[] = (node.pastQuestions || []).slice(0, 4).map((q) => {
+      paperSet.add(q.category as ('数一' | '数二' | '数三'));
+      yearSet.add(q.year);
+      return {
+        id: q.id,
+        year: q.year,
+        category: q.category as ('数一' | '数二' | '数三'),
+        questionNumber: q.questionNumber,
+        source: q.source,
+        prompt: q.content,
+        keyReaction: q.analysis,
+        answer: q.answer || '详见解析',
+        difficulty: q.difficulty,
+      };
+    });
+
+    const papers = paperSet.size > 0 
+      ? Array.from(paperSet) 
+      : (['数一', '数二', '数三'] as ('数一' | '数二' | '数三')[]);
+    const recentYears = Array.from(yearSet).sort().reverse();
 
     (node.triggers || []).forEach((trig, idx) => {
       items.push({
@@ -63,6 +105,10 @@ export function getAllFeatures(): FeatureItem[] {
         firstReaction: node.firstReaction,
         primaryMethod,
         whyChoose,
+        pitfalls,
+        papers,
+        recentYears,
+        examples,
       });
     });
   }
@@ -72,16 +118,42 @@ export function getAllFeatures(): FeatureItem[] {
 
 export const ALL_FEATURES = getAllFeatures();
 
-export function searchFeatures(query: string, category: FeatureCategory = 'all'): FeatureItem[] {
+export function searchFeatures(
+  query: string,
+  category: FeatureCategory = 'all',
+  paper: 'all' | '数一' | '数二' | '数三' = 'all',
+  yearFilter: 'all' | 'recent' | 'classic' = 'all'
+): FeatureItem[] {
   const q = query.trim().toLowerCase();
+
   return ALL_FEATURES.filter((item) => {
+    // Category filter
     if (category !== 'all' && item.category !== category) return false;
+
+    // Paper filter (数一 / 数二 / 数三)
+    if (paper !== 'all' && !item.papers.includes(paper)) return false;
+
+    // Year filter (recent: 2021~2026, classic: earlier)
+    if (yearFilter === 'recent') {
+      const hasRecent = item.recentYears.some((yr) => ['2021', '2022', '2023', '2024', '2025', '2026'].includes(yr));
+      if (!hasRecent) return false;
+    } else if (yearFilter === 'classic') {
+      const hasClassic = item.recentYears.some((yr) => !['2021', '2022', '2023', '2024', '2025', '2026'].includes(yr));
+      if (!hasClassic && item.recentYears.length > 0) return false;
+    }
+
+    // Search query
     if (!q) return true;
     return (
       item.trigger.toLowerCase().includes(q) ||
       item.firstReaction.toLowerCase().includes(q) ||
       item.primaryMethod.toLowerCase().includes(q) ||
-      item.topicTitle.toLowerCase().includes(q)
+      item.topicTitle.toLowerCase().includes(q) ||
+      item.examples.some((ex) => 
+        ex.prompt.toLowerCase().includes(q) || 
+        ex.year.includes(q) ||
+        ex.category.includes(q)
+      )
     );
   });
 }

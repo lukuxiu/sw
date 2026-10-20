@@ -1,113 +1,95 @@
 const fs = require('fs');
 const katex = require('katex');
 
+// 1. Parse knowledgeBase JSON object
 const text = fs.readFileSync('src/data/knowledgeBase.ts', 'utf8');
-const jsonPart = text.split('export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = ')[1].trim().replace(/;$/, '');
+const startIdx = text.indexOf('export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {') + 'export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = '.length;
+const endIdx = text.indexOf('\n};\n\nimport { EXTRACTED_PAST_QUESTIONS }');
+const jsonPart = text.slice(startIdx, endIdx + 2).trim();
 const kb = JSON.parse(jsonPart);
 
-function escapeHtml(str) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/\n/g, '<br/>');
+// 2. Parse pastQuestionsData JSON object
+const pqText = fs.readFileSync('src/data/pastQuestionsData.ts', 'utf8');
+const pqStart = pqText.indexOf('export const EXTRACTED_PAST_QUESTIONS: Record<string, PastQuestionItem[]> = ') + 'export const EXTRACTED_PAST_QUESTIONS: Record<string, PastQuestionItem[]> = '.length;
+const pqJson = pqText.slice(pqStart).trim().replace(/;$/, '');
+const pqData = JSON.parse(pqJson);
+
+// Merge pastQuestions into kb for full verification
+for (const [nodeId, list] of Object.entries(pqData)) {
+  if (kb[nodeId]) {
+    kb[nodeId].pastQuestions = (kb[nodeId].pastQuestions || []).concat(list);
+  }
 }
 
-function renderMathContent(content, inline = false) {
-  if (!content) return '';
+let totalItemsChecked = 0;
+let errorsFound = 0;
+let unmatchedDollars = 0;
 
-  // 1. If content contains $ delimiters, parse segments
-  if (content.includes('$')) {
-    // Match display math $$...$$ or inline math $...$
-    const parts = content.split(/(\$\$[\s\S]*?\$\$|\$[^$\n]+?\$)/g);
+function checkString(str, context) {
+  if (!str || typeof str !== 'string') return;
+  totalItemsChecked++;
 
-    return parts
-      .map((part) => {
-        if (part.startsWith('$$') && part.endsWith('$$')) {
-          const math = part.slice(2, -2).trim();
-          try {
-            return katex.renderToString(math, { displayMode: true, throwOnError: false });
-          } catch (e) {
-            return escapeHtml(part);
-          }
-        } else if (part.startsWith('$') && part.endsWith('$')) {
-          const math = part.slice(1, -1).trim();
-          try {
-            return katex.renderToString(math, { displayMode: false, throwOnError: false });
-          } catch (e) {
-            return escapeHtml(part);
-          }
-        } else {
-          return escapeHtml(part);
-        }
-      })
-      .join('');
+  // Check unmatched dollar signs
+  const dollarCount = (str.match(/(?<!\\)\$/g) || []).length;
+  if (dollarCount % 2 !== 0) {
+    unmatchedDollars++;
+    console.error(`[UNMATCHED $] Context: ${context} | Text: "${str.slice(0, 100)}..."`);
   }
 
-  // 2. If NO $ delimiters:
-  const trimmed = content.trim();
-  // Check if it's likely a pure LaTeX formula
-  const hasChinese = /[\u4e00-\u9fa5]/.test(trimmed);
-  const isLikelyLatex = !hasChinese && (
-    trimmed.startsWith('\\') || 
-    /\\[a-zA-Z]+/.test(trimmed) || 
-    /^[a-zA-Z0-9\s\+\-\*\/\=\(\)\,\.\_\^]+$/.test(trimmed) && /[\^_\=]/.test(trimmed)
-  );
+  // Extract all math formulas $...$ and $$...$$
+  const regex = /(\$\$[\s\S]*?\$\$|\$[^\$]+?\$)/g;
+  let match;
+  while ((match = regex.exec(str)) !== null) {
+    const raw = match[0];
+    const isDisplay = raw.startsWith('$$');
+    const math = isDisplay ? raw.slice(2, -2).trim() : raw.slice(1, -1).trim();
 
-  if (isLikelyLatex) {
     try {
-      return katex.renderToString(trimmed, {
-        displayMode: !inline,
-        throwOnError: false,
-      });
+      katex.renderToString(math, { displayMode: isDisplay, throwOnError: true });
     } catch (e) {
-      return escapeHtml(content);
-    }
-  }
-
-  // 3. Plain text
-  return escapeHtml(content);
-}
-
-let katexErrorCount = 0;
-let rawDollarCount = 0;
-let totalChecked = 0;
-
-for (const [id, node] of Object.entries(kb)) {
-  const allTexts = [
-    node.summary,
-    node.firstReaction,
-    node.applicability,
-    ...(node.triggers || []),
-    ...(node.steps || []),
-    ...(node.pitfalls || []),
-    ...(node.candidateMethods || []).flatMap(m => [m.name, m.condition, m.description, m.whyChoose]),
-    ...(node.formulas || []).map(f => `$$${f.latex}$$`),
-    ...(node.pastQuestions || []).flatMap(q => [q.content, q.analysis, ...(q.solutionSteps || []), q.answer, q.pitfall]),
-    ...(node.variants || []).flatMap(v => [v.question, v.hint, v.methodChoiceAnalysis, ...(v.fullSolution || []), v.keyTakeaway])
-  ];
-
-  for (const t of allTexts) {
-    if (!t) continue;
-    totalChecked++;
-    const rendered = renderMathContent(t, true);
-    if (rendered.includes('katex-error')) {
-      katexErrorCount++;
-      console.log(`[KaTeX Error] in node ${id}:`, t);
-    }
-    // Check if there are raw $ remaining outside of html tags or attributes
-    // In our escapeHtml, $ is not escaped, but if KaTeX rendered it, there should be no $ in raw text unless intended
-    const plainParts = t.split(/(\$\$[\s\S]*?\$\$|\$[^$\n]+?\$)/g);
-    for (let i = 0; i < plainParts.length; i += 2) {
-      if (plainParts[i] && plainParts[i].includes('$')) {
-        rawDollarCount++;
-        console.log(`[Unmatched $] in node ${id}:`, plainParts[i]);
-      }
+      errorsFound++;
+      console.error(`[KATEX ERROR] in ${context}: "${math}" -> ${e.message}`);
     }
   }
 }
 
-console.log('=== VERIFICATION SUMMARY ===');
-console.log('Total text items checked:', totalChecked);
-console.log('KaTeX errors found:', katexErrorCount);
-console.log('Unmatched $ found:', rawDollarCount);
+// Traverse KB and check every string
+for (const [nodeId, node] of Object.entries(kb)) {
+  checkString(node.title, `${nodeId}.title`);
+  checkString(node.firstReaction, `${nodeId}.firstReaction`);
+  checkString(node.whyChooseMethod, `${nodeId}.whyChooseMethod`);
+  (node.triggers || []).forEach((t, i) => checkString(t, `${nodeId}.triggers[${i}]`));
+  (node.standardSteps || []).forEach((s, i) => checkString(s, `${nodeId}.standardSteps[${i}]`));
+  (node.pitfalls || []).forEach((p, i) => checkString(p, `${nodeId}.pitfalls[${i}]`));
+
+  (node.candidateMethods || []).forEach((m, i) => {
+    checkString(m.name, `${nodeId}.candidateMethods[${i}].name`);
+    checkString(m.applicability, `${nodeId}.candidateMethods[${i}].applicability`);
+    checkString(m.whyChoose, `${nodeId}.candidateMethods[${i}].whyChoose`);
+  });
+
+  (node.coreFormulas || []).forEach((f, i) => {
+    checkString(f.latex, `${nodeId}.coreFormulas[${i}].latex`);
+  });
+
+  (node.pastQuestions || []).forEach((q, i) => {
+    checkString(q.content, `${nodeId}.pastQuestions[${i}].content (${q.id})`);
+    checkString(q.analysis, `${nodeId}.pastQuestions[${i}].analysis (${q.id})`);
+    checkString(q.answer, `${nodeId}.pastQuestions[${i}].answer (${q.id})`);
+    checkString(q.pitfall, `${nodeId}.pastQuestions[${i}].pitfall (${q.id})`);
+    (q.solutionSteps || []).forEach((s, si) => {
+      checkString(s, `${nodeId}.pastQuestions[${i}].solutionSteps[${si}]`);
+    });
+  });
+}
+
+console.log("\n=== VERIFICATION SUMMARY ===");
+console.log(`Total text items checked: ${totalItemsChecked}`);
+console.log(`KaTeX errors found: ${errorsFound}`);
+console.log(`Unmatched $ found: ${unmatchedDollars}`);
+
+if (errorsFound === 0 && unmatchedDollars === 0) {
+  process.exit(0);
+} else {
+  process.exit(1);
+}
