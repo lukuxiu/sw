@@ -4,6 +4,7 @@ import {
 } from 'lucide-react';
 import { KNOWLEDGE_BASE } from '../data/knowledgeBase';
 import { LearningStatus } from '../data/types';
+import { MathView } from './MathView';
 import { getAllLearningStatuses, getOverallProgress, setLearningStatus } from '../data/storage';
 
 interface ReviewModalProps {
@@ -149,9 +150,9 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
                         {topic.subjectName} · {topic.chapterTitle}
                       </span>
                     </div>
-                    <p className="text-xs text-[var(--muted)] mt-1 line-clamp-1 leading-relaxed font-body">
-                      {topic.summary}
-                    </p>
+                    <div className="text-xs text-[var(--muted)] mt-1 line-clamp-1 leading-relaxed font-body">
+                      <MathView content={topic.summary} inline />
+                    </div>
                   </div>
 
                   {/* Actions */}

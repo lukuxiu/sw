@@ -1,3 +1,4 @@
+import { MathView } from './MathView';
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   ZoomIn, ZoomOut, RotateCcw, ChevronRight, ChevronDown, 
@@ -321,9 +322,9 @@ export const MindmapView: React.FC<MindmapViewProps> = ({
                                                 </span>
                                               )}
                                             </div>
-                                            <p className="text-[11px] text-[var(--muted)] mt-1 line-clamp-1 leading-relaxed">
-                                              {t.summary}
-                                            </p>
+                                            <div className="text-[11px] text-[var(--muted)] mt-1 line-clamp-1 leading-relaxed">
+                                              <MathView content={t.summary} inline />
+                                            </div>
                                           </div>
 
                                           {/* Status Indicator */}
@@ -347,7 +348,7 @@ export const MindmapView: React.FC<MindmapViewProps> = ({
                                         {t.triggers && t.triggers.length > 0 && (
                                           <div className="mt-2 pt-1.5 border-t border-[var(--line)] flex items-center gap-1 text-[10px] font-mono text-[var(--muted)]">
                                             <span className="text-[var(--blue)]">看到:</span>
-                                            <span className="truncate">{t.triggers[0]}</span>
+                                            <span className="truncate"><MathView content={t.triggers[0]} inline /></span>
                                           </div>
                                         )}
                                       </div>

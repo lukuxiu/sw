@@ -3,6 +3,7 @@ import {
   Search, X, Compass, Award, Sun, Moon
 } from 'lucide-react';
 import { searchKnowledgeBase } from '../data/search';
+import { MathView } from './MathView';
 import { SearchMatchItem } from '../data/types';
 import { getOverallProgress } from '../data/storage';
 
@@ -156,7 +157,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                         </span>
                       </div>
                       <div className="text-[11px] text-[var(--muted)] mt-1 line-clamp-1 font-mono">
-                        <span className="text-[var(--blue)]">[{item.matchedField}]</span> {item.snippet}
+                        <span className="text-[var(--blue)]">[{item.matchedField}]</span> <MathView content={item.snippet} inline />
                       </div>
                     </div>
                   ))}

@@ -313,7 +313,7 @@ export const ChapterView: React.FC<ChapterViewProps> = ({
                   § 一句话记忆
                 </div>
                 <p className="text-sm text-[var(--ink)] font-medium leading-relaxed font-body">
-                  {activeTopic.summary}
+                  <MathView content={activeTopic.summary} inline />
                 </p>
               </div>
 
@@ -327,7 +327,7 @@ export const ChapterView: React.FC<ChapterViewProps> = ({
                     {activeTopic.triggers.map((trig, idx) => (
                       <li key={idx} className="flex items-start gap-1.5">
                         <span className="text-[var(--muted)] font-mono">•</span>
-                        <span>{trig}</span>
+                        <span className="leading-relaxed"><MathView content={trig} inline /></span>
                       </li>
                     ))}
                   </ul>
@@ -337,9 +337,9 @@ export const ChapterView: React.FC<ChapterViewProps> = ({
                   <h3 className="text-xs font-mono font-bold text-[var(--blue)] mb-2">
                     [第一反应] 应该想到什么？
                   </h3>
-                  <p className="text-xs text-[var(--ink)] leading-relaxed font-body">
-                    {activeTopic.firstReaction}
-                  </p>
+                  <div className="text-xs text-[var(--ink)] leading-relaxed font-body">
+                    <MathView content={activeTopic.firstReaction} inline />
+                  </div>
                 </div>
               </div>
 

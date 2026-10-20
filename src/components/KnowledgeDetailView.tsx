@@ -145,7 +145,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
               § 1. 一句话记忆 (Core Takeaway)
             </div>
             <p className="text-sm text-[var(--ink)] font-medium leading-relaxed font-body">
-              {node.summary}
+              <MathView content={node.summary} inline />
             </p>
           </div>
         </div>
@@ -164,7 +164,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
               {node.triggers.map((trig, idx) => (
                 <li key={idx} className="flex items-start gap-2 bg-[var(--well)] p-2.5 rounded-[8px] border border-[var(--line)]">
                   <span className="font-mono text-[var(--amber)] font-bold">0{idx + 1}.</span>
-                  <span className="leading-relaxed">{trig}</span>
+                  <span className="leading-relaxed"><MathView content={trig} inline /></span>
                 </li>
               ))}
             </ul>
@@ -179,7 +179,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
               读完题后大脑首要执行的自检动作与初步化简思路：
             </p>
             <div className="bg-[var(--well)] border border-[var(--line)] p-3.5 rounded-[8px] text-xs leading-relaxed text-[var(--ink)] font-body">
-              {node.firstReaction}
+              <MathView content={node.firstReaction} inline />
             </div>
           </div>
         </div>
@@ -207,18 +207,18 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
                     <h3 className="text-xs font-bold text-[var(--ink)] font-display">{m.name}</h3>
                   </div>
                   <span className="text-xs font-mono text-[var(--blue)]">
-                    理由: {m.whyChoose}
+                    理由: <MathView content={m.whyChoose} inline />
                   </span>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
                   <div>
                     <span className="text-[var(--muted)] font-mono">适用特征：</span>
-                    <p className="text-[var(--ink)] mt-0.5 leading-relaxed font-body">{m.condition}</p>
+                    <div className="text-[var(--ink)] mt-0.5 leading-relaxed font-body"><MathView content={m.condition} inline /></div>
                   </div>
                   <div>
                     <span className="text-[var(--muted)] font-mono">核心操作：</span>
-                    <p className="text-[var(--ink)] mt-0.5 leading-relaxed font-body">{m.description}</p>
+                    <div className="text-[var(--ink)] mt-0.5 leading-relaxed font-body"><MathView content={m.description} inline /></div>
                   </div>
                 </div>
               </div>
@@ -233,9 +233,9 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
             <div className="text-xs font-mono font-bold text-[var(--red)]">
               § 5. 适用条件与前置限制
             </div>
-            <p className="text-xs text-[var(--ink)] leading-relaxed bg-[var(--well)] p-3.5 rounded-[8px] border border-[var(--line)] font-body">
-              {node.applicability}
-            </p>
+            <div className="text-xs text-[var(--ink)] leading-relaxed bg-[var(--well)] p-3.5 rounded-[8px] border border-[var(--line)] font-body">
+              <MathView content={node.applicability} inline />
+            </div>
           </div>
 
           {/* 解题步骤 */}
@@ -292,7 +292,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
               {node.pitfalls.map((pitfall, idx) => (
                 <div key={idx} className="bg-[var(--well)] p-3 rounded-[8px] border border-[var(--line)] flex items-start gap-2 text-xs text-[var(--ink)] leading-relaxed font-body">
                   <span className="text-[var(--red)] font-mono font-bold">[!]</span>
-                  <span>{pitfall}</span>
+                  <div className="flex-1 leading-relaxed"><MathView content={pitfall} inline /></div>
                 </div>
               ))}
             </div>
@@ -380,14 +380,14 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
                       <div className="flex items-center gap-2">
                         <span className="text-[var(--muted)] font-mono">答案：</span>
                         <span className="font-bold text-[var(--green)] bg-[var(--sheet)] px-2 py-0.5 rounded border border-[var(--line)]">
-                          {q.answer}
+                          <MathView content={q.answer} inline />
                         </span>
                       </div>
                     )}
                     {q.pitfall && (
                       <div className="text-[var(--muted)] text-xs flex items-center gap-1 font-mono">
                         <span className="text-[var(--red)] font-bold">易错：</span>
-                        <span>{q.pitfall}</span>
+                        <MathView content={q.pitfall} inline />
                       </div>
                     )}
                   </div>
@@ -476,7 +476,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
 
                         {v.keyTakeaway && (
                           <div className="text-xs font-mono text-[var(--green)] bg-[var(--green-bg)] p-2.5 rounded-[8px] border border-[var(--green)]">
-                            结论提炼：{v.keyTakeaway}
+                            结论提炼：<MathView content={v.keyTakeaway} inline />
                           </div>
                         )}
                       </div>
