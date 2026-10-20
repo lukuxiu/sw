@@ -42,10 +42,10 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs font-body">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-xs font-body">
       <div className="bg-[var(--sheet)] border border-[var(--line)] rounded-[14px] w-full max-w-3xl max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
         {/* Modal Header */}
-        <div className="px-6 py-4 bg-[var(--well)] border-b border-[var(--line)] flex items-center justify-between">
+        <div className="px-4 sm:px-6 py-3 sm:py-4 bg-[var(--well)] border-b border-[var(--line)] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="p-1.5 rounded-[6px] bg-[var(--sheet)] text-[var(--blue)] border border-[var(--line)]">
               <Award className="w-4 h-4" />
@@ -68,7 +68,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
         </div>
 
         {/* Overview Stats Bar */}
-        <div className="px-6 py-3 bg-[var(--sheet)] border-b border-[var(--line)] flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
+        <div className="px-4 sm:px-6 py-2.5 sm:py-3 bg-[var(--sheet)] border-b border-[var(--line)] flex flex-wrap items-center justify-between gap-2 sm:gap-4 font-mono text-xs">
           <div className="flex items-center gap-4">
             <div>
               <span className="text-[var(--muted)]">已掌握: </span>
@@ -95,7 +95,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
                   : 'text-[var(--muted)] hover:text-[var(--ink)]'
               }`}
             >
-              推导困难 ({progress.struggling})
+              <span className="hidden sm:inline">推导困难</span><span className="inline sm:hidden">困难</span> ({progress.struggling})
             </button>
             <button
               onClick={() => setFilter('mastered')}
@@ -105,7 +105,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
                   : 'text-[var(--muted)] hover:text-[var(--ink)]'
               }`}
             >
-              已完全掌握 ({progress.mastered})
+              <span className="hidden sm:inline">已完全掌握</span><span className="inline sm:hidden">已掌握</span> ({progress.mastered})
             </button>
             <button
               onClick={() => setFilter('all')}
@@ -121,7 +121,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
         </div>
 
         {/* Topic List */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-2.5">
+        <div className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-2 sm:space-y-2.5">
           {filteredTopics.length === 0 ? (
             <div className="text-center py-12 text-[var(--muted)] font-mono text-xs space-y-1">
               <p>暂无该状态下的考点</p>
@@ -156,7 +156,7 @@ export const ReviewModal: React.FC<ReviewModalProps> = ({
                   </div>
 
                   {/* Actions */}
-                  <div className="flex items-center gap-2 flex-shrink-0 font-mono text-xs">
+                  <div className="flex items-center justify-between sm:justify-end gap-2 flex-shrink-0 font-mono text-xs mt-2 sm:mt-0 pt-2 sm:pt-0 border-t sm:border-0 border-[var(--line)]">
                     <div className="flex items-center gap-1 bg-[var(--sheet)] p-0.5 rounded-[6px] border border-[var(--line)]">
                       <button
                         onClick={() => handleUpdateStatus(topic.id, 'struggling')}

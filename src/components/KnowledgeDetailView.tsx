@@ -53,7 +53,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
   return (
     <div className="min-h-[calc(100vh-56px)] bg-[var(--paper)] text-[var(--ink)] pb-20 font-body">
       {/* Top Breadcrumb & Control Bar */}
-      <div className="sticky top-0 z-20 bg-[var(--sheet)] border-b border-[var(--line)] px-4 lg:px-8 py-3 shadow-sm">
+      <div className="sticky top-0 z-20 bg-[var(--sheet)] border-b border-[var(--line)] px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 shadow-xs">
         <div className="max-w-4xl mx-auto flex flex-wrap items-center justify-between gap-3 font-mono text-xs">
           {/* Breadcrumbs */}
           <div className="flex items-center space-x-2 text-[var(--muted)] overflow-x-auto py-0.5">
@@ -100,7 +100,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
                   : 'text-[var(--muted)] hover:text-[var(--amber)]'
               }`}
             >
-              推导困难
+              <span className="hidden sm:inline">推导困难</span><span className="inline sm:hidden">困难</span>
             </button>
             <button
               onClick={() => handleStatusChange('mastered')}
@@ -110,17 +110,17 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
                   : 'text-[var(--muted)] hover:text-[var(--green)]'
               }`}
             >
-              能够独立完成
+              <span className="hidden sm:inline">能够独立完成</span><span className="inline sm:hidden">已掌握</span>
             </button>
           </div>
         </div>
       </div>
 
       {/* Main Content Article Body */}
-      <div className="max-w-4xl mx-auto px-4 lg:px-8 mt-6 space-y-8">
+      <div className="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 mt-4 sm:mt-6 space-y-5 sm:space-y-8">
         
         {/* Title Header Card */}
-        <div className="bg-[var(--sheet)] border border-[var(--line)] rounded-[14px] p-6 lg:p-8 space-y-4 shadow-sm">
+        <div className="bg-[var(--sheet)] border border-[var(--line)] rounded-[14px] p-4 sm:p-6 lg:p-8 space-y-3 sm:space-y-4 shadow-xs">
           <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-[var(--muted)]">
             <span className="px-2 py-0.5 rounded-[999px] bg-[var(--well)] border border-[var(--line)] text-[var(--ink)]">
               {subject.name} · 第 {chapter.order} 讲
@@ -185,7 +185,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
         </div>
 
         {/* 候选解题方法与优先级 */}
-        <div className="bg-[var(--sheet)] border border-[var(--line)] rounded-[14px] p-6 space-y-4 shadow-sm">
+        <div className="bg-[var(--sheet)] border border-[var(--line)] rounded-[14px] p-4 sm:p-6 space-y-3 sm:space-y-4 shadow-xs">
           <div className="flex items-center justify-between pb-2 border-b border-[var(--line)]">
             <h2 className="text-sm font-display font-bold text-[var(--ink)]">
               § 4. 候选方法与优先级判断 (Candidate Methods)
@@ -284,7 +284,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
 
         {/* 易错点分析 */}
         {node.pitfalls && node.pitfalls.length > 0 && (
-          <div className="bg-[var(--sheet)] border border-[var(--red)]/40 rounded-[14px] p-6 space-y-3 shadow-sm">
+          <div className="bg-[var(--sheet)] border border-[var(--red)]/40 rounded-[14px] p-4 sm:p-6 space-y-3 shadow-xs">
             <h2 className="text-xs font-mono font-bold text-[var(--red)]">
               § 8. 高频失分点与自查清单 (Pitfalls & Common Errors)
             </h2>
@@ -300,7 +300,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
         )}
 
         {/* 历年真题实战检验 (Maki PDF 真题分类精解样式) */}
-        <div className="bg-[var(--sheet)] border border-[var(--line)] rounded-[14px] p-6 space-y-6 shadow-sm">
+        <div className="bg-[var(--sheet)] border border-[var(--line)] rounded-[14px] p-4 sm:p-6 space-y-4 sm:space-y-6 shadow-xs">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-[var(--line)]">
             <div>
               <h2 className="text-base font-display font-bold text-[var(--ink)]">
@@ -490,7 +490,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
 
         {/* 关联考点 */}
         {node.relatedKnowledgeIds && node.relatedKnowledgeIds.length > 0 && (
-          <div className="bg-[var(--sheet)] border border-[var(--line)] rounded-[14px] p-6 space-y-3 shadow-sm">
+          <div className="bg-[var(--sheet)] border border-[var(--line)] rounded-[14px] p-4 sm:p-6 space-y-3 shadow-xs">
             <h2 className="text-xs font-mono font-bold text-[var(--ink)]">
               § 11. 关联考点 (Related Topics)
             </h2>
@@ -515,12 +515,12 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
         )}
 
         {/* Bottom Navigation Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[var(--line)] font-mono text-xs">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 pt-5 sm:pt-6 border-t border-[var(--line)] font-mono text-xs">
           <div>
             {prevTopicId ? (
               <button
                 onClick={() => onNavigateTopic(prevTopicId)}
-                className="flex items-center gap-2 px-3.5 py-2 rounded-[8px] bg-[var(--sheet)] hover:bg-[var(--well)] border border-[var(--line)] text-[var(--ink)] transition-colors"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-3.5 py-2.5 sm:py-2 rounded-[8px] bg-[var(--sheet)] hover:bg-[var(--well)] border border-[var(--line)] text-[var(--ink)] transition-colors"
               >
                 <ChevronLeft className="w-4 h-4" />
                 <span>上一考点：{KNOWLEDGE_BASE[prevTopicId]?.title}</span>
@@ -532,7 +532,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
 
           <button
             onClick={() => onBackToChapter(chapter.id)}
-            className="px-4 py-2 rounded-[8px] bg-[var(--sheet)] hover:bg-[var(--well)] text-[var(--muted)] hover:text-[var(--ink)] border border-[var(--line)] transition-colors"
+            className="w-full sm:w-auto text-center px-4 py-2.5 sm:py-2 rounded-[8px] bg-[var(--sheet)] hover:bg-[var(--well)] text-[var(--muted)] hover:text-[var(--ink)] border border-[var(--line)] transition-colors"
           >
             返回章节目录
           </button>
@@ -541,7 +541,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
             {nextTopicId ? (
               <button
                 onClick={() => onNavigateTopic(nextTopicId)}
-                className="flex items-center gap-2 px-3.5 py-2 rounded-[8px] bg-[var(--ink)] text-[var(--paper)] font-bold transition-all hover:opacity-90"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-3.5 py-2.5 sm:py-2 rounded-[8px] bg-[var(--ink)] text-[var(--paper)] font-bold transition-all hover:opacity-90"
               >
                 <span>下一考点：{KNOWLEDGE_BASE[nextTopicId]?.title}</span>
                 <ArrowRight className="w-4 h-4" />

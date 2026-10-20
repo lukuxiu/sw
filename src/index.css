@@ -93,9 +93,30 @@
   overflow-x: auto;
   overflow-y: hidden;
   padding: 0.2em 0;
+  -webkit-overflow-scrolling: touch;
 }
 
 .katex {
   font-size: 1.05em;
   color: var(--ink);
+}
+
+.math-rendered {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 640px) {
+  .katex-display {
+    font-size: 0.9em;
+    padding: 0.1em 0;
+  }
+  .katex {
+    font-size: 0.98em;
+  }
+}
+
+/* Touch canvas container */
+.touch-canvas {
+  touch-action: none;
 }
