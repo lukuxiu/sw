@@ -112,3 +112,36 @@ export interface MindmapTreeNode {
   children?: MindmapTreeNode[];
   isPending?: boolean;
 }
+
+
+export type MistakeTag =
+  | '公式记错'
+  | '计算失误'
+  | '定义域/限制遗漏'
+  | '分类讨论不全'
+  | '突破口未想到';
+
+export interface TopicRecord {
+  status: LearningStatus;
+  lastReviewedAt?: number;
+  reviewCount?: number;
+  mistakeTags?: string[];
+  notes?: string;
+}
+
+export interface UniversalMetaMethod {
+  id: string;
+  name: string;
+  subtitle: string;
+  corePhilosophy: string;
+  manifestations: {
+    subjectId: SubjectId;
+    subjectName: string;
+    chapterTitle: string;
+    topicId: string;
+    topicTitle: string;
+    triggerForm: string;
+    coreAction: string;
+  }[];
+  commonPitfalls: string[];
+}

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { 
   ZoomIn, ZoomOut, RotateCcw, ChevronRight, ChevronDown, 
-  Minus, Plus, ArrowRight, LayoutGrid, Network, Compass
+  Minus, Plus, ArrowRight, LayoutGrid, Network, Compass, Eye, EyeOff
 } from 'lucide-react';
 import { SUBJECTS, CHAPTERS } from '../data/subjects';
 import { KNOWLEDGE_BASE } from '../data/knowledgeBase';
@@ -27,6 +27,7 @@ export const MindmapView: React.FC<MindmapViewProps> = ({
 
   // Branch focus: 'all' | 'gaoshu' | 'xiandai' | 'gailv'
   const [focusSubject, setFocusSubject] = useState<'all' | SubjectId>('all');
+  const [isMaskMode, setIsMaskMode] = useState<boolean>(false);
 
   const [scale, setScale] = useState<number>(0.85);
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 40, y: 220 });
@@ -264,6 +265,19 @@ export const MindmapView: React.FC<MindmapViewProps> = ({
               [缩放: {Math.round(scale * 100)}%]
             </span>
 
+            <button
+              onClick={() => setIsMaskMode(!isMaskMode)}
+              className={`flex items-center gap-1 px-2.5 py-1.5 rounded-[6px] border text-xs font-mono transition-colors ${
+                isMaskMode
+                  ? 'bg-[var(--amber-bg)] text-[var(--amber)] border-[var(--amber)] font-bold'
+                  : 'bg-[var(--well)] text-[var(--muted)] hover:text-[var(--ink)] border-[var(--line)]'
+              }`}
+              title="开启遮盖模式后，卡片上的提示与信号默认打码，点击或悬停才显示，强化主动回忆"
+            >
+              {isMaskMode ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+              <span className="hidden sm:inline">{isMaskMode ? '遮盖背诵中' : '遮盖背诵'}</span>
+            </button>
+            <div className="h-3.5 w-px bg-[var(--line)] mx-0.5" />
             <button
               onClick={handleZoomIn}
               title="放大"
@@ -525,7 +539,7 @@ export const MindmapView: React.FC<MindmapViewProps> = ({
                                                     </span>
                                                   )}
                                                 </div>
-                                                <div className="text-[11px] text-[var(--muted)] mt-1 line-clamp-1 leading-relaxed">
+                                                <div className={`text-[11px] text-[var(--muted)] mt-1 line-clamp-1 leading-relaxed transition-all ${isMaskMode ? 'blur-xs hover:blur-none select-none hover:select-text cursor-pointer' : ''}`}>
                                                   <MathView content={t.summary} inline />
                                                 </div>
                                               </div>
@@ -551,7 +565,7 @@ export const MindmapView: React.FC<MindmapViewProps> = ({
                                             {t.triggers && t.triggers.length > 0 && (
                                               <div className="mt-2 pt-1.5 border-t border-[var(--line)] flex items-center gap-1 text-[10px] font-mono text-[var(--muted)]">
                                                 <span className="text-[var(--blue)]">看到:</span>
-                                                <span className="truncate"><MathView content={t.triggers[0]} inline /></span>
+                                                <span className={`truncate transition-all ${isMaskMode ? 'blur-xs hover:blur-none select-none hover:select-text cursor-pointer' : ''}`}><MathView content={t.triggers[0]} inline /></span>
                                               </div>
                                             )}
                                           </div>
@@ -688,7 +702,7 @@ export const MindmapView: React.FC<MindmapViewProps> = ({
                                       </span>
                                     ) : null}
                                   </div>
-                                  <p className="text-[11px] text-[var(--muted)] line-clamp-1">
+                                  <p className={`text-[11px] text-[var(--muted)] line-clamp-1 transition-all ${isMaskMode ? 'blur-xs hover:blur-none select-none hover:select-text cursor-pointer' : ''}`}>
                                     <MathView content={t.summary} inline />
                                   </p>
                                 </div>

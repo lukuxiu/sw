@@ -4,6 +4,8 @@ import { MindmapView } from './components/MindmapView';
 import { ChapterView } from './components/ChapterView';
 import { KnowledgeDetailView } from './components/KnowledgeDetailView';
 import { ReviewModal } from './components/ReviewModal';
+import { FeatureLookupModal } from './components/FeatureLookupModal';
+import { MetaMethodModal } from './components/MetaMethodModal';
 import { CHAPTERS } from './data/subjects';
 import { KNOWLEDGE_BASE } from './data/knowledgeBase';
 
@@ -15,6 +17,8 @@ type RouteState =
 export function App() {
   const [route, setRoute] = useState<RouteState>({ type: 'mindmap' });
   const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const [isFeatureLookupOpen, setIsFeatureLookupOpen] = useState(false);
+  const [isMetaMethodOpen, setIsMetaMethodOpen] = useState(false);
 
   // Parse hash to route
   const parseHash = (): RouteState => {
@@ -77,6 +81,8 @@ export function App() {
         onNavigateChapter={(cid) => navigateToChapter(cid)}
         onNavigateTopic={(tid) => navigateToTopic(tid)}
         onOpenReviewModal={() => setIsReviewOpen(true)}
+        onOpenFeatureLookup={() => setIsFeatureLookupOpen(true)}
+        onOpenMetaMethods={() => setIsMetaMethodOpen(true)}
       />
 
       {/* Main View Area */}
@@ -108,10 +114,24 @@ export function App() {
         )}
       </main>
 
-      {/* Review Hub Modal */}
+      {/* Review Hub Modal (With Export/Import & Ebbinghaus Time Sorting) */}
       <ReviewModal
         isOpen={isReviewOpen}
         onClose={() => setIsReviewOpen(false)}
+        onSelectTopic={(tid) => navigateToTopic(tid)}
+      />
+
+      {/* Feature Matrix & Active Recall Flashcards Modal */}
+      <FeatureLookupModal
+        isOpen={isFeatureLookupOpen}
+        onClose={() => setIsFeatureLookupOpen(false)}
+        onSelectTopic={(tid) => navigateToTopic(tid)}
+      />
+
+      {/* Universal Cross-Chapter Meta-Methods Matrix Modal */}
+      <MetaMethodModal
+        isOpen={isMetaMethodOpen}
+        onClose={() => setIsMetaMethodOpen(false)}
         onSelectTopic={(tid) => navigateToTopic(tid)}
       />
     </div>

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
-  Search, X, Compass, Award, Sun, Moon
+  Search, X, Compass, Award, Sun, Moon, Sparkles, Layers
 } from 'lucide-react';
 import { searchKnowledgeBase } from '../data/search';
 import { MathView } from './MathView';
@@ -12,6 +12,8 @@ interface NavbarProps {
   onNavigateChapter: (chapterId: string) => void;
   onNavigateTopic: (topicId: string) => void;
   onOpenReviewModal: () => void;
+  onOpenFeatureLookup: () => void;
+  onOpenMetaMethods: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -19,6 +21,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onNavigateChapter,
   onNavigateTopic,
   onOpenReviewModal,
+  onOpenFeatureLookup,
+  onOpenMetaMethods,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<SearchMatchItem[]>([]);
@@ -174,29 +178,48 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Right Navigation Actions */}
-        <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
+        <div className="flex items-center space-x-1 sm:space-x-1.5 flex-shrink-0">
+          {/* Feature Lookup Button (看到了什么 -> 逆向速查 & 闪卡) */}
+          <button
+            onClick={onOpenFeatureLookup}
+            className="flex items-center gap-1 p-2 sm:px-2.5 sm:py-1.5 rounded-[8px] bg-[var(--well)] hover:bg-[var(--sheet)] text-xs text-[var(--ink)] border border-[var(--line)] transition-colors"
+            title="题目特征逆向速查与闪卡抽查（看到什么就想到什么）"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-[var(--amber)]" />
+            <span className="hidden lg:inline font-medium">特征速查</span>
+          </button>
+
+          {/* Universal Meta-Methods Button (跨章节通用方法) */}
+          <button
+            onClick={onOpenMetaMethods}
+            className="flex items-center gap-1 p-2 sm:px-2.5 sm:py-1.5 rounded-[8px] bg-[var(--well)] hover:bg-[var(--sheet)] text-xs text-[var(--ink)] border border-[var(--line)] transition-colors"
+            title="数一跨章节通用方法论矩阵（对称性、构造辅助函数等）"
+          >
+            <Layers className="w-3.5 h-3.5 text-[var(--purple)]" />
+            <span className="hidden lg:inline font-medium">通用方法</span>
+          </button>
+
           {/* Mindmap Nav Button */}
           <button
             onClick={onNavigateMindmap}
-            className="flex items-center gap-1.5 p-2 sm:px-3 sm:py-1.5 rounded-[8px] bg-[var(--well)] hover:bg-[var(--sheet)] text-xs text-[var(--ink)] border border-[var(--line)] transition-colors"
+            className="flex items-center gap-1.5 p-2 sm:px-2.5 sm:py-1.5 rounded-[8px] bg-[var(--well)] hover:bg-[var(--sheet)] text-xs text-[var(--ink)] border border-[var(--line)] transition-colors"
             title="返回总思维导图"
           >
             <Compass className="w-3.5 h-3.5 text-[var(--muted)]" />
-            <span className="hidden md:inline font-medium">总思维导图</span>
+            <span className="hidden md:inline font-medium">总导图</span>
           </button>
 
           {/* Review Hub Button */}
           <button
             onClick={onOpenReviewModal}
-            className="flex items-center gap-1.5 p-2 sm:px-3 sm:py-1.5 rounded-[8px] bg-[var(--well)] hover:bg-[var(--sheet)] text-xs text-[var(--ink)] border border-[var(--line)] transition-colors relative"
-            title="复习薄弱点清单"
+            className="flex items-center gap-1.5 p-2 sm:px-2.5 sm:py-1.5 rounded-[8px] bg-[var(--well)] hover:bg-[var(--sheet)] text-xs text-[var(--ink)] border border-[var(--line)] transition-colors relative"
+            title="复习薄弱点清单与备份"
           >
             <Award className="w-3.5 h-3.5 text-[var(--blue)]" />
-            <span className="hidden sm:inline font-medium">薄弱点</span>
+            <span className="hidden md:inline font-medium">薄弱点</span>
             <span className="font-mono text-[11px] text-[var(--muted)] hidden sm:inline">
               [{progress.mastered}/{progress.total}]
             </span>
-            {/* Small badge dot on mobile */}
             {progress.struggling > 0 && (
               <span className="sm:hidden absolute -top-1 -right-1 w-2.5 h-2.5 bg-[var(--amber)] rounded-full border-2 border-[var(--sheet)]" />
             )}
