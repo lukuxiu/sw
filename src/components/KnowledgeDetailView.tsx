@@ -52,6 +52,13 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
     setRecord(getTopicRecord(node.id));
   };
 
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const handleToggleMistakeTag = (tag: MistakeTag) => {
     const currentTags = record.mistakeTags || [];
     const exists = currentTags.includes(tag);
@@ -180,27 +187,27 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
           {/* Quick Anchor Jump Bar */}
           <div className="pt-2 border-t border-[var(--line)] flex items-center gap-1.5 overflow-x-auto no-scrollbar font-mono text-[11px] text-[var(--muted)]">
             <span className="flex-shrink-0 text-[10px]">跳转:</span>
-            <a href="#sec-breakthrough" className="px-2 py-1 rounded bg-[var(--well)] hover:bg-[var(--line)] text-[var(--ink)] flex-shrink-0">
+            <button onClick={() => scrollToSection('sec-breakthrough')} className="px-2 py-1 rounded bg-[var(--well)] hover:bg-[var(--line)] text-[var(--ink)] flex-shrink-0 cursor-pointer">
               突破口与反应
-            </a>
-            <a href="#sec-methods" className="px-2 py-1 rounded bg-[var(--well)] hover:bg-[var(--line)] text-[var(--ink)] flex-shrink-0">
+            </button>
+            <button onClick={() => scrollToSection('sec-methods')} className="px-2 py-1 rounded bg-[var(--well)] hover:bg-[var(--line)] text-[var(--ink)] flex-shrink-0 cursor-pointer">
               候选方法
-            </a>
-            <a href="#sec-steps" className="px-2 py-1 rounded bg-[var(--well)] hover:bg-[var(--line)] text-[var(--ink)] flex-shrink-0">
+            </button>
+            <button onClick={() => scrollToSection('sec-steps')} className="px-2 py-1 rounded bg-[var(--well)] hover:bg-[var(--line)] text-[var(--ink)] flex-shrink-0 cursor-pointer">
               标准步骤
-            </a>
-            <a href="#sec-formulas" className="px-2 py-1 rounded bg-[var(--well)] hover:bg-[var(--line)] text-[var(--ink)] flex-shrink-0">
+            </button>
+            <button onClick={() => scrollToSection('sec-formulas')} className="px-2 py-1 rounded bg-[var(--well)] hover:bg-[var(--line)] text-[var(--ink)] flex-shrink-0 cursor-pointer">
               核心公式
-            </a>
-            <a href="#sec-variants" className="px-2 py-1 rounded bg-[var(--blue-bg)] text-[var(--blue)] font-bold flex-shrink-0">
+            </button>
+            <button onClick={() => scrollToSection('sec-variants')} className="px-2 py-1 rounded bg-[var(--blue-bg)] text-[var(--blue)] font-bold flex-shrink-0 cursor-pointer">
               自测挑战(先练)
-            </a>
-            <a href="#sec-past" className="px-2 py-1 rounded bg-[var(--well)] hover:bg-[var(--line)] text-[var(--ink)] flex-shrink-0">
+            </button>
+            <button onClick={() => scrollToSection('sec-past')} className="px-2 py-1 rounded bg-[var(--well)] hover:bg-[var(--line)] text-[var(--ink)] flex-shrink-0 cursor-pointer">
               历年真题
-            </a>
-            <a href="#sec-pitfalls" className="px-2 py-1 rounded bg-[var(--well)] hover:bg-[var(--line)] text-[var(--ink)] flex-shrink-0">
+            </button>
+            <button onClick={() => scrollToSection('sec-pitfalls')} className="px-2 py-1 rounded bg-[var(--well)] hover:bg-[var(--line)] text-[var(--ink)] flex-shrink-0 cursor-pointer">
               易错自查
-            </a>
+            </button>
           </div>
         </div>
 

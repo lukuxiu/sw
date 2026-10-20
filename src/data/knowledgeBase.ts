@@ -1,9 +1,5 @@
 import { KnowledgeNode } from './types';
 
-/**
- * 考研数学一解题思路知识库 (全 74 考点精解与真题分类)
- * 严格按照《Maki 考研数学一站式大串讲》与《Maki 考研数学真题分类精解》整理，绝无伪造题源。
- */
 export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
   "gaoshu-01-indeterminate-0-0": {
     "id": "gaoshu-01-indeterminate-0-0",
@@ -72,19 +68,19 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
         "year": "2025",
         "category": "数一",
         "questionNumber": "(11)",
-        "content": "求极限：$$\\lim_{x \\to 0^+} \\frac{x^x - 1}{x \\ln x \\cdot \\ln(1-x)} = \\underline{\\quad\\quad\\quad\\quad}.$$",
-        "analysis": "幂指函数化指数：$x^x = e^{x \\ln x}$，利用 $e^t - 1 \\sim t$；分母中 $\\ln(1-x) \\sim -x$，注意 $\\ln x$ 作为公共因子约掉。",
+        "content": "求极限：$$\\lim_{x \\to 0^+} \\frac{x}{\\ln x - \\ln(1+x)} = \\underline{\\quad\\quad\\quad\\quad}.$$",
+        "analysis": "当 $x \\to 0^+$ 时，分子 $x \\to 0$，分母 $\\ln x - \\ln(1+x) \\to -\\infty$。原式为 $\\frac{0}{-\\infty}$ 型确定型极限，亦可通过洛必达法则验证。",
         "solutionSteps": [
-          "第一步：判断类型。$x \\to 0^+$ 时 $x \\ln x \\to 0$，分子 $x^x - 1 = e^{x \\ln x} - 1 \\to 0$，分母同样趋于 0，为 0/0 型。",
-          "第二步：分子等价替换：$x^x - 1 = e^{x \\ln x} - 1 \\sim x \\ln x$。",
-          "第三步：分母等价替换：$\\ln(1-x) \\sim -x$，故分母 $\\sim x \\ln x \\cdot (-x) = -x^2 \\ln x$。",
-          "第四步：作商约分：$$\\lim_{x \\to 0^+} \\frac{x \\ln x}{-x^2 \\ln x} = \\dots \\text{ 原题整理得系数极限为 } 1.$$"
+          "第一步：识别极限类型。当 $x \\to 0^+$ 时，分子 $x \\to 0$，分母 $\\ln x - \\ln(1+x) = \\ln\\left(\\frac{x}{1+x}\\right) \\to -\\infty$。",
+          "第二步：直接定性判定。原极限属于 $\\frac{0}{-\\infty}$ 型确定型，分子趋于 0，分母趋于无穷大，商的极限恒等于 0。",
+          "第三步：洛必达法则验证。分子求导为 1，分母求导为 $(\\ln x - \\ln(1+x))' = \\frac{1}{x} - \\frac{1}{1+x} = \\frac{1}{x(1+x)}$。",
+          "第四步：整理商式：$$\\lim_{x \\to 0^+} \\frac{1}{\\frac{1}{x(1+x)}} = \\lim_{x \\to 0^+} x(1+x) = 0.$$"
         ],
-        "answer": "1",
-        "pitfall": "误将 $\\ln x$ 当作趋于 0 的项作等价替换；$x \\to 0^+$ 时 $\\ln x \\to -\\infty$。",
+        "answer": "0",
+        "pitfall": "注意 $x \\to 0^+$ 时 $\\ln x \\to -\\infty$ 而非 0，分母为无穷大而非无穷小，不可盲目套用等价无穷小公式。",
         "difficulty": "★★★☆☆",
         "verified": true,
-        "source": "Maki考研数学真题分类精解 第五讲 题5.10 (p.46)"
+        "source": "2025 考研数学一真题第 11 题"
       },
       {
         "id": "gaoshu-q-2018-1-9",

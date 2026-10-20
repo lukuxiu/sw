@@ -120,3 +120,33 @@
 .touch-canvas {
   touch-action: none;
 }
+
+/* Print optimizations for paper formula cheat-sheet */
+@media print {
+  header, nav, .no-print, button, .modal-backdrop {
+    display: none !important;
+  }
+  body, html, main {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+  .katex {
+    color: #000000 !important;
+  }
+  .border, [class*="border"] {
+    border-color: #d1d5db !important;
+  }
+  [class*="bg-"] {
+    background-color: transparent !important;
+  }
+  .shadow, [class*="shadow"] {
+    box-shadow: none !important;
+  }
+  a {
+    text-decoration: none !important;
+    color: #000000 !important;
+  }
+}

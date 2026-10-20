@@ -44,6 +44,38 @@ export function App() {
     return { type: 'mindmap' };
   };
 
+  // Global keyboard shortcuts (Esc to close modals, / or Ctrl+K to search)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        if (isReviewOpen || isFeatureLookupOpen || isMetaMethodOpen) {
+          setIsReviewOpen(false);
+          setIsFeatureLookupOpen(false);
+          setIsMetaMethodOpen(false);
+        }
+        return;
+      }
+
+      // Check if user is typing in an editable field
+      const activeTag = (document.activeElement?.tagName || '').toLowerCase();
+      const isInputFocused = activeTag === 'input' || activeTag === 'textarea';
+
+      if (!isInputFocused) {
+        if (e.key === '/' || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k')) {
+          e.preventDefault();
+          const searchInput = document.getElementById('global-search-input') as HTMLInputElement | null;
+          if (searchInput) {
+            searchInput.focus();
+            searchInput.select();
+          }
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isReviewOpen, isFeatureLookupOpen, isMetaMethodOpen]);
+
   // Sync hash on initial mount and hashchange event
   useEffect(() => {
     const initialRoute = parseHash();

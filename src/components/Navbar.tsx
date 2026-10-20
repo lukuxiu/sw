@@ -113,28 +113,33 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Maki Style Search Box */}
         <div ref={searchBoxRef} className="relative flex-1 max-w-md mx-1 sm:mx-2">
-          <div className="relative">
-            <Search className="w-3.5 h-3.5 absolute left-2.5 sm:left-3 top-2.5 text-[var(--muted)]" />
+          <div className="relative flex items-center">
+            <Search className="w-3.5 h-3.5 absolute left-2.5 sm:left-3 text-[var(--muted)] pointer-events-none" />
             <input
+              id="global-search-input"
               type="text"
-              placeholder="搜索考点/真题/方法..."
+              placeholder="搜索考点/真题/方法... (/ 或 ⌘K)"
               value={searchQuery}
               onChange={handleSearchChange}
               onFocus={() => {
                 if (searchQuery.trim().length > 0) setIsSearchOpen(true);
               }}
-              className="w-full bg-[var(--well)] focus:bg-[var(--sheet)] border border-transparent focus:border-[var(--line)] rounded-[9px] pl-8 sm:pl-9 pr-7 sm:pr-8 py-1.5 text-xs text-[var(--ink)] placeholder-[var(--muted)] focus:outline-none transition-colors"
+              className="w-full bg-[var(--well)] focus:bg-[var(--sheet)] border border-transparent focus:border-[var(--line)] rounded-[9px] pl-8 sm:pl-9 pr-14 py-1.5 text-xs text-[var(--ink)] placeholder-[var(--muted)] focus:outline-none transition-colors"
             />
-            {searchQuery && (
+            {searchQuery ? (
               <button
                 onClick={() => {
                   setSearchQuery('');
                   setIsSearchOpen(false);
                 }}
-                className="absolute right-2 top-2 text-[var(--muted)] hover:text-[var(--ink)]"
+                className="absolute right-2 text-[var(--muted)] hover:text-[var(--ink)]"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
+            ) : (
+              <span className="hidden sm:inline-block absolute right-2.5 px-1.5 py-0.5 rounded text-[10px] font-mono text-[var(--muted)] bg-[var(--sheet)] border border-[var(--line)] pointer-events-none">
+                /
+              </span>
             )}
           </div>
 
