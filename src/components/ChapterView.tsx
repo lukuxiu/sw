@@ -1,11 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { 
-  ArrowLeft, ArrowRight, ExternalLink, Search, Target, Compass, Filter, ChevronDown, ChevronUp
+  ArrowLeft, ArrowRight, ExternalLink, Search, Target, Compass, Filter, ChevronDown, ChevronUp, BookOpen
 } from 'lucide-react';
 import { CHAPTERS, SUBJECTS } from '../data/subjects';
 import { KNOWLEDGE_BASE } from '../data/knowledgeBase';
 import { LearningStatus, KnowledgeNode } from '../data/types';
 import { getChapterProgress, setLearningStatus } from '../data/storage';
+import { TOPIC_TO_LECTURE } from '../data/makiLectures';
 import { MathView } from './MathView';
 
 interface ChapterViewProps {
@@ -13,6 +14,7 @@ interface ChapterViewProps {
   onBackToMindmap: () => void;
   onSelectTopic: (topicId: string) => void;
   initialTopicId?: string;
+  onOpenMakiLecture?: (lectureId: string) => void;
 }
 
 export const ChapterView: React.FC<ChapterViewProps> = ({
@@ -20,6 +22,7 @@ export const ChapterView: React.FC<ChapterViewProps> = ({
   onBackToMindmap,
   onSelectTopic,
   initialTopicId,
+  onOpenMakiLecture,
 }) => {
   const chapter = CHAPTERS[chapterId] || CHAPTERS['gaoshu-ch01'];
   const subject = SUBJECTS[chapter.subjectId];
@@ -279,6 +282,20 @@ export const ChapterView: React.FC<ChapterViewProps> = ({
                           <h4 className={`text-xs font-semibold ${isSelected ? 'text-[var(--blue)]' : 'text-[var(--ink)]'}`}>
                             {t.title}
                           </h4>
+                          {TOPIC_TO_LECTURE[t.id] && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onOpenMakiLecture?.(TOPIC_TO_LECTURE[t.id].lectureId);
+                              }}
+                              className="inline-flex items-center gap-0.5 text-[9.5px] font-mono px-1 py-0.2 rounded bg-purple-50 text-purple-700 dark:bg-purple-950/40 dark:text-purple-300 border border-purple-200 dark:border-purple-800 hover:bg-purple-100 dark:hover:bg-purple-900 transition-colors"
+                              title={`大串讲 ${TOPIC_TO_LECTURE[t.id].lectureId} ${TOPIC_TO_LECTURE[t.id].lectureTitle}`}
+                            >
+                              <span>{TOPIC_TO_LECTURE[t.id].lectureId}</span>
+                              <span className="opacity-70 text-[8px]">↗</span>
+                            </button>
+                          )}
                           {t.isPending && (
                             <span className="text-[10px] font-mono px-1 py-0.2 rounded bg-[var(--well)] text-[var(--muted)] border border-[var(--line)]">
                               待补充
@@ -326,9 +343,22 @@ export const ChapterView: React.FC<ChapterViewProps> = ({
                       {activeTopic.title}
                     </h2>
                   </div>
-                  <p className="text-xs font-mono text-[var(--muted)] mt-1">
-                    所属章节：{activeTopic.chapterTitle}
-                  </p>
+                  <div className="flex items-center gap-2 mt-1 flex-wrap text-xs font-mono text-[var(--muted)]">
+                    <span>所属章节：{activeTopic.chapterTitle}</span>
+                    {TOPIC_TO_LECTURE[activeTopic.id] && (
+                      <>
+                        <span>•</span>
+                        <button
+                          type="button"
+                          onClick={() => onOpenMakiLecture?.(TOPIC_TO_LECTURE[activeTopic.id].lectureId)}
+                          className="inline-flex items-center gap-1 text-purple-700 dark:text-purple-300 hover:underline"
+                        >
+                          <BookOpen className="w-3 h-3" />
+                          <span>对应大串讲：{TOPIC_TO_LECTURE[activeTopic.id].lectureId} {TOPIC_TO_LECTURE[activeTopic.id].lectureTitle} ↗</span>
+                        </button>
+                      </>
+                    )}
+                  </div>
                 </div>
 
                 <button

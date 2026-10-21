@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
-  Search, X, Compass, Award, Sun, Moon, Sparkles, Layers
+  Search, X, Compass, Award, Sun, Moon, Sparkles, Layers, BookOpen
 } from 'lucide-react';
 import { searchKnowledgeBase } from '../data/search';
 import { MathView } from './MathView';
@@ -14,6 +14,7 @@ interface NavbarProps {
   onOpenReviewModal: () => void;
   onOpenFeatureLookup: () => void;
   onOpenMetaMethods: () => void;
+  onOpenMakiLectures: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -23,6 +24,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenReviewModal,
   onOpenFeatureLookup,
   onOpenMetaMethods,
+  onOpenMakiLectures,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<SearchMatchItem[]>([]);
@@ -184,6 +186,16 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right Navigation Actions */}
         <div className="flex items-center space-x-1 sm:space-x-1.5 flex-shrink-0">
+          {/* Maki 66 Lectures Hub Button */}
+          <button
+            onClick={onOpenMakiLectures}
+            className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 rounded-[8px] bg-[var(--well)] hover:bg-[var(--sheet)] text-xs text-[var(--ink)] border border-[var(--purple)]/40 font-bold transition-all shadow-xs"
+            title="Maki 考研数学 66 讲全讲次透视、考频面板与作战地图"
+          >
+            <BookOpen className="w-3.5 h-3.5 text-[var(--purple)]" />
+            <span className="inline font-bold">66讲大串讲</span>
+          </button>
+
           {/* Feature Lookup Button (看到了什么 -> 逆向速查 & 闪卡) */}
           <button
             onClick={onOpenFeatureLookup}

@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
-  ArrowLeft, ArrowRight, ChevronLeft, Compass, Eye, EyeOff, Tag, CheckCircle2, Bookmark, Layers
+  ArrowLeft, ArrowRight, ChevronLeft, Compass, Eye, EyeOff, Tag, CheckCircle2, Bookmark, Layers, BookOpen
 } from 'lucide-react';
 import { KNOWLEDGE_BASE } from '../data/knowledgeBase';
 import { TOPIC_TO_META_METHOD } from '../data/featureIndex';
+import { TOPIC_TO_LECTURE } from '../data/makiLectures';
 import { CHAPTERS, SUBJECTS } from '../data/subjects';
 import { LearningStatus, MistakeTag, PastQuestion } from '../data/types';
 import { getLearningStatus, setLearningStatus, getTopicRecord, setTopicMistakeTags } from '../data/storage';
@@ -15,6 +16,7 @@ interface KnowledgeDetailViewProps {
   onBackToMindmap: () => void;
   onNavigateTopic: (nodeId: string) => void;
   onOpenMetaMethod?: (metaMethodId: string) => void;
+  onOpenMakiLecture?: (lectureId: string) => void;
 }
 
 const AVAILABLE_MISTAKE_TAGS: MistakeTag[] = [
@@ -31,6 +33,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
   onBackToMindmap,
   onNavigateTopic,
   onOpenMetaMethod,
+  onOpenMakiLecture,
 }) => {
   const node = KNOWLEDGE_BASE[nodeId] || KNOWLEDGE_BASE['gaoshu-01-indeterminate-0-0'];
   const chapter = CHAPTERS[node.chapterId] || CHAPTERS['gaoshu-ch01'];
@@ -191,17 +194,30 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
             <h1 className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-[var(--ink)] tracking-tight">
               {node.title}
             </h1>
-            {TOPIC_TO_META_METHOD[node.id] && onOpenMetaMethod && (
-              <button
-                type="button"
-                onClick={() => onOpenMetaMethod(TOPIC_TO_META_METHOD[node.id].id)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] bg-[var(--purple-bg)]/30 text-[var(--purple)] border border-[var(--purple)]/40 hover:bg-[var(--purple)] hover:text-white transition-colors cursor-pointer text-xs font-mono font-bold self-start sm:self-auto"
-                title="查看该考点对应跨章节通用方法的完整矩阵与历年例题"
-              >
-                <Layers className="w-3.5 h-3.5" />
-                <span>通用方法：{TOPIC_TO_META_METHOD[node.id].name} ↗</span>
-              </button>
-            )}
+            <div className="flex items-center gap-1.5 flex-wrap self-start sm:self-auto">
+              {TOPIC_TO_LECTURE[node.id] && onOpenMakiLecture && (
+                <button
+                  type="button"
+                  onClick={() => onOpenMakiLecture(TOPIC_TO_LECTURE[node.id].lectureId)}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-[8px] bg-[var(--well)] hover:bg-[var(--sheet)] text-[var(--ink)] border border-[var(--purple)]/40 hover:border-[var(--purple)] transition-colors cursor-pointer text-xs font-mono font-bold shadow-xs"
+                  title="查看 Maki 大串讲中本讲的完整定位、考频面板与方法卡"
+                >
+                  <BookOpen className="w-3.5 h-3.5 text-[var(--purple)]" />
+                  <span>{TOPIC_TO_LECTURE[node.id].lectureId} {TOPIC_TO_LECTURE[node.id].lectureTitle} ↗</span>
+                </button>
+              )}
+              {TOPIC_TO_META_METHOD[node.id] && onOpenMetaMethod && (
+                <button
+                  type="button"
+                  onClick={() => onOpenMetaMethod(TOPIC_TO_META_METHOD[node.id].id)}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-[8px] bg-[var(--purple-bg)]/30 text-[var(--purple)] border border-[var(--purple)]/40 hover:bg-[var(--purple)] hover:text-white transition-colors cursor-pointer text-xs font-mono font-bold"
+                  title="查看该考点对应跨章节通用方法的完整矩阵与历年例题"
+                >
+                  <Layers className="w-3.5 h-3.5" />
+                  <span>通用方法：{TOPIC_TO_META_METHOD[node.id].name} ↗</span>
+                </button>
+              )}
+            </div>
           </div>
 
           {/* § 1. 一句话记忆 (Summary banner) */}

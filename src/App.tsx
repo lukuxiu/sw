@@ -6,6 +6,7 @@ import { KnowledgeDetailView } from './components/KnowledgeDetailView';
 import { ReviewModal } from './components/ReviewModal';
 import { FeatureLookupModal } from './components/FeatureLookupModal';
 import { MetaMethodModal } from './components/MetaMethodModal';
+import { MakiLecturesModal } from './components/MakiLecturesModal';
 import { CHAPTERS } from './data/subjects';
 import { KNOWLEDGE_BASE } from './data/knowledgeBase';
 
@@ -20,6 +21,8 @@ export function App() {
   const [isFeatureLookupOpen, setIsFeatureLookupOpen] = useState(false);
   const [isMetaMethodOpen, setIsMetaMethodOpen] = useState(false);
   const [selectedMetaMethodId, setSelectedMetaMethodId] = useState<string | undefined>(undefined);
+  const [isMakiLecturesOpen, setIsMakiLecturesOpen] = useState(false);
+  const [selectedLectureId, setSelectedLectureId] = useState<string | undefined>(undefined);
 
   // Parse hash to route
   const parseHash = (): RouteState => {
@@ -49,7 +52,8 @@ export function App() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        if (isReviewOpen || isFeatureLookupOpen || isMetaMethodOpen) {
+        if (isReviewOpen || isFeatureLookupOpen || isMetaMethodOpen || isMakiLecturesOpen) {
+          setIsMakiLecturesOpen(false);
           setIsReviewOpen(false);
           setIsFeatureLookupOpen(false);
           setIsMetaMethodOpen(false);
@@ -75,7 +79,7 @@ export function App() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isReviewOpen, isFeatureLookupOpen, isMetaMethodOpen]);
+  }, [isReviewOpen, isFeatureLookupOpen, isMetaMethodOpen, isMakiLecturesOpen]);
 
   // Sync hash on initial mount and hashchange event
   useEffect(() => {
@@ -116,6 +120,7 @@ export function App() {
         onOpenReviewModal={() => setIsReviewOpen(true)}
         onOpenFeatureLookup={() => setIsFeatureLookupOpen(true)}
         onOpenMetaMethods={() => { setSelectedMetaMethodId(undefined); setIsMetaMethodOpen(true); }}
+        onOpenMakiLectures={() => { setSelectedLectureId(undefined); setIsMakiLecturesOpen(true); }}
       />
 
       {/* Main View Area */}
@@ -125,6 +130,10 @@ export function App() {
             onSelectChapter={(cid) => navigateToChapter(cid)}
             onSelectTopic={(tid) => navigateToTopic(tid)}
             highlightTopicId={route.highlightTopicId}
+            onOpenMakiLecture={(lid) => {
+              setSelectedLectureId(lid);
+              setIsMakiLecturesOpen(true);
+            }}
           />
         )}
 
@@ -134,6 +143,10 @@ export function App() {
             onBackToMindmap={() => navigateToMindmap()}
             onSelectTopic={(tid) => navigateToTopic(tid)}
             initialTopicId={route.initialTopicId}
+            onOpenMakiLecture={(lid) => {
+              setSelectedLectureId(lid);
+              setIsMakiLecturesOpen(true);
+            }}
           />
         )}
 
@@ -146,6 +159,10 @@ export function App() {
             onOpenMetaMethod={(mid) => {
               setSelectedMetaMethodId(mid);
               setIsMetaMethodOpen(true);
+            }}
+            onOpenMakiLecture={(lid) => {
+              setSelectedLectureId(lid);
+              setIsMakiLecturesOpen(true);
             }}
           />
         )}
@@ -180,6 +197,14 @@ export function App() {
           setIsMetaMethodOpen(false);
           setIsFeatureLookupOpen(true);
         }}
+      />
+
+      {/* Maki 66 Lectures Directory & War Map Modal */}
+      <MakiLecturesModal
+        isOpen={isMakiLecturesOpen}
+        onClose={() => setIsMakiLecturesOpen(false)}
+        onSelectTopic={(tid) => navigateToTopic(tid)}
+        initialLectureId={selectedLectureId}
       />
     </div>
   );

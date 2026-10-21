@@ -1,24 +1,27 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { 
   ZoomIn, ZoomOut, RotateCcw, ChevronRight, ChevronDown, 
-  Minus, Plus, ArrowRight, LayoutGrid, Network, Compass, Eye, EyeOff
+  Minus, Plus, ArrowRight, LayoutGrid, Network, Compass, Eye, EyeOff, BookOpen
 } from 'lucide-react';
 import { SUBJECTS, CHAPTERS } from '../data/subjects';
 import { KNOWLEDGE_BASE } from '../data/knowledgeBase';
 import { SubjectId, LearningStatus } from '../data/types';
 import { getAllLearningStatuses } from '../data/storage';
+import { TOPIC_TO_LECTURE } from '../data/makiLectures';
 import { MathView } from './MathView';
 
 interface MindmapViewProps {
   onSelectChapter: (chapterId: string) => void;
   onSelectTopic: (topicId: string) => void;
   highlightTopicId?: string;
+  onOpenMakiLecture?: (lectureId?: string) => void;
 }
 
 export const MindmapView: React.FC<MindmapViewProps> = ({
   onSelectChapter,
   onSelectTopic,
   highlightTopicId,
+  onOpenMakiLecture,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -533,6 +536,20 @@ export const MindmapView: React.FC<MindmapViewProps> = ({
                                                   <span className="text-xs font-semibold text-[var(--ink)] hover:text-[var(--blue)]">
                                                     {t.title}
                                                   </span>
+                                                  {TOPIC_TO_LECTURE[t.id] && (
+                                                    <button
+                                                      type="button"
+                                                      onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        onOpenMakiLecture?.(TOPIC_TO_LECTURE[t.id].lectureId);
+                                                      }}
+                                                      className="inline-flex items-center gap-0.5 text-[9.5px] font-mono px-1 py-0.2 rounded bg-purple-50 text-purple-700 dark:bg-purple-950/40 dark:text-purple-300 border border-purple-200 dark:border-purple-800 hover:bg-purple-100 dark:hover:bg-purple-900 transition-colors"
+                                                      title={`对应大串讲 ${TOPIC_TO_LECTURE[t.id].lectureId} ${TOPIC_TO_LECTURE[t.id].lectureTitle}`}
+                                                    >
+                                                      <span>{TOPIC_TO_LECTURE[t.id].lectureId}</span>
+                                                      <span className="opacity-70 text-[8px]">↗</span>
+                                                    </button>
+                                                  )}
                                                   {t.isPending && (
                                                     <span className="text-[10px] font-mono px-1 py-0.2 rounded bg-[var(--well)] text-[var(--muted)] border border-[var(--line)]">
                                                       待补充
@@ -689,9 +706,25 @@ export const MindmapView: React.FC<MindmapViewProps> = ({
                                   className="bg-[var(--well)] hover:bg-[var(--sheet)] border border-[var(--line)] hover:border-[var(--blue)] p-2.5 rounded-[8px] cursor-pointer transition-colors space-y-1"
                                 >
                                   <div className="flex items-center justify-between gap-1">
-                                    <span className="text-xs font-semibold text-[var(--ink)]">
-                                      {t.title}
-                                    </span>
+                                    <div className="flex items-center gap-1.5 flex-wrap">
+                                      <span className="text-xs font-semibold text-[var(--ink)]">
+                                        {t.title}
+                                      </span>
+                                      {TOPIC_TO_LECTURE[t.id] && (
+                                        <button
+                                          type="button"
+                                          onClick={(e) => {
+                                            e.stopPropagation();
+                                            onOpenMakiLecture?.(TOPIC_TO_LECTURE[t.id].lectureId);
+                                          }}
+                                          className="inline-flex items-center gap-0.5 text-[9.5px] font-mono px-1 py-0.2 rounded bg-purple-50 text-purple-700 dark:bg-purple-950/40 dark:text-purple-300 border border-purple-200 dark:border-purple-800 hover:bg-purple-100 dark:hover:bg-purple-900 transition-colors"
+                                          title={`大串讲 ${TOPIC_TO_LECTURE[t.id].lectureId} ${TOPIC_TO_LECTURE[t.id].lectureTitle}`}
+                                        >
+                                          <span>{TOPIC_TO_LECTURE[t.id].lectureId}</span>
+                                          <span className="opacity-70 text-[8px]">↗</span>
+                                        </button>
+                                      )}
+                                    </div>
                                     {s === 'mastered' ? (
                                       <span className="text-[10px] font-mono px-1 py-0.2 rounded bg-[var(--green-bg)] text-[var(--green)]">
                                         已掌握
