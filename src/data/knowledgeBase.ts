@@ -188,7 +188,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
         "year": "2010",
         "category": "数一",
         "questionNumber": "(1)",
-        "content": "极限 $\\lim_{x \\to \\infty} \\left[ \\frac{x^2}{(x-a)(x+b)} \\right]^x = (\\quad)$\n(A) 1 \n(B) e \n(C) $e^{a-b}$ \n(D) $e^{b-a}$",
+        "content": "极限 $\\lim_{x \\to \\infty} \\left[ \\frac{x^2}{(x-a)(x+b)} \\right]^x$ = （　　）\n(A) 1 \n(B) e \n(C) $e^{a-b}$ \n(D) $e^{b-a}$",
         "options": [
           "(A) 1",
           "(B) e",
@@ -286,7 +286,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
         "year": "2014",
         "category": "数三",
         "questionNumber": "(1)",
-        "content": "求极限 $\\lim_{x \\to 0} \\left( \\frac{1}{x} - \\frac{1}{\\sin x} \\right) = (\\quad)$\n(A) 0 \n(B) 1 \n(C) $\\infty$ \n(D) 不存在",
+        "content": "求极限 $\\lim_{x \\to 0} \\left( \\frac{1}{x} - \\frac{1}{\\sin x} \\right)$ = （　　）\n(A) 0 \n(B) 1 \n(C) $\\infty$ \n(D) 不存在",
         "analysis": "基础分式通分转化为 0/0 型极限。",
         "solutionSteps": [
           "第一步：通分：$\\frac{\\sin x - x}{x \\sin x}$。",
@@ -378,7 +378,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
         "year": "2016",
         "category": "数一",
         "questionNumber": "(4)",
-        "content": "已知函数 $f(x) = \\begin{cases} x, & x \\le 0 \\\\ \\frac{1}{n}, & \\frac{1}{n+1} < x \\le \\frac{1}{n}, n=1, 2, \\dots \\end{cases}$，则 (\\quad)\n(A) $x=0$ 是 $f(x)$ 的第一类间断点\n(B) $x=0$ 是 $f(x)$ 的第二类间断点\n(C) $f(x)$ 在 $x=0$ 处连续但不可导\n(D) $f(x)$ 在 $x=0$ 处可导",
+        "content": "已知函数 $f(x) = \\begin{cases} x, & x \\le 0 \\\\ \\frac{1}{n}, & \\frac{1}{n+1} < x \\le \\frac{1}{n}, n=1, 2, \\dots \\end{cases}$，则 （　　）\n(A) $x=0$ 是 $f(x)$ 的第一类间断点\n(B) $x=0$ 是 $f(x)$ 的第二类间断点\n(C) $f(x)$ 在 $x=0$ 处连续但不可导\n(D) $f(x)$ 在 $x=0$ 处可导",
         "options": [
           "(A) 第一类间断点",
           "(B) 第二类间断点",
@@ -479,7 +479,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
         "year": "2019",
         "category": "数一",
         "questionNumber": "(1)",
-        "content": "设函数 $f(x) = \\begin{cases} x^2 \\sin \\frac{1}{x}, & x \\neq 0 \\\\ 0, & x = 0 \\end{cases}$，则 $f'(0) = (\\quad)$\n(A) 0 \n(B) 1 \n(C) 不存在 \n(D) $\\infty$",
+        "content": "设函数 $f(x) = \\begin{cases} x^2 \\sin \\frac{1}{x}, & x \\neq 0 \\\\ 0, & x = 0 \\end{cases}$，则 $f'(0)$ = （　　）\n(A) 0 \n(B) 1 \n(C) 不存在 \n(D) $\\infty$",
         "analysis": "利用导数定义计算分段点导数，不可直接对原式求导令 x=0。",
         "solutionSteps": [
           "由导数定义：$$f'(0) = \\lim_{x \\to 0} \\frac{f(x) - f(0)}{x - 0} = \\lim_{x \\to 0} \\frac{x^2 \\sin(1/x)}{x} = \\lim_{x \\to 0} x \\sin \\frac{1}{x}.$$",
@@ -668,7 +668,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
         "year": "2015",
         "category": "数一",
         "questionNumber": "(1)",
-        "content": "设函数 $F(x) = \\int_0^x (x - t) f(t)\\,dt$，其中 $f(t)$ 连续，则 $F''(x) = (\\quad)$\n(A) $f(x)$ \n(B) $f'(x)$ \n(C) $x f(x)$ \n(D) $0$",
+        "content": "设函数 $F(x) = \\int_0^x (x - t) f(t)\\,dt$，其中 $f(t)$ 连续，则 $F''(x)$ = （　　）\n(A) $f(x)$ \n(B) $f'(x)$ \n(C) $x f(x)$ \n(D) $0$",
         "analysis": "拆项提出外层变量 x，连续求导两次。",
         "solutionSteps": [
           "第一步：拆项：$F(x) = x \\int_0^x f(t)dt - \\int_0^x t f(t)dt$。",
@@ -850,7 +850,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
         "year": "2019",
         "category": "数一",
         "questionNumber": "(4)",
-        "content": "设函数 $Q(x,y) = \\frac{x}{y^2}$。如果对上半平面 ($y > 0$) 内的任意有向光滑封闭曲线 $C$ 都有 $\\oint_C P(x,y)\\,dx + Q(x,y)\\,dy = 0$，那么函数 $P(x,y)$ 可取为 (\\quad)\n(A) $-\\frac{2x}{y^3}$ \n(B) $-\\frac{1}{y} - \\frac{2x}{y^3}$ \n(C) $\\frac{1}{x} - \\frac{1}{y}$ \n(D) $x - \\frac{1}{y}$",
+        "content": "设函数 $Q(x,y) = \\frac{x}{y^2}$。如果对上半平面 ($y > 0$) 内的任意有向光滑封闭曲线 $C$ 都有 $\\oint_C P(x,y)\\,dx + Q(x,y)\\,dy = 0$，那么函数 $P(x,y)$ 可取为 （　　）\n(A) $-\\frac{2x}{y^3}$ \n(B) $-\\frac{1}{y} - \\frac{2x}{y^3}$ \n(C) $\\frac{1}{x} - \\frac{1}{y}$ \n(D) $x - \\frac{1}{y}$",
         "options": [
           "(A) -2x/y^3",
           "(B) -1/y - 2x/y^3",
@@ -1687,7 +1687,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
           "体积 $V = \\pi \\int_0^1 x^2 dy = \\pi \\int_0^1 y dy = \\pi \\left[ \\frac{y^2}{2} \\right]_0^1 = \\frac{\\pi}{2}$。",
           "方法二（柱壳法）：$V = 2\\pi \\int_0^1 x y dx = 2\\pi \\int_0^1 x \\cdot x^2 dx = 2\\pi \\left[ \\frac{x^4}{4} \\right]_0^1 = \\frac{\\pi}{2}$。"
         ],
-        "answer": "\\pi / 2",
+        "answer": "$\\frac{\\pi}{2}$",
         "pitfall": "把绕 $y$ 轴误算成绕 $x$ 轴体积（绕 $x$ 轴是 $\\pi \\int_0^1 x^4 dx = \\pi/5$）。",
         "difficulty": "★☆☆☆☆",
         "verified": true,
@@ -2185,7 +2185,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
           "$$dz = f_1'(dx + dy) + f_2'(dx - dy) + f_3'(y dx + x dy)$$",
           "$$= (f_1' + f_2' + y f_3') dx + (f_1' - f_2' + x f_3') dy$$"
         ],
-        "answer": "(f_1' + f_2' + y f_3')dx + (f_1' - f_2' + x f_3')dy",
+        "answer": "$(f_1' + f_2' + y f_3')\\,dx + (f_1' - f_2' + x f_3')\\,dy$",
         "pitfall": "分别去求偏导数 $\\frac{\\partial z}{\\partial x}$ 与 $\\frac{\\partial z}{\\partial y}$ 容易漏项；全微分微分形式不变性一步合并。",
         "difficulty": "★★☆☆☆",
         "verified": true,
@@ -2391,7 +2391,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
           "第四步：因此最小值在左端点 $z = 2 - \\sqrt{3}$ 处取得：",
           "$$f_{\\min} = (2-\\sqrt{3})^2 + (2-\\sqrt{3}) = 7 - 4\\sqrt{3} + 2 - \\sqrt{3} = 9 - 5\\sqrt{3}$$"
         ],
-        "answer": "9 - 5\\sqrt{3}",
+        "answer": "$9 - 5\\sqrt{3}$",
         "pitfall": "盲目引入两个乘子列 5 元非线性方程组极难求解；利用几何与代数代换消元实现降维秒杀。",
         "difficulty": "★★★★☆",
         "verified": true,
@@ -2597,7 +2597,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
           "第四步：分母 $x$ 被完全消去！直接积分：",
           "$$I = [-\\cos x]_0^1 = 1 - \\cos 1$$"
         ],
-        "answer": "1 - \\cos 1",
+        "answer": "$1 - \\cos 1$",
         "pitfall": "在草稿纸上试图分部积分求 $\\int \\frac{\\sin x}{x}dx$；只要内层积不出，100% 交换次序。",
         "difficulty": "★★☆☆☆",
         "verified": true,
@@ -2710,7 +2710,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
           "积分为 $2\\pi \\times 2 \\times \\frac{R^5}{5} = \\frac{4\\pi R^5}{5}$。",
           "第五步：代入原式：$\\frac{2}{3} \\times \\frac{4\\pi R^5}{5} = \\frac{8\\pi R^5}{15}$。"
         ],
-        "answer": "8\\pi R^5 / 15",
+        "answer": "$\\frac{8}{15}\\pi R^5$",
         "pitfall": "不使用轮换对称性去硬算，计算量大 3 倍且容易在天顶角积分出错。",
         "difficulty": "★★☆☆☆",
         "verified": true,
@@ -2921,7 +2921,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
           "$$\\iint_{\\Sigma_1} x dydz + y dzdx + z dxdy = \\iint_{D_{xy}} 0 (-dxdy) = 0$$",
           "第五步：移项得出所求积分：$I = \\frac{3\\pi}{2} - 0 = \\frac{3\\pi}{2}$。"
         ],
-        "answer": "3\\pi / 2",
+        "answer": "$\\frac{3\\pi}{2}$",
         "pitfall": "补底面时忘记在底面上 $z=0$ 可以直接代入化简；补面侧向漏负号。",
         "difficulty": "★★★☆☆",
         "verified": true,
@@ -3021,7 +3021,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
           "第四步：由投影面积关系：$\\mathrm{Area}(\\Sigma) = \\frac{\\mathrm{Area}(D_{xy})}{\\cos\\gamma} = \\frac{\\pi \\cdot 1^2}{1/\\sqrt{3}} = \\sqrt{3}\\pi$。",
           "因此 $I = -2\\sqrt{3} \\times (\\sqrt{3}\\pi) = -6\\pi$。"
         ],
-        "answer": "-6\\pi",
+        "answer": "$-6\\pi$",
         "pitfall": "曲面面积投影忘记除以 $\\cos\\gamma = 1/\\sqrt{3}$；逆时针方向对应法向朝上判定出错。",
         "difficulty": "★★★☆☆",
         "verified": true,
@@ -3355,7 +3355,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
           "$$S\\left(\\frac{1}{\\sqrt{3}}\\right) = \\frac{1}{2}\\ln\\frac{1 + 1/\\sqrt{3}}{1 - 1/\\sqrt{3}} = \\frac{1}{2}\\ln\\frac{\\sqrt{3}+1}{\\sqrt{3}-1} = \\frac{1}{2}\\ln(2 + \\sqrt{3})$$",
           "因此原级数之和为 $\\frac{\\sqrt{3}}{2}\\ln(2+\\sqrt{3})$。"
         ],
-        "answer": "S(x) = \\frac{1}{2}\\ln\\frac{1+x}{1-x}, \\quad \\text{和为 } \\frac{\\sqrt{3}}{2}\\ln(2+\\sqrt{3})",
+        "answer": "$S(x) = \\frac{1}{2}\\ln\\frac{1+x}{1-x}$，和为 $\\frac{\\sqrt{3}}{2}\\ln(2+\\sqrt{3})$",
         "pitfall": "代入点时未配出奇数次方缺少 $\\sqrt{3}$ 因子；积分还原漏写 $1/2$。",
         "difficulty": "★★★☆☆",
         "verified": true,
@@ -3553,7 +3553,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
           "第二步：计算模长：",
           "$$S = |\\mathbf{a} \\times \\mathbf{b}| = \\sqrt{(-1)^2 + (-1)^2 + 1^2} = \\sqrt{3}$$"
         ],
-        "answer": "\\sqrt{3}",
+        "answer": "$\\sqrt{3}$",
         "pitfall": "行列式展开中间负号出错导致模长算错。",
         "difficulty": "★☆☆☆☆",
         "verified": true,
@@ -3861,7 +3861,7 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
           "$$C_1 + C_2 = 0, \\quad \\sqrt{2}(C_1 - C_2) = 1 \\implies C_1 = \\frac{1}{2\\sqrt{2}}, \\quad C_2 = -\\frac{1}{2\\sqrt{2}}$$",
           "因此 $f(x) = \\frac{1}{2\\sqrt{2}}(e^{\\sqrt{2}x} - e^{-\\sqrt{2}x}) = \\frac{1}{\\sqrt{2}}\\sinh(\\sqrt{2}x)$。"
         ],
-        "answer": "\\frac{1}{2\\sqrt{2}}(e^{\\sqrt{2}x} - e^{-\\sqrt{2}x})",
+        "answer": "$\\frac{1}{2\\sqrt{2}}(e^{\\sqrt{2}x} - e^{-\\sqrt{2}x})$",
         "pitfall": "拆分积分时符号算错；求导第一次未提取初始值 $f'(0)=1$。",
         "difficulty": "★★★☆☆",
         "verified": true,
@@ -7503,298 +7503,298 @@ export const KNOWLEDGE_BASE: Record<string, KnowledgeNode> = {
     ],
     "source": "Maki考研数学大串讲 L62 & 真题分类精解 题62.1",
     "isPending": false
-  }
-,
+  },
   "gaoshu-00-algebra-five-actions": {
-  "id": "gaoshu-00-algebra-five-actions",
-  "title": "代数变形五大动作与高中公式补丁 (L01~L02)",
-  "subject": "gaoshu",
-  "subjectName": "高等数学",
-  "chapterId": "gaoshu-ch00",
-  "chapterTitle": "第 0 编 预备：高中补丁与代数动作",
-  "nodeType": "topic",
-  "summary": "Maki 预备篇核心：高等数学计算卡壳 80% 源于代数变形不熟练。必须掌握五大动作（配方、有理化、裂项、放缩、换元）与高中三角/指数不等式补丁。",
-  "triggers": [
-    "式中含二次三项式形如 x^2 + px + q（反常积分、二次型、有理积分）",
-    "含根号差式形如 \\sqrt{A} - \\sqrt{B} 处于分子或分母",
-    "数列或级数通项形如 \\frac{1}{n(n+k)} 或 \\frac{1}{n(n+1)(n+2)}",
-    "极限与不等式证明中出现 e^x, \\ln(1+x), \\sin x, \\tan x 混合",
-    "初等函数定义域、反函数与初等三角积化和差与和差化积"
-  ],
-  "firstReaction": "第一反应：不要死算！先观察属于五大代数动作的哪一种：遇二次式想配方，遇根号差想有理化，遇分式乘积想裂项，遇超越函数想切线放缩。",
-  "candidateMethods": [
-    {
-      "name": "配方法（真题调用 38 处第一高频）",
+    "id": "gaoshu-00-algebra-five-actions",
+    "title": "代数变形五大动作与高中公式补丁 (L01~L02)",
+    "subject": "gaoshu",
+    "subjectName": "高等数学",
+    "chapterId": "gaoshu-ch00",
+    "chapterTitle": "第 0 编 预备：高中补丁与代数动作",
+    "nodeType": "topic",
+    "summary": "Maki 预备篇核心：高等数学计算卡壳 80% 源于代数变形不熟练。必须掌握五大动作（配方、有理化、裂项、放缩、换元）与高中三角/指数不等式补丁。",
+    "triggers": [
+      "式中含二次三项式形如 $x^2 + px + q$（反常积分、二次型、有理积分）",
+      "含根号差式形如 $\\sqrt{A} - \\sqrt{B}$ 处于分子或分母",
+      "数列或级数通项形如 $\\frac{1}{n(n+k)}$ 或 $\\frac{1}{n(n+1)(n+2)}$",
+      "极限与不等式证明中出现 $e^x$, $\\ln(1+x)$, $\\sin x$, $\\tan x$ 混合",
+      "初等函数定义域、反函数与初等三角积化和差与和差化积"
+    ],
+    "firstReaction": "第一反应：不要死算！先观察属于五大代数动作的哪一种：遇二次式想配方，遇根号差想有理化，遇分式乘积想裂项，遇超越函数想切线放缩。",
+    "candidateMethods": [
+      {
+        "name": "配方法（真题调用 38 处第一高频）",
         "priority": 1,
-      "applicability": "出现 $x^2 + px + q$ 或多变量二次型",
-      "whyChoose": "配成 $(x + \\frac{p}{2})^2 + (q - \\frac{p^2}{4})$ 转化为标准变量代换（如 $\\int \\frac{1}{x^2+2x+5}dx$ 换元为 $\\arctan$ 积分）。",
-      "description": "配方时注意括号外常数符号，切忌符号抄错。"
-    },
-    {
-      "name": "有理化（共轭无理式脱根号）",
+        "applicability": "出现 $x^2 + px + q$ 或多变量二次型",
+        "whyChoose": "配成 $(x + \\frac{p}{2})^2 + (q - \\frac{p^2}{4})$ 转化为标准变量代换（如 $\\int \\frac{1}{x^2+2x+5}dx$ 换元为 $\\arctan$ 积分）。",
+        "description": "配方时注意括号外常数符号，切忌符号抄错。"
+      },
+      {
+        "name": "有理化（共轭无理式脱根号）",
         "priority": 1,
-      "applicability": "根号相减未定式、渐近线斜率求 $b$、分母根号化简",
-      "whyChoose": "乘共轭式 $(\\sqrt{A}+\\sqrt{B})$ 将无理差化为有理差 $(A-B)$，迅速暴露主要无穷小阶数。",
-      "description": "只有两项为同阶无穷大或同阶差时才能有效消去主要项。"
-    },
-    {
-      "name": "裂项相消（级数求和与数列极限利器）",
+        "applicability": "根号相减未定式、渐近线斜率求 $b$、分母根号化简",
+        "whyChoose": "乘共轭式 $(\\sqrt{A}+\\sqrt{B})$ 将无理差化为有理差 $(A-B)$，迅速暴露主要无穷小阶数。",
+        "description": "只有两项为同阶无穷大或同阶差时才能有效消去主要项。"
+      },
+      {
+        "name": "裂项相消（级数求和与数列极限利器）",
         "priority": 1,
-      "applicability": "分母为因式连乘乘积形式",
-      "whyChoose": "待定系数拆分 $\\frac{1}{n(n+1)} = \\frac{1}{n} - \\frac{1}{n+1}$，相加后中间全部抵消仅余首尾两项。",
-      "description": "注意核对拆分系数 $\\frac{1}{k}$ 是否遗漏。"
-    },
-    {
-      "name": "常用经典不等式放缩",
+        "applicability": "分母为因式连乘乘积形式",
+        "whyChoose": "待定系数拆分 $\\frac{1}{n(n+1)} = \\frac{1}{n} - \\frac{1}{n+1}$，相加后中间全部抵消仅余首尾两项。",
+        "description": "注意核对拆分系数 $\\frac{1}{k}$ 是否遗漏。"
+      },
+      {
+        "name": "常用经典不等式放缩",
         "priority": 1,
-      "applicability": "夹逼准则、单调有界证明、不等式放缩",
-      "whyChoose": "牢记切线不等式：$e^x \\ge 1+x$（$x=0$ 取等）、$\\ln(1+x) \\le x$（$x>-1$）、$\\sin x < x < \\tan x$（$x \\in (0, \\pi/2)$）。",
-      "description": "放缩必须保留主部，不可放得过粗导致极限不一致。"
-    }
-  ],
-  "steps": [
-    "第一步：识别结构特征（二次式、根号差、连乘分母、超越因式）。",
-    "第二步：执行五大动作之一：配方、有理化、裂项、放缩或整体换元。",
-    "第三步：核验高中三角补丁：倍角公式 $\\cos 2x = 2\\cos^2 x - 1 = 1 - 2\\sin^2 x$ 与降幂公式。",
-    "第四步：带入微积分主干算法（求极限、求导、求积分、特征多项式分解）。"
-  ],
-  "formulas": [
-    {
-      "title": "核心不等式放缩链",
-      "latex": "e^x \\ge 1+x,\\quad \\ln(1+x) \\le x,\\quad \\frac{x}{1+x} \\le \\ln(1+x) \\le x",
-      "notes": "考研高数四大金刚不等式，常用于夹逼与单调性分析"
-    },
-    {
-      "title": "二倍角与降幂公式",
-      "latex": "\\sin^2 x = \\frac{1-\\cos 2x}{2},\\quad \\cos^2 x = \\frac{1+\\cos 2x}{2}",
-      "notes": "三角积分与定积分计算的基石转化公式"
-    }
-  ],
-  "pitfalls": [
-    "有理化时盲目分子分母同乘，没有先提取公因子，导致多项式越来越庞大",
-    "配方时忽视二次项系数不为 1 的情形，提取负号时常数项忘记变号",
-    "裂项相消时漏写相消后保留的最后几项与负号"
-  ],
-  "whyChooseMethod": "L02 归纳的五个代数动作用在后面 60 多讲的真题演练里，是保证运算顺畅的基础基本功。",
-  "pastQuestions": [],
-  "variants": [],
-  "selfCheckList": [
-    "能否在 5 秒内默写出 e^x >= 1+x 与 ln(1+x) <= x 的等号成立条件？",
-    "遇到 1/(x^2 + 2x + 5) 是否能瞬间本能完成配方 (x+1)^2 + 4？",
-    "遇到 \\sqrt{x^2+x} - x 是否能迅速有理化得到极限为 1/2？"
-  ],
-  "relatedKnowledgeIds": [
-    "gaoshu-01-indeterminate-0-0",
-    "gaoshu-03-variable-limit-integral"
-  ],
-  "tags": [
-    "五大动作",
-    "配方",
-    "有理化",
-    "裂项",
-    "不等式放缩"
-  ],
-  "source": "Maki考研数学大串讲 L01 & L02",
-  "isPending": false
-},
+        "applicability": "夹逼准则、单调有界证明、不等式放缩",
+        "whyChoose": "牢记切线不等式：$e^x \\ge 1+x$（$x=0$ 取等）、$\\ln(1+x) \\le x$（$x>-1$）、$\\sin x < x < \\tan x$（$x \\in (0, \\pi/2)$）。",
+        "description": "放缩必须保留主部，不可放得过粗导致极限不一致。"
+      }
+    ],
+    "steps": [
+      "第一步：识别结构特征（二次式、根号差、连乘分母、超越因式）。",
+      "第二步：执行五大动作之一：配方、有理化、裂项、放缩或整体换元。",
+      "第三步：核验高中三角补丁：倍角公式 $\\cos 2x = 2\\cos^2 x - 1 = 1 - 2\\sin^2 x$ 与降幂公式。",
+      "第四步：带入微积分主干算法（求极限、求导、求积分、特征多项式分解）。"
+    ],
+    "formulas": [
+      {
+        "title": "核心不等式放缩链",
+        "latex": "e^x \\ge 1+x,\\quad \\ln(1+x) \\le x,\\quad \\frac{x}{1+x} \\le \\ln(1+x) \\le x",
+        "notes": "考研高数四大金刚不等式，常用于夹逼与单调性分析"
+      },
+      {
+        "title": "二倍角与降幂公式",
+        "latex": "\\sin^2 x = \\frac{1-\\cos 2x}{2},\\quad \\cos^2 x = \\frac{1+\\cos 2x}{2}",
+        "notes": "三角积分与定积分计算的基石转化公式"
+      }
+    ],
+    "pitfalls": [
+      "有理化时盲目分子分母同乘，没有先提取公因子，导致多项式越来越庞大",
+      "配方时忽视二次项系数不为 1 的情形，提取负号时常数项忘记变号",
+      "裂项相消时漏写相消后保留的最后几项与负号"
+    ],
+    "whyChooseMethod": "L02 归纳的五个代数动作用在后面 60 多讲的真题演练里，是保证运算顺畅的基础基本功。",
+    "pastQuestions": [],
+    "variants": [],
+    "selfCheckList": [
+      "能否在 5 秒内默写出 e^x >= 1+x 与 ln(1+x) <= x 的等号成立条件？",
+      "遇到 1/(x^2 + 2x + 5) 是否能瞬间本能完成配方 (x+1)^2 + 4？",
+      "遇到 \\sqrt{x^2+x} - x 是否能迅速有理化得到极限为 1/2？"
+    ],
+    "relatedKnowledgeIds": [
+      "gaoshu-01-indeterminate-0-0",
+      "gaoshu-03-variable-limit-integral"
+    ],
+    "tags": [
+      "五大动作",
+      "配方",
+      "有理化",
+      "裂项",
+      "不等式放缩"
+    ],
+    "source": "Maki考研数学大串讲 L01 & L02",
+    "isPending": false
+  },
   "yingshi-64-exam-time-structure": {
-  "id": "yingshi-64-exam-time-structure",
-  "title": "卷面结构与 180 分钟时间分配方案 (L64)",
-  "subject": "gaoshu",
-  "subjectName": "高等数学",
-  "chapterId": "gaoshu-ch11",
-  "chapterTitle": "第 7 编 应试工程：卷面分配与保命进阶清单",
-  "nodeType": "topic",
-  "summary": "Maki 应试工程篇 L64：考研数学卷面由 10 道选择（50分）、6 道填空（30分）、6 道解答（70分）构成。考场 180 分钟必须建立精准的时间红线意识，绝不可在一道选择题上死磕超过 8 分钟。",
-  "triggers": [
-    "考场实战模考、全真模拟卷训练、冲刺套卷测试",
-    "做题慢、卡在难题上导致后面大题写不完、填空计算超时",
-    "选择题与填空题时间分配不均，前 16 题耗时超过 90 分钟"
-  ],
-  "firstReaction": "第一反应：考场时间就是分数！选填题每题平均 4~5 分钟，总计控制在 65~70 分钟；大题平均每题 12~14 分钟，总计控制在 80~85 分钟；必须留出 25~30 分钟进行全局核验与填涂卡检查！",
-  "candidateMethods": [
-    {
-      "name": "65-85-30 黄金时间分配律",
+    "id": "yingshi-64-exam-time-structure",
+    "title": "卷面结构与 180 分钟时间分配方案 (L64)",
+    "subject": "gaoshu",
+    "subjectName": "高等数学",
+    "chapterId": "gaoshu-ch11",
+    "chapterTitle": "第 7 编 应试工程：卷面分配与保命进阶清单",
+    "nodeType": "topic",
+    "summary": "Maki 应试工程篇 L64：考研数学卷面由 10 道选择（50分）、6 道填空（30分）、6 道解答（70分）构成。考场 180 分钟必须建立精准的时间红线意识，绝不可在一道选择题上死磕超过 8 分钟。",
+    "triggers": [
+      "考场实战模考、全真模拟卷训练、冲刺套卷测试",
+      "做题慢、卡在难题上导致后面大题写不完、填空计算超时",
+      "选择题与填空题时间分配不均，前 16 题耗时超过 90 分钟"
+    ],
+    "firstReaction": "第一反应：考场时间就是分数！选填题每题平均 4~5 分钟，总计控制在 65~70 分钟；大题平均每题 12~14 分钟，总计控制在 80~85 分钟；必须留出 25~30 分钟进行全局核验与填涂卡检查！",
+    "candidateMethods": [
+      {
+        "name": "65-85-30 黄金时间分配律",
         "priority": 1,
-      "applicability": "全国硕士研究生数学统考 180 分钟全卷",
-      "whyChoose": "前 65 分钟保住 80 分选填题；中间 85 分钟拿下 6 道综合解答大题；最后 30 分钟复查高危计算与填涂，将失误率降至最低。",
-      "description": "严格设置单题止损点：选填题 6 分钟无进展必须先标记跳过。"
-    },
-    {
-      "name": "选择题四大特化得分术",
+        "applicability": "全国硕士研究生数学统考 180 分钟全卷",
+        "whyChoose": "前 65 分钟保住 80 分选填题；中间 85 分钟拿下 6 道综合解答大题；最后 30 分钟复查高危计算与填涂，将失误率降至最低。",
+        "description": "严格设置单题止损点：选填题 6 分钟无进展必须先标记跳过。"
+      },
+      {
+        "name": "选择题四大特化得分术",
         "priority": 1,
-      "applicability": "单项选择题 1~10 题",
-      "whyChoose": "结合排除法、特值法（特殊函数 $f(x)=x, x^2$、特殊矩阵 $A=E, O$）、极值反例法，秒杀不需分步过程的选择题。",
-      "description": "特值法验证只能用于否定错误选项，只有唯一合法项剩余时方可敲定。"
-    }
-  ],
-  "steps": [
-    "第一阶段（0~65分钟）：全神贯注完成 1~16 题（10 选择 + 6 填空），遇阻卡壳立即画圈跳过。",
-    "第二阶段（65~150分钟）：集中精力推进 17~22 题（6 道综合大题），按步拿分，步骤规范。",
-    "第三阶段（150~180分钟）：返回攻坚此前画圈标记的卡壳题，并按清单重点核查计算易错项。"
-  ],
-  "formulas": [
-    {
-      "title": "考卷分值结构比",
-      "latex": "\\text{选填: } 16 \\times 5 = 80\\text{分 (53.3\\%)}, \\quad \\text{解答: } 6\\text{题} = 70\\text{分 (46.7\\%)}",
-      "notes": "选填占半壁江山，得选填者得天下"
-    }
-  ],
-  "pitfalls": [
-    "在某一道 5 分的选择题上苦思冥想 15 分钟，导致后面 12 分的大题没有时间看题",
-    "解答题草稿纸上算对，抄到答题卡上时符号或指数抄错",
-    "没有留出足够时间检查填空题的定义域与开闭区间"
-  ],
-  "whyChooseMethod": "把控时间节奏是发挥平时真实水平的决定性前提，严格执行止损与分段策略。",
-  "pastQuestions": [],
-  "variants": [],
-  "selfCheckList": [
-    "模考时能否在 70 分钟内完成前 16 题？",
-    "是否有单题耗时超过 8 分钟立即跳过的果断止损纪律？",
-    "是否留出了至少 20 分钟用于检查高频符号错误？"
-  ],
-  "relatedKnowledgeIds": [
-    "yingshi-65-calculation-mistakes-checklist",
-    "yingshi-66-survival-and-advanced-checklist"
-  ],
-  "tags": [
-    "时间分配",
-    "卷面结构",
-    "模考策略",
-    "止损纪律"
-  ],
-  "source": "Maki考研数学大串讲 L64",
-  "isPending": false
-},
+        "applicability": "单项选择题 1~10 题",
+        "whyChoose": "结合排除法、特值法（特殊函数 $f(x)=x, x^2$、特殊矩阵 $A=E, O$）、极值反例法，秒杀不需分步过程的选择题。",
+        "description": "特值法验证只能用于否定错误选项，只有唯一合法项剩余时方可敲定。"
+      }
+    ],
+    "steps": [
+      "第一阶段（0~65分钟）：全神贯注完成 1~16 题（10 选择 + 6 填空），遇阻卡壳立即画圈跳过。",
+      "第二阶段（65~150分钟）：集中精力推进 17~22 题（6 道综合大题），按步拿分，步骤规范。",
+      "第三阶段（150~180分钟）：返回攻坚此前画圈标记的卡壳题，并按清单重点核查计算易错项。"
+    ],
+    "formulas": [
+      {
+        "title": "考卷分值结构比",
+        "latex": "\\text{选填: } 16 \\times 5 = 80\\text{分 (53.3\\%)}, \\quad \\text{解答: } 6\\text{题} = 70\\text{分 (46.7\\%)}",
+        "notes": "选填占半壁江山，得选填者得天下"
+      }
+    ],
+    "pitfalls": [
+      "在某一道 5 分的选择题上苦思冥想 15 分钟，导致后面 12 分的大题没有时间看题",
+      "解答题草稿纸上算对，抄到答题卡上时符号或指数抄错",
+      "没有留出足够时间检查填空题的定义域与开闭区间"
+    ],
+    "whyChooseMethod": "把控时间节奏是发挥平时真实水平的决定性前提，严格执行止损与分段策略。",
+    "pastQuestions": [],
+    "variants": [],
+    "selfCheckList": [
+      "模考时能否在 70 分钟内完成前 16 题？",
+      "是否有单题耗时超过 8 分钟立即跳过的果断止损纪律？",
+      "是否留出了至少 20 分钟用于检查高频符号错误？"
+    ],
+    "relatedKnowledgeIds": [
+      "yingshi-65-calculation-mistakes-checklist",
+      "yingshi-66-survival-and-advanced-checklist"
+    ],
+    "tags": [
+      "时间分配",
+      "卷面结构",
+      "模考策略",
+      "止损纪律"
+    ],
+    "source": "Maki考研数学大串讲 L64",
+    "isPending": false
+  },
   "yingshi-65-calculation-mistakes-checklist": {
-  "id": "yingshi-65-calculation-mistakes-checklist",
-  "title": "考研数学四大失误清单与交卷前自查 (L65)",
-  "subject": "gaoshu",
-  "subjectName": "高等数学",
-  "chapterId": "gaoshu-ch11",
-  "chapterTitle": "第 7 编 应试工程：卷面分配与保命进阶清单",
-  "nodeType": "topic",
-  "summary": "Maki 应试工程篇 L65：考研数学的扣分点有 60% 不是因为‘不会’，而是因为‘四大失误’（读题失误、建模失误、方法失误、计算失误）。考前必须形成强有力的防错雷达与交卷前自查习惯。",
-  "triggers": [
-    "平时做题总能看懂解析，但自己算总是在符号、常数上扣分",
-    "定义域看错、开闭区间看漏、题干问极小值误写成极小值点",
-    "二重积分积分区域上下限写颠倒、矩阵乘法不满足交换律却擅自交换"
-  ],
-  "firstReaction": "第一反应：交卷前 20 分钟启动‘四查雷达’：一查题干问什么（点还是值？），二查定义域与符号（分母非零、底数大于0），三查二重积分投影与格林公式方向，四查特征向量是否非零！",
-  "candidateMethods": [
-    {
-      "name": "四大失误雷达自查法",
+    "id": "yingshi-65-calculation-mistakes-checklist",
+    "title": "考研数学四大失误清单与交卷前自查 (L65)",
+    "subject": "gaoshu",
+    "subjectName": "高等数学",
+    "chapterId": "gaoshu-ch11",
+    "chapterTitle": "第 7 编 应试工程：卷面分配与保命进阶清单",
+    "nodeType": "topic",
+    "summary": "Maki 应试工程篇 L65：考研数学的扣分点有 60% 不是因为‘不会’，而是因为‘四大失误’（读题失误、建模失误、方法失误、计算失误）。考前必须形成强有力的防错雷达与交卷前自查习惯。",
+    "triggers": [
+      "平时做题总能看懂解析，但自己算总是在符号、常数上扣分",
+      "定义域看错、开闭区间看漏、题干问极小值误写成极小值点",
+      "二重积分积分区域上下限写颠倒、矩阵乘法不满足交换律却擅自交换"
+    ],
+    "firstReaction": "第一反应：交卷前 20 分钟启动‘四查雷达’：一查题干问什么（点还是值？），二查定义域与符号（分母非零、底数大于0），三查二重积分投影与格林公式方向，四查特征向量是否非零！",
+    "candidateMethods": [
+      {
+        "name": "四大失误雷达自查法",
         "priority": 1,
-      "applicability": "所有大题演算与填空题核对",
-      "whyChoose": "针对性排查：读题错误（问点还是值？齐次还是非齐次？）、建模错误（旋转体绕 x 轴还是 y 轴？）、方法错误（加减法误代无穷小）、计算错误（分母通分移项变号）。",
-      "description": "必须在脑海中条理化列出检查项，不可泛泛扫视。"
-    }
-  ],
-  "steps": [
-    "第一项（读题自查）：重新扫一眼题干第一句和问句末尾，核对题设条件（如独立？连续？正定？非零？）。",
-    "第二项（极限自查）：核对等价无穷小是否仅用于乘积项；洛必达是否确认是 0/0 或 \\infty/\\infty。",
-    "第三项（积分自查）：二重积分奇偶对称性是否包含原点；格林公式曲线是否为逆时针正向（顺时针必须加负号）。",
-    "第四项（线代自查）：伴随矩阵公式 $A^{-1} = \\frac{1}{|A|}A^*$ 的分母 $|A|$ 有无漏除；特征向量写成基础解系是否注明 $k_1, k_2$ 不同时为 0。",
-    "第五项（概率自查）：概率密度积分为 1 的全域检查；方差公式 $DX = E(X^2) - [E(X)]^2$ 有无忘扣平方。"
-  ],
-  "formulas": [
-    {
-      "title": "四大高危陷阱公式",
-      "latex": "DX = E(X^2) - [E(X)]^2,\\quad A^{-1} = \\frac{1}{|A|}A^*,\\quad \\oint_L = -\\oint_{L^-}",
-      "notes": "考场失误最高频的三大符号与常数漏记点"
-    }
-  ],
-  "pitfalls": [
-    "题干问‘极值’却写成了自变量坐标 $x=x_0$；问‘极值点’却写成了函数值 $f(x_0)$",
-    "格林公式与高斯公式中，未检查曲面或曲线的方向，顺时针或内侧遗漏负号",
-    "矩阵乘法 $AB=AC$ 在 $|A| \\ne 0$ 未满足时擅自约去 $A$ 得到 $B=C$"
-  ],
-  "whyChooseMethod": "考前每消除一种习惯性失误，考场上就能多拿 5~10 分，是产出比极高的提分手段。",
-  "pastQuestions": [],
-  "variants": [],
-  "selfCheckList": [
-    "算完方差是否核验过 DX >= 0？若算成负数是否能立刻意识到公式写错？",
-    "求格林公式是否先画草图检查边界是逆时针（正向）还是顺时针（负向）？",
-    "求特征向量通解是否写了 'c 为任意非零常数'？"
-  ],
-  "relatedKnowledgeIds": [
-    "yingshi-64-exam-time-structure",
-    "yingshi-66-survival-and-advanced-checklist"
-  ],
-  "tags": [
-    "四大失误",
-    "读题错误",
-    "计算失误",
-    "符号检查",
-    "自查清单"
-  ],
-  "source": "Maki考研数学大串讲 L65",
-  "isPending": false
-},
+        "applicability": "所有大题演算与填空题核对",
+        "whyChoose": "针对性排查：读题错误（问点还是值？齐次还是非齐次？）、建模错误（旋转体绕 x 轴还是 y 轴？）、方法错误（加减法误代无穷小）、计算错误（分母通分移项变号）。",
+        "description": "必须在脑海中条理化列出检查项，不可泛泛扫视。"
+      }
+    ],
+    "steps": [
+      "第一项（读题自查）：重新扫一眼题干第一句和问句末尾，核对题设条件（如独立？连续？正定？非零？）。",
+      "第二项（极限自查）：核对等价无穷小是否仅用于乘积项；洛必达是否确认是 0/0 或 \\infty/\\infty。",
+      "第三项（积分自查）：二重积分奇偶对称性是否包含原点；格林公式曲线是否为逆时针正向（顺时针必须加负号）。",
+      "第四项（线代自查）：伴随矩阵公式 $A^{-1} = \\frac{1}{|A|}A^*$ 的分母 $|A|$ 有无漏除；特征向量写成基础解系是否注明 $k_1, k_2$ 不同时为 0。",
+      "第五项（概率自查）：概率密度积分为 1 的全域检查；方差公式 $DX = E(X^2) - [E(X)]^2$ 有无忘扣平方。"
+    ],
+    "formulas": [
+      {
+        "title": "四大高危陷阱公式",
+        "latex": "DX = E(X^2) - [E(X)]^2,\\quad A^{-1} = \\frac{1}{|A|}A^*,\\quad \\oint_L = -\\oint_{L^-}",
+        "notes": "考场失误最高频的三大符号与常数漏记点"
+      }
+    ],
+    "pitfalls": [
+      "题干问‘极值’却写成了自变量坐标 $x=x_0$；问‘极值点’却写成了函数值 $f(x_0)$",
+      "格林公式与高斯公式中，未检查曲面或曲线的方向，顺时针或内侧遗漏负号",
+      "矩阵乘法 $AB=AC$ 在 $|A| \\ne 0$ 未满足时擅自约去 $A$ 得到 $B=C$"
+    ],
+    "whyChooseMethod": "考前每消除一种习惯性失误，考场上就能多拿 5~10 分，是产出比极高的提分手段。",
+    "pastQuestions": [],
+    "variants": [],
+    "selfCheckList": [
+      "算完方差是否核验过 DX >= 0？若算成负数是否能立刻意识到公式写错？",
+      "求格林公式是否先画草图检查边界是逆时针（正向）还是顺时针（负向）？",
+      "求特征向量通解是否写了 'c 为任意非零常数'？"
+    ],
+    "relatedKnowledgeIds": [
+      "yingshi-64-exam-time-structure",
+      "yingshi-66-survival-and-advanced-checklist"
+    ],
+    "tags": [
+      "四大失误",
+      "读题错误",
+      "计算失误",
+      "符号检查",
+      "自查清单"
+    ],
+    "source": "Maki考研数学大串讲 L65",
+    "isPending": false
+  },
   "yingshi-66-survival-and-advanced-checklist": {
-  "id": "yingshi-66-survival-and-advanced-checklist",
-  "title": "保命清单 (60~90分) 与 进阶提分清单 (120~140分) (L66)",
-  "subject": "gaoshu",
-  "subjectName": "高等数学",
-  "chapterId": "gaoshu-ch11",
-  "chapterTitle": "第 7 编 应试工程：卷面分配与保命进阶清单",
-  "nodeType": "topic",
-  "summary": "Maki 应试工程篇 L66：将考研数学考点划分为两大作战军团：保命清单（必须稳拿的 80~90 分基本盘）与进阶清单（拉开分差冲击 120~140 分的高难度考点）。考前两周按清单分类逐项突破，有的放矢。",
-  "triggers": [
-    "考前最后 1~2 个月复习规划、知识点查漏补缺",
-    "目标分数在 80~100 分（过线求稳）或 120~140 分（冲刺名校）",
-    "感觉考点太多抓不住主次重点，需要清晰的优先级阶梯"
-  ],
-  "firstReaction": "第一反应：先保基本盘，再攻进阶堡垒！保命清单上的 25 个送分考点必须达到 100% 零失误；在此坚实基础上，攻坚 15 个高阶综合题型以争取 120+ 高分。",
-  "candidateMethods": [
-    {
-      "name": "阶梯式分类推进策略",
+    "id": "yingshi-66-survival-and-advanced-checklist",
+    "title": "保命清单 (60~90分) 与 进阶提分清单 (120~140分) (L66)",
+    "subject": "gaoshu",
+    "subjectName": "高等数学",
+    "chapterId": "gaoshu-ch11",
+    "chapterTitle": "第 7 编 应试工程：卷面分配与保命进阶清单",
+    "nodeType": "topic",
+    "summary": "Maki 应试工程篇 L66：将考研数学考点划分为两大作战军团：保命清单（必须稳拿的 80~90 分基本盘）与进阶清单（拉开分差冲击 120~140 分的高难度考点）。考前两周按清单分类逐项突破，有的放矢。",
+    "triggers": [
+      "考前最后 1~2 个月复习规划、知识点查漏补缺",
+      "目标分数在 80~100 分（过线求稳）或 120~140 分（冲刺名校）",
+      "感觉考点太多抓不住主次重点，需要清晰的优先级阶梯"
+    ],
+    "firstReaction": "第一反应：先保基本盘，再攻进阶堡垒！保命清单上的 25 个送分考点必须达到 100% 零失误；在此坚实基础上，攻坚 15 个高阶综合题型以争取 120+ 高分。",
+    "candidateMethods": [
+      {
+        "name": "阶梯式分类推进策略",
         "priority": 1,
-      "applicability": "考研数学一整体复习与冲刺复盘",
-      "whyChoose": "把有限的备考精力精准投放到产出比最高的考点上，避免在冷门极难偏题上浪费时间而丢失基本分。",
-      "description": "保命盘未稳时切忌盲目硬啃极难证明题。"
-    }
-  ],
-  "steps": [
-    "第一层（60~90分保命清单）：七大未定式极限计算、导数与复合/隐函数求导、可分离变量方程与二阶常系数齐次方程、定积分换元分部、基础解系与相似对角化、八大常见分布与均值方差公式。",
-    "第二层（90~120分强化清单）：泰勒公式展开定阶、单调有界递推数列、微分中值定理辅助函数、变限积分求导与反常积分收敛性、多元极值拉格朗日乘数、二重积分极坐标、施密特正交与二次型化标准形、二维联合分布求边缘与条件概率、矩估计与似然估计。",
-    "第三层（120~140分进阶清单）：曲线曲面积分（格林、高斯、斯托克斯、场论）、三重积分切片法、幂级数求和与傅里叶展开、抽象分块矩阵方程与秩定理、二维随机变量函数分布（卷积公式与最大最小值分布）、估计量的无偏性与有效性证明、跨章节综合分析证明题。"
-  ],
-  "formulas": [
-    {
-      "title": "得分目标梯队",
-      "latex": "\\text{保命盘: } 85\\text{分} \\to \\text{强化盘: } 115\\text{分} \\to \\text{进阶盘: } 135+\\text{分}",
-      "notes": "考研数学阶梯式目标管理"
-    }
-  ],
-  "pitfalls": [
-    "基础未牢固就盲目追求高深技巧，结果最简单的极限与导数丢分严重",
-    "只刷题不总结方法卡与特征归纳，做一道忘一道",
-    "忽视最后两周的模拟考全真掐表训练，考场上缺乏时间压迫感应对能力"
-  ],
-  "whyChooseMethod": "考前两周依清单对号入座，实现复习收益最大化。",
-  "pastQuestions": [],
-  "variants": [],
-  "selfCheckList": [
-    "保命清单上的 25 个题型是否能做到提笔即出答案？",
-    "进阶清单上的重点考点（拉格朗日乘数、格林公式、正交对角化、MLE）是否有标准的推导模版？",
-    "最后两周是否安排了至少 3 次全真 180 分钟模考测试？"
-  ],
-  "relatedKnowledgeIds": [
-    "yingshi-64-exam-time-structure",
-    "yingshi-65-calculation-mistakes-checklist"
-  ],
-  "tags": [
-    "保命清单",
-    "进阶清单",
-    "提分规划",
-    "优先级",
-    "冲刺复习"
-  ],
-  "source": "Maki考研数学大串讲 L66",
-  "isPending": false
-}
+        "applicability": "考研数学一整体复习与冲刺复盘",
+        "whyChoose": "把有限的备考精力精准投放到产出比最高的考点上，避免在冷门极难偏题上浪费时间而丢失基本分。",
+        "description": "保命盘未稳时切忌盲目硬啃极难证明题。"
+      }
+    ],
+    "steps": [
+      "第一层（60~90分保命清单）：七大未定式极限计算、导数与复合/隐函数求导、可分离变量方程与二阶常系数齐次方程、定积分换元分部、基础解系与相似对角化、八大常见分布与均值方差公式。",
+      "第二层（90~120分强化清单）：泰勒公式展开定阶、单调有界递推数列、微分中值定理辅助函数、变限积分求导与反常积分收敛性、多元极值拉格朗日乘数、二重积分极坐标、施密特正交与二次型化标准形、二维联合分布求边缘与条件概率、矩估计与似然估计。",
+      "第三层（120~140分进阶清单）：曲线曲面积分（格林、高斯、斯托克斯、场论）、三重积分切片法、幂级数求和与傅里叶展开、抽象分块矩阵方程与秩定理、二维随机变量函数分布（卷积公式与最大最小值分布）、估计量的无偏性与有效性证明、跨章节综合分析证明题。"
+    ],
+    "formulas": [
+      {
+        "title": "得分目标梯队",
+        "latex": "\\text{保命盘: } 85\\text{分} \\to \\text{强化盘: } 115\\text{分} \\to \\text{进阶盘: } 135+\\text{分}",
+        "notes": "考研数学阶梯式目标管理"
+      }
+    ],
+    "pitfalls": [
+      "基础未牢固就盲目追求高深技巧，结果最简单的极限与导数丢分严重",
+      "只刷题不总结方法卡与特征归纳，做一道忘一道",
+      "忽视最后两周的模拟考全真掐表训练，考场上缺乏时间压迫感应对能力"
+    ],
+    "whyChooseMethod": "考前两周依清单对号入座，实现复习收益最大化。",
+    "pastQuestions": [],
+    "variants": [],
+    "selfCheckList": [
+      "保命清单上的 25 个题型是否能做到提笔即出答案？",
+      "进阶清单上的重点考点（拉格朗日乘数、格林公式、正交对角化、MLE）是否有标准的推导模版？",
+      "最后两周是否安排了至少 3 次全真 180 分钟模考测试？"
+    ],
+    "relatedKnowledgeIds": [
+      "yingshi-64-exam-time-structure",
+      "yingshi-65-calculation-mistakes-checklist"
+    ],
+    "tags": [
+      "保命清单",
+      "进阶清单",
+      "提分规划",
+      "优先级",
+      "冲刺复习"
+    ],
+    "source": "Maki考研数学大串讲 L66",
+    "isPending": false
+  }
 };
+
 
 import { EXTRACTED_PAST_QUESTIONS } from './pastQuestionsData';
 
