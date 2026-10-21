@@ -148,5 +148,13 @@ export interface UniversalMetaMethod {
     triggerForm: string;
     coreAction: string;
   }[];
+  representativeQuestions?: {
+    year: string;
+    category: string;
+    questionNumber: string;
+    stem: string;
+    methodUsage: string;
+    topicId: string;
+  }[];
   commonPitfalls: string[];
 }

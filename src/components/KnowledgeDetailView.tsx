@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { 
-  ArrowLeft, ArrowRight, ChevronLeft, Compass, Eye, EyeOff, Tag, CheckCircle2, Bookmark
+  ArrowLeft, ArrowRight, ChevronLeft, Compass, Eye, EyeOff, Tag, CheckCircle2, Bookmark, Layers
 } from 'lucide-react';
 import { KNOWLEDGE_BASE } from '../data/knowledgeBase';
+import { TOPIC_TO_META_METHOD } from '../data/featureIndex';
 import { CHAPTERS, SUBJECTS } from '../data/subjects';
 import { LearningStatus, MistakeTag, PastQuestion } from '../data/types';
 import { getLearningStatus, setLearningStatus, getTopicRecord, setTopicMistakeTags } from '../data/storage';
@@ -13,6 +14,7 @@ interface KnowledgeDetailViewProps {
   onBackToChapter: (chapterId: string) => void;
   onBackToMindmap: () => void;
   onNavigateTopic: (nodeId: string) => void;
+  onOpenMetaMethod?: (metaMethodId: string) => void;
 }
 
 const AVAILABLE_MISTAKE_TAGS: MistakeTag[] = [
@@ -28,6 +30,7 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
   onBackToChapter,
   onBackToMindmap,
   onNavigateTopic,
+  onOpenMetaMethod,
 }) => {
   const node = KNOWLEDGE_BASE[nodeId] || KNOWLEDGE_BASE['gaoshu-01-indeterminate-0-0'];
   const chapter = CHAPTERS[node.chapterId] || CHAPTERS['gaoshu-ch01'];
@@ -184,9 +187,22 @@ export const KnowledgeDetailView: React.FC<KnowledgeDetailViewProps> = ({
             </span>
           </div>
 
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-[var(--ink)] tracking-tight">
-            {node.title}
-          </h1>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-[var(--ink)] tracking-tight">
+              {node.title}
+            </h1>
+            {TOPIC_TO_META_METHOD[node.id] && onOpenMetaMethod && (
+              <button
+                type="button"
+                onClick={() => onOpenMetaMethod(TOPIC_TO_META_METHOD[node.id].id)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[8px] bg-[var(--purple-bg)]/30 text-[var(--purple)] border border-[var(--purple)]/40 hover:bg-[var(--purple)] hover:text-white transition-colors cursor-pointer text-xs font-mono font-bold self-start sm:self-auto"
+                title="查看该考点对应跨章节通用方法的完整矩阵与历年例题"
+              >
+                <Layers className="w-3.5 h-3.5" />
+                <span>通用方法：{TOPIC_TO_META_METHOD[node.id].name} ↗</span>
+              </button>
+            )}
+          </div>
 
           {/* § 1. 一句话记忆 (Summary banner) */}
           <div className="p-3.5 sm:p-4 rounded-[10px] bg-[var(--well)] border-l-2 border-[var(--blue)]">

@@ -19,6 +19,7 @@ export function App() {
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [isFeatureLookupOpen, setIsFeatureLookupOpen] = useState(false);
   const [isMetaMethodOpen, setIsMetaMethodOpen] = useState(false);
+  const [selectedMetaMethodId, setSelectedMetaMethodId] = useState<string | undefined>(undefined);
 
   // Parse hash to route
   const parseHash = (): RouteState => {
@@ -114,7 +115,7 @@ export function App() {
         onNavigateTopic={(tid) => navigateToTopic(tid)}
         onOpenReviewModal={() => setIsReviewOpen(true)}
         onOpenFeatureLookup={() => setIsFeatureLookupOpen(true)}
-        onOpenMetaMethods={() => setIsMetaMethodOpen(true)}
+        onOpenMetaMethods={() => { setSelectedMetaMethodId(undefined); setIsMetaMethodOpen(true); }}
       />
 
       {/* Main View Area */}
@@ -142,6 +143,10 @@ export function App() {
             onBackToChapter={(cid) => navigateToChapter(cid)}
             onBackToMindmap={() => navigateToMindmap()}
             onNavigateTopic={(tid) => navigateToTopic(tid)}
+            onOpenMetaMethod={(mid) => {
+              setSelectedMetaMethodId(mid);
+              setIsMetaMethodOpen(true);
+            }}
           />
         )}
       </main>
@@ -158,6 +163,11 @@ export function App() {
         isOpen={isFeatureLookupOpen}
         onClose={() => setIsFeatureLookupOpen(false)}
         onSelectTopic={(tid) => navigateToTopic(tid)}
+        onSelectMetaMethod={(mid) => {
+          setIsFeatureLookupOpen(false);
+          setSelectedMetaMethodId(mid);
+          setIsMetaMethodOpen(true);
+        }}
       />
 
       {/* Universal Cross-Chapter Meta-Methods Matrix Modal */}
@@ -165,6 +175,11 @@ export function App() {
         isOpen={isMetaMethodOpen}
         onClose={() => setIsMetaMethodOpen(false)}
         onSelectTopic={(tid) => navigateToTopic(tid)}
+        initialMethodId={selectedMetaMethodId}
+        onOpenFeatureLookup={() => {
+          setIsMetaMethodOpen(false);
+          setIsFeatureLookupOpen(true);
+        }}
       />
     </div>
   );

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { X, Network, ArrowRight, Lightbulb, Compass, AlertTriangle } from 'lucide-react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { X, Network, ArrowRight, Lightbulb, Search, AlertTriangle, Layers } from 'lucide-react';
 import { UNIVERSAL_META_METHODS } from '../data/metaMethods';
 import { UniversalMetaMethod } from '../data/types';
 import { MathView } from './MathView';
@@ -8,19 +8,54 @@ interface MetaMethodModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSelectTopic: (topicId: string) => void;
+  initialMethodId?: string;
+  onOpenFeatureLookup?: () => void;
 }
 
 export const MetaMethodModal: React.FC<MetaMethodModalProps> = ({
   isOpen,
   onClose,
   onSelectTopic,
+  initialMethodId,
+  onOpenFeatureLookup,
 }) => {
   if (!isOpen) return null;
 
-  const [activeMethodId, setActiveMethodId] = useState<string>(UNIVERSAL_META_METHODS[0].id);
+  const [activeMethodId, setActiveMethodId] = useState<string>(
+    initialMethodId || UNIVERSAL_META_METHODS[0].id
+  );
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  useEffect(() => {
+    if (initialMethodId) {
+      setActiveMethodId(initialMethodId);
+    }
+  }, [initialMethodId]);
+
+  const filteredMethods = useMemo(() => {
+    if (!searchQuery.trim()) return UNIVERSAL_META_METHODS;
+    const q = searchQuery.toLowerCase().trim();
+    return UNIVERSAL_META_METHODS.filter((m) => {
+      if (m.name.toLowerCase().includes(q)) return true;
+      if (m.subtitle.toLowerCase().includes(q)) return true;
+      if (m.corePhilosophy.toLowerCase().includes(q)) return true;
+      if (m.manifestations.some((man) => 
+        man.topicTitle.toLowerCase().includes(q) || 
+        man.triggerForm.toLowerCase().includes(q) ||
+        man.coreAction.toLowerCase().includes(q)
+      )) return true;
+      if (m.representativeQuestions?.some((rq) => 
+        rq.stem.toLowerCase().includes(q) || 
+        rq.methodUsage.toLowerCase().includes(q)
+      )) return true;
+      return false;
+    });
+  }, [searchQuery]);
 
   const activeMethod: UniversalMetaMethod =
-    UNIVERSAL_META_METHODS.find((m) => m.id === activeMethodId) || UNIVERSAL_META_METHODS[0];
+    UNIVERSAL_META_METHODS.find((m) => m.id === activeMethodId) ||
+    filteredMethods[0] ||
+    UNIVERSAL_META_METHODS[0];
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-xs font-body">
@@ -37,7 +72,7 @@ export const MetaMethodModal: React.FC<MetaMethodModalProps> = ({
                   跨章节通用方法论矩阵 (Meta-Methods)
                 </h2>
                 <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-[var(--sheet)] text-[var(--muted)] border border-[var(--line)] hidden sm:inline">
-                  数一综合提分核心
+                  数一综合提分核心 · 10大通用方法
                 </span>
               </div>
               <p className="text-[11px] text-[var(--muted)] font-mono">
@@ -46,25 +81,53 @@ export const MetaMethodModal: React.FC<MetaMethodModalProps> = ({
             </div>
           </div>
 
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-[6px] text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--line)] transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
+          <div className="flex items-center gap-2">
+            {onOpenFeatureLookup && (
+              <button
+                onClick={() => {
+                  onClose();
+                  onOpenFeatureLookup();
+                }}
+                className="hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-[6px] text-xs font-mono bg-[var(--sheet)] hover:bg-[var(--line)] text-[var(--ink)] border border-[var(--line)] transition-colors cursor-pointer"
+                title="切换到特征速查与刷题表"
+              >
+                <Layers className="w-3.5 h-3.5 text-[var(--blue)]" />
+                <span>特征速查表</span>
+              </button>
+            )}
+
+            <button
+              onClick={onClose}
+              className="p-1.5 rounded-[6px] text-[var(--muted)] hover:text-[var(--ink)] hover:bg-[var(--line)] transition-colors cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
         </div>
 
         {/* Content area */}
         <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
           {/* Method selector tabs (Left on desktop, Top on mobile) */}
-          <div className="w-full md:w-64 bg-[var(--well)] border-b md:border-b-0 md:border-r border-[var(--line)] p-2 sm:p-3 overflow-x-auto md:overflow-y-auto flex md:flex-col gap-1.5 flex-shrink-0 no-scrollbar">
-            {UNIVERSAL_META_METHODS.map((m) => {
-              const isSelected = m.id === activeMethodId;
+          <div className="w-full md:w-68 bg-[var(--well)] border-b md:border-b-0 md:border-r border-[var(--line)] p-2 sm:p-3 overflow-x-auto md:overflow-y-auto flex md:flex-col gap-1.5 flex-shrink-0 no-scrollbar">
+            {/* Quick search input */}
+            <div className="relative mb-1 hidden md:block">
+              <Search className="w-3.5 h-3.5 absolute left-2.5 top-2.5 text-[var(--muted)]" />
+              <input
+                type="text"
+                placeholder="搜索通用方法/场景..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-[var(--sheet)] border border-[var(--line)] rounded-[6px] pl-8 pr-2 py-1.5 text-xs text-[var(--ink)] placeholder-[var(--muted)] focus:outline-none"
+              />
+            </div>
+
+            {filteredMethods.map((m) => {
+              const isSelected = m.id === activeMethod.id;
               return (
                 <button
                   key={m.id}
                   onClick={() => setActiveMethodId(m.id)}
-                  className={`text-left p-2.5 sm:p-3 rounded-[10px] border transition-all flex-shrink-0 md:w-full ${
+                  className={`text-left p-2.5 sm:p-3 rounded-[10px] border transition-all flex-shrink-0 md:w-full cursor-pointer ${
                     isSelected
                       ? 'bg-[var(--sheet)] border-[var(--purple)] shadow-xs'
                       : 'border-transparent hover:bg-[var(--sheet)] hover:border-[var(--line)] text-[var(--muted)]'
@@ -101,7 +164,7 @@ export const MetaMethodModal: React.FC<MetaMethodModalProps> = ({
             <div className="space-y-3">
               <div className="flex items-center justify-between text-xs font-mono text-[var(--muted)]">
                 <span className="font-bold text-[var(--ink)]">在各章节中的具体表现形态与触发点：</span>
-                <span>收录 {activeMethod.manifestations.length} 个跨板块应用</span>
+                <span>收录 {activeMethod.manifestations.length} 个跨板块应用场景</span>
               </div>
 
               <div className="space-y-3">
@@ -125,7 +188,7 @@ export const MetaMethodModal: React.FC<MetaMethodModalProps> = ({
                           onSelectTopic(item.topicId);
                           onClose();
                         }}
-                        className="flex items-center gap-1 text-xs font-mono text-[var(--blue)] hover:underline"
+                        className="flex items-center gap-1 text-xs font-mono text-[var(--blue)] hover:underline cursor-pointer"
                       >
                         <span>去考点推导</span>
                         <ArrowRight className="w-3 h-3" />
@@ -151,6 +214,52 @@ export const MetaMethodModal: React.FC<MetaMethodModalProps> = ({
                 ))}
               </div>
             </div>
+
+            {/* Representative Exam Questions */}
+            {activeMethod.representativeQuestions && activeMethod.representativeQuestions.length > 0 && (
+              <div className="space-y-3">
+                <div className="flex items-center justify-between text-xs font-mono text-[var(--muted)]">
+                  <span className="font-bold text-[var(--ink)]">历年真题实战考查（典型考研真题与实战切入点）：</span>
+                  <span className="text-[var(--purple)] font-bold">{activeMethod.representativeQuestions.length} 道精选真题</span>
+                </div>
+
+                <div className="space-y-2.5">
+                  {activeMethod.representativeQuestions.map((q, qi) => (
+                    <div
+                      key={qi}
+                      className="bg-[var(--sheet)] border border-[var(--line)] hover:border-[var(--purple)]/50 p-3.5 rounded-[10px] space-y-2 transition-colors"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="px-2 py-0.5 rounded-[5px] bg-[var(--well)] text-[var(--ink)] font-mono text-[11px] font-bold border border-[var(--line)]">
+                            {q.year} · {q.category} · {q.questionNumber}
+                          </span>
+                        </div>
+                        <button
+                          onClick={() => {
+                            onSelectTopic(q.topicId);
+                            onClose();
+                          }}
+                          className="flex items-center gap-1 text-xs font-mono text-[var(--blue)] hover:underline cursor-pointer"
+                        >
+                          <span>进入对应考点</span>
+                          <ArrowRight className="w-3 h-3" />
+                        </button>
+                      </div>
+
+                      <div className="text-xs text-[var(--ink)] font-serif leading-relaxed bg-[var(--well)] p-2.5 rounded-[8px] border border-[var(--line)]">
+                        <MathView content={q.stem} />
+                      </div>
+
+                      <div className="text-xs font-mono text-[var(--purple)] bg-[var(--purple-bg)]/20 p-2 rounded-[6px] border border-[var(--purple)]/30 flex items-start gap-1.5">
+                        <span className="font-bold flex-shrink-0">方法切入点：</span>
+                        <span className="font-body text-[var(--ink)] leading-relaxed"><MathView content={q.methodUsage} inline /></span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Pitfalls */}
             {activeMethod.commonPitfalls && activeMethod.commonPitfalls.length > 0 && (
